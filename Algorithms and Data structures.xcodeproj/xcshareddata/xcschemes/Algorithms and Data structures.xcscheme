@@ -38,6 +38,16 @@
                ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9BF18A841D5A0273004D343B"
+               BuildableName = "GraphTests.xctest"
+               BlueprintName = "GraphTests"
+               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
