@@ -1,0 +1,11 @@
+branches:
+  only:
+  - master
+  - Development
+language: objective-c
+os: osx
+osx_image: xcode8
+install:
+  - gem install xcpretty
+script:
+  - xcodebuild test -workspace Algorithms-and-Data-structures.xcworkspace -scheme "Algorithms and Data structures" | xcpretty
