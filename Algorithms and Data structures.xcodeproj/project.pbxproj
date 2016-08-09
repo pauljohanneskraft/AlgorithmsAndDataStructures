@@ -120,9 +120,9 @@
 		9B788D071D59D68000B2402E /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
+				9B788D1D1D59DC0300B2402E /* Graph.swift */,
 				9B788D1B1D59DC0300B2402E /* Graph_Hashing.swift */,
 				9B788D1C1D59DC0300B2402E /* Graph_Matrix.swift */,
-				9B788D1D1D59DC0300B2402E /* Graph.swift */,
 			);
 			name = Graphs;
 			path = ..;
