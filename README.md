@@ -1,1 +1,1 @@
-# algorithms-data-structures
+# Algorithms & Data structures [![Build Status](https://travis-ci.org/pauljohanneskraft/Algorithms-and-Data-structures.svg?branch=master)](https://travis-ci.org/pauljohanneskraft/Algorithms-and-Data-structures)
