@@ -8,26 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		9B788D011D59D5CA00B2402E /* Algorithms and Data structures.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9B788D0D1D59D71900B2402E /* Graph_Hashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D0C1D59D71900B2402E /* Graph_Hashing.swift */; };
-		9B788D0F1D59D72400B2402E /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D0E1D59D72400B2402E /* Graph.swift */; };
-		9B788D111D59D73600B2402E /* Graph_Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D101D59D73600B2402E /* Graph_Matrix.swift */; };
-		9B788D131D59D79C00B2402E /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D121D59D79C00B2402E /* SinglyLinkedList.swift */; };
-		9B788D151D59D7A900B2402E /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D141D59D7A900B2402E /* DoublyLinkedList.swift */; };
 		9B788D171D59D7B600B2402E /* BinomialHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D161D59D7B600B2402E /* BinomialHeap.swift */; };
 		9B788D191D59D7D200B2402E /* Pattern_Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D181D59D7D200B2402E /* Pattern_Matching.swift */; };
+		9B788D1F1D59DC0300B2402E /* DoublyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1A1D59DC0300B2402E /* DoublyLinkedList.swift */; };
+		9B788D201D59DC0300B2402E /* Graph_Hashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1B1D59DC0300B2402E /* Graph_Hashing.swift */; };
+		9B788D211D59DC0300B2402E /* Graph_Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1C1D59DC0300B2402E /* Graph_Matrix.swift */; };
+		9B788D221D59DC0300B2402E /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1D1D59DC0300B2402E /* Graph.swift */; };
+		9B788D231D59DC0300B2402E /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1E1D59DC0300B2402E /* SinglyLinkedList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9B788CFC1D59D5CA00B2402E /* Algorithms and Data structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Algorithms and Data structures.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Algorithms and Data structures.h"; sourceTree = "<group>"; };
 		9B788D001D59D5CA00B2402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9B788D0C1D59D71900B2402E /* Graph_Hashing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph_Hashing.swift; sourceTree = "<group>"; };
-		9B788D0E1D59D72400B2402E /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
-		9B788D101D59D73600B2402E /* Graph_Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph_Matrix.swift; sourceTree = "<group>"; };
-		9B788D121D59D79C00B2402E /* SinglyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglyLinkedList.swift; sourceTree = "<group>"; };
-		9B788D141D59D7A900B2402E /* DoublyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoublyLinkedList.swift; sourceTree = "<group>"; };
 		9B788D161D59D7B600B2402E /* BinomialHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinomialHeap.swift; sourceTree = "<group>"; };
 		9B788D181D59D7D200B2402E /* Pattern_Matching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pattern_Matching.swift; sourceTree = "<group>"; };
+		9B788D1A1D59DC0300B2402E /* DoublyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoublyLinkedList.swift; path = "Algorithms and Data structures/DoublyLinkedList.swift"; sourceTree = "<group>"; };
+		9B788D1B1D59DC0300B2402E /* Graph_Hashing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graph_Hashing.swift; path = "Algorithms and Data structures/Graph_Hashing.swift"; sourceTree = "<group>"; };
+		9B788D1C1D59DC0300B2402E /* Graph_Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graph_Matrix.swift; path = "Algorithms and Data structures/Graph_Matrix.swift"; sourceTree = "<group>"; };
+		9B788D1D1D59DC0300B2402E /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graph.swift; path = "Algorithms and Data structures/Graph.swift"; sourceTree = "<group>"; };
+		9B788D1E1D59DC0300B2402E /* SinglyLinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SinglyLinkedList.swift; path = "Algorithms and Data structures/SinglyLinkedList.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +73,9 @@
 		9B788D071D59D68000B2402E /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
-				9B788D0E1D59D72400B2402E /* Graph.swift */,
-				9B788D101D59D73600B2402E /* Graph_Matrix.swift */,
-				9B788D0C1D59D71900B2402E /* Graph_Hashing.swift */,
+				9B788D1B1D59DC0300B2402E /* Graph_Hashing.swift */,
+				9B788D1C1D59DC0300B2402E /* Graph_Matrix.swift */,
+				9B788D1D1D59DC0300B2402E /* Graph.swift */,
 			);
 			name = Graphs;
 			path = ..;
@@ -84,8 +84,8 @@
 		9B788D081D59D6C700B2402E /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				9B788D121D59D79C00B2402E /* SinglyLinkedList.swift */,
-				9B788D141D59D7A900B2402E /* DoublyLinkedList.swift */,
+				9B788D1A1D59DC0300B2402E /* DoublyLinkedList.swift */,
+				9B788D1E1D59DC0300B2402E /* SinglyLinkedList.swift */,
 			);
 			name = Lists;
 			path = ..;
@@ -188,13 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B788D221D59DC0300B2402E /* Graph.swift in Sources */,
 				9B788D171D59D7B600B2402E /* BinomialHeap.swift in Sources */,
-				9B788D151D59D7A900B2402E /* DoublyLinkedList.swift in Sources */,
-				9B788D0F1D59D72400B2402E /* Graph.swift in Sources */,
-				9B788D111D59D73600B2402E /* Graph_Matrix.swift in Sources */,
+				9B788D211D59DC0300B2402E /* Graph_Matrix.swift in Sources */,
+				9B788D201D59DC0300B2402E /* Graph_Hashing.swift in Sources */,
+				9B788D231D59DC0300B2402E /* SinglyLinkedList.swift in Sources */,
+				9B788D1F1D59DC0300B2402E /* DoublyLinkedList.swift in Sources */,
 				9B788D191D59D7D200B2402E /* Pattern_Matching.swift in Sources */,
-				9B788D131D59D79C00B2402E /* SinglyLinkedList.swift in Sources */,
-				9B788D0D1D59D71900B2402E /* Graph_Hashing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
