@@ -8,4 +8,4 @@ osx_image: xcode8
 install:
   - gem install xcpretty
 script:
-  - xcodebuild test -workspace "Algorithms & Data structures.xcworkspace" -scheme Algorithms-and-Data-structures | xcpretty
+  - xcodebuild test -workspace Algorithms-and-Data-structures.xcworkspace -scheme Algorithms-and-Data-structures | xcpretty
