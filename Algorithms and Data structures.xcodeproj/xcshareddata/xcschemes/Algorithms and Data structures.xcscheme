@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B788D271D59E03D00B2402E"
+               BuildableName = "TreeTests.xctest"
+               BlueprintName = "TreeTests"
+               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
+            BuildableName = "Algorithms and Data structures.framework"
+            BlueprintName = "Algorithms and Data structures"
+            ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
