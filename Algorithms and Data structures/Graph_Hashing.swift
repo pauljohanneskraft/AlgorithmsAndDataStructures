@@ -8,9 +8,7 @@
 
 import Foundation
 
-
-
-public struct Vertex : VertexProtocol, CustomStringConvertible {
+public struct Vertex_Hashing : VertexProtocol, CustomStringConvertible {
 	public var edges: [(key: Int, value: Int)] { return _edges.map { $0 } }
     public var _edges = [Int:Int]()
     public var hashValue: Int
@@ -37,10 +35,6 @@ public struct Vertex : VertexProtocol, CustomStringConvertible {
     public var descriptionIncludingEdges: String {
         return description + ", edges to: \(Array(_edges.sorted { $0.key < $1.key }))"
     }
-}
-
-public func == (lhs: Vertex, rhs: Vertex) -> Bool {
-    return lhs.hashValue == rhs.hashValue
 }
 
 public struct Graph_Hashing<V : VertexProtocol> : CustomStringConvertible, GraphProtocol {
