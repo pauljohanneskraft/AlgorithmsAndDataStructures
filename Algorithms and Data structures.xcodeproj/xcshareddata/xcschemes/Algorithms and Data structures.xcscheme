@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
-               BuildableName = "Algorithms and Data structures.framework"
+               BuildableName = "Algorithms_and_Data_structures.framework"
                BlueprintName = "Algorithms and Data structures"
                ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
             </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
-            BuildableName = "Algorithms and Data structures.framework"
+            BuildableName = "Algorithms_and_Data_structures.framework"
             BlueprintName = "Algorithms and Data structures"
             ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
          </BuildableReference>
@@ -75,7 +75,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
-            BuildableName = "Algorithms and Data structures.framework"
+            BuildableName = "Algorithms_and_Data_structures.framework"
             BlueprintName = "Algorithms and Data structures"
             ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
          </BuildableReference>
@@ -93,7 +93,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
-            BuildableName = "Algorithms and Data structures.framework"
+            BuildableName = "Algorithms_and_Data_structures.framework"
             BlueprintName = "Algorithms and Data structures"
             ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
          </BuildableReference>
