@@ -8,21 +8,11 @@
 
 import Foundation
 
-public protocol VertexProtocol : Hashable, Comparable {
-    func getWeight(_ vertex: Int) -> Int?
-    mutating func addEdge(_ vertex: Int, weight: Int)
-    mutating func removeEdge(_ vertex: Int)
-    mutating func removeAllEdges()
-    var edges : [Int:Int] { get }
-    var descriptionIncludingEdges: String { get }
-}
 
-public func < <V : VertexProtocol>(lhs: V, rhs: V) -> Bool {
-    return lhs.hashValue < rhs.hashValue
-}
 
 public struct Vertex : VertexProtocol, CustomStringConvertible {
-    public var edges = [Int:Int]()
+    public var edges : [(Int, Int)] { return _edges.map { $0 } }
+    public var _edges = [Int:Int]()
     public var hashValue: Int
     var name: String
     
@@ -31,28 +21,16 @@ public struct Vertex : VertexProtocol, CustomStringConvertible {
         self.name = name
     }
     
-    public func getWeight(_ vertex: Int) -> Int? {
-        return edges[vertex]
-    }
-    
-    mutating public func addEdge(_ vertex: Int, weight: Int = 1) {
-        edges[vertex] = weight
-    }
-    
-    mutating public func removeEdge(_ vertex: Int) {
-        edges.removeValue(forKey: vertex)
-    }
-    
     public mutating func removeAllEdges() {
-        edges = [:]
+        _edges = [:]
     }
     
     public var description: String {
-        return "\(name): \(hashValue)"
+        return "\(name) \(hashValue)"
     }
     
     public var descriptionIncludingEdges: String {
-        return description + ", edges to: \(Array(edges.sorted { $0.key < $1.key }))"
+        return description + ", edges to: \(Array(_edges.sorted { $0.key < $1.key }))"
     }
 }
 
@@ -98,101 +76,4 @@ public struct Graph_Hashing<V : VertexProtocol> : CustomStringConvertible, Graph
         return "AsymmetricalGraph with vertices: \(verticesString)"
     }
     
-    public func depthFirstSearch(start: V) -> [V] {
-        return []
-    }
-    
-}
-
-public protocol GraphProtocol {
-    associatedtype V : VertexProtocol
-    var vertices: [Int:V] { get }
-}
-
-extension GraphProtocol {
-    public func djikstra(start: V, end: V) -> [Int] {
-        assert(vertices[start.hashValue] != nil && vertices[end.hashValue] != nil, "Start or end is not part of graph.")
-        guard start != end else { return [] }
-        var visited = [Int:(weight: Int, last: V)]()
-        djikstraRec(start: start, end: end, weights: 0, visited: &visited)
-        let v = visited.sorted { $0.key < $1.key }
-        print("visited:")
-        for i in v {
-            print("\t", i)
-        }
-        var result = [Int]()
-        var current = end.hashValue
-        var next = Optional(end)?.hashValue
-        repeat {
-            current = next!.hashValue
-            next = visited[current]?.last.hashValue
-            result.append(current)
-            if next == nil && current != start.hashValue { return [] }
-        } while current != start.hashValue
-        return result.reversed()
-    }
-    
-    private func djikstraRec(start: V, end: V, weights: Int, visited: inout [Int:(weight: Int, last: V)]) {
-        // print(start.hashValue)
-        for v in start.edges.sorted(by: { $0.key < $1.key }) {
-            let weightAfterEdge = weights + v.value
-            // print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
-            if let existingWeight = visited[v.key]?.weight {
-                if weightAfterEdge < existingWeight {
-                    visited[v.key] = (weight: weightAfterEdge, last: start)
-                } else { continue }
-            } else { visited[v.key] = (weight: weightAfterEdge, last: start) }
-            // print("\tvisited[\(v.key)] =", visited[v.key]!)
-            djikstraRec(start: vertices[v.key]!, end: end, weights: weightAfterEdge, visited: &visited)
-        }
-    }
-    
-    public func bellmanFord(start: V, end: V) -> [Int] {
-        assert(vertices[start.hashValue] != nil && vertices[end.hashValue] != nil, "Start or end is not part of graph.")
-        guard start != end else { return [] }
-        var visited = [Int:(weight: Int, last: V)]()
-        bellmanFordRec(start: start, end: end, weights: 0, visited: &visited)
-        let v = visited.sorted { $0.key < $1.key }
-        print("visited:")
-        for i in v {
-            print("\t", i)
-        }
-        var result = [Int]()
-        var current = end.hashValue
-        var next = Optional(end)?.hashValue
-        repeat {
-            current = next!.hashValue
-            next = visited[current]?.last.hashValue
-            result.append(current)
-            if next == nil && current != start.hashValue { return [] }
-        } while current != start.hashValue
-        return result.reversed()
-    }
-    
-    private func bellmanFordRec(start: V, end: V, weights: Int, visited: inout [Int:(weight: Int, last: V)]) {
-        // print(start.hashValue)
-        for v in start.edges.sorted(by: { $0.key < $1.key }) {
-            let weightAfterEdge = weights + v.value
-            // print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
-            if let existingWeight = visited[v.key]?.weight {
-                if weightAfterEdge < existingWeight {
-                    visited[v.key] = (weight: weightAfterEdge, last: start)
-                } else { continue }
-            } else { visited[v.key] = (weight: weightAfterEdge, last: start) }
-            // print("\tvisited[\(v.key)] =", visited[v.key]!)
-            bellmanFordRec(start: vertices[v.key]!, end: end, weights: weightAfterEdge, visited: &visited)
-        }
-    }
-    
-}
-
-
-func print<K>(unwrapping: K?) {
-    print(unwrapping != nil ? "\(unwrapping!)" : "nil")
-}
-
-func print<K>(unwrapping: [K?]) {
-    for i in unwrapping.indices {
-        print(unwrapping: unwrapping[i])
-    }
 }
