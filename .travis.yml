@@ -6,6 +6,6 @@ language: objective-c
 os: osx
 osx_image: xcode8
 install:
-  - gem install xcpretty
+  - gem install xcpretty-travis-formatter
 script:
-  - xcodebuild test -workspace Algorithms-and-Data-structures.xcworkspace -scheme "Algorithms and Data structures" | xcpretty
+  - xcodebuild test -workspace Algorithms-and-Data-structures.xcworkspace -scheme "Algorithms and Data structures" | xcpretty -f `xcpretty-travis-formatter` && exit ${PIPESTATUS[0]}
