@@ -14,7 +14,7 @@ class GraphTests: XCTestCase {
     func testGraph() {
         var asymmGraph = Graph_Hashing<Vertex>(rule: {
             start, end in
-            if start.hashValue != end.hashValue { return 1 } else { return nil }
+            if start.hashValue == end.hashValue - 1 { return 1 } else { return nil }
         })
         
         for i in 0..<20 { asymmGraph.insert(Vertex(value: i)) }
