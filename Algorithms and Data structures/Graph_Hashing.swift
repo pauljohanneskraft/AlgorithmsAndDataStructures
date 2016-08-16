@@ -11,11 +11,16 @@ import Foundation
 
 
 public struct Vertex : VertexProtocol, CustomStringConvertible {
-    public var edges : [(Int, Int)] { return _edges.map { $0 } }
+	public var edges: [(key: Int, value: Int)] { return _edges.map { $0 } }
     public var _edges = [Int:Int]()
     public var hashValue: Int
     var name: String
-    
+	
+	public subscript(_ i: Int) -> Int? {
+		get { return _edges[i] }
+		set { _edges[i] = newValue }
+	}
+	
     public init(value: Int, name: String = "Vertex") {
         self.hashValue = value
         self.name = name
@@ -39,31 +44,33 @@ public func == (lhs: Vertex, rhs: Vertex) -> Bool {
 }
 
 public struct Graph_Hashing<V : VertexProtocol> : CustomStringConvertible, GraphProtocol {
+	
     private(set) public var vertices : [Int:V] = [:]
-    public var rule: (start: V, end: V) -> Int? {
+	
+	public var rule: (_ start: V, _ end: V) -> Int? {
         willSet {
             for start in vertices.keys {
                 vertices[start]!.removeAllEdges()
                 for end in vertices.keys {
-                    if let w = newValue(start: vertices[start]!, end: vertices[end]!) {
-                        vertices[start]!.addEdge(vertices[end.hashValue]!.hashValue, weight: w)
+                    if let w = newValue(vertices[start]!, vertices[end]!) {
+                        vertices[start]![vertices[end.hashValue]!.hashValue] = w
                     }
-                    if let w = newValue(start: vertices[end]!, end: vertices[start]!) {
-                        vertices[end]!.addEdge(vertices[start.hashValue]!.hashValue, weight: w)
-                    }
+                    if let w = newValue(vertices[end]!, vertices[start]!) {
+                        vertices[end]![vertices[start.hashValue]!.hashValue] = w
+					}
                 }
             }
         }
     }
-    public init(rule: (start: V, end: V) -> Int?) {
-        self.rule = rule
+	public init(rule r: @escaping (_: V, _: V) -> Int?) {
+        self.rule = r
     }
     public mutating func insert(_ vertex: V) {
         guard vertices[vertex.hashValue] == nil else { return }
         var vertex = vertex
         for i in vertices.keys {
-            if let w = rule(start: vertices[i]!, end: vertex) { vertices[i.hashValue]!.addEdge(vertex.hashValue, weight: w) }
-            if let w = rule(start: vertex, end: vertices[i]!) { vertex.addEdge(vertices[i.hashValue]!.hashValue, weight: w) }
+            if let w = rule(vertices[i]!, vertex) { vertices[i.hashValue]![vertex.hashValue] = w }
+            if let w = rule(vertex, vertices[i]!) { vertex[vertices[i.hashValue]!.hashValue] = w }
         }
         vertices[vertex.hashValue] = vertex
     }
