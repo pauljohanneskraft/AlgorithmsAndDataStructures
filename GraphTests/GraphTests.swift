@@ -12,12 +12,12 @@ import Algorithms_and_Data_structures
 class GraphTests: XCTestCase {
     
     func testGraph() {
-        var asymmGraph = Graph_Hashing<Vertex>(rule: {
+        var asymmGraph = Graph_Hashing<Vertex_Hashing>(rule: {
             start, end in
             if start.hashValue == end.hashValue - 1 { return 1 } else { return nil }
         })
         
-        for i in 0..<20 { asymmGraph.insert(Vertex(value: i)) }
+        for i in 0..<20 { asymmGraph.insert(Vertex_Hashing(value: i)) }
         
         print(asymmGraph)
         
