@@ -16,7 +16,9 @@
 		9B788D221D59DC0300B2402E /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1D1D59DC0300B2402E /* Graph.swift */; };
 		9B788D231D59DC0300B2402E /* SinglyLinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D1E1D59DC0300B2402E /* SinglyLinkedList.swift */; };
 		9B788D2B1D59E03D00B2402E /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D2A1D59E03D00B2402E /* TreeTests.swift */; };
-		9B788D2D1D59E03D00B2402E /* Algorithms and Data structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B788CFC1D59D5CA00B2402E /* Algorithms and Data structures.framework */; };
+		9B788D2D1D59E03D00B2402E /* Algorithms_and_Data_structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */; };
+		9BF18A881D5A0273004D343B /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF18A871D5A0273004D343B /* GraphTests.swift */; };
+		9BF18A8A1D5A0273004D343B /* Algorithms_and_Data_structures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,10 +29,17 @@
 			remoteGlobalIDString = 9B788CFB1D59D5CA00B2402E;
 			remoteInfo = "Algorithms and Data structures";
 		};
+		9BF18A8B1D5A0273004D343B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B788CF31D59D5CA00B2402E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B788CFB1D59D5CA00B2402E;
+			remoteInfo = "Algorithms and Data structures";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9B788CFC1D59D5CA00B2402E /* Algorithms and Data structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Algorithms and Data structures.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Algorithms_and_Data_structures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Algorithms and Data structures.h"; sourceTree = "<group>"; };
 		9B788D001D59D5CA00B2402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B788D161D59D7B600B2402E /* BinomialHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinomialHeap.swift; sourceTree = "<group>"; };
@@ -43,6 +52,9 @@
 		9B788D281D59E03D00B2402E /* TreeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TreeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B788D2A1D59E03D00B2402E /* TreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		9B788D2C1D59E03D00B2402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BF18A851D5A0273004D343B /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BF18A871D5A0273004D343B /* GraphTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTests.swift; sourceTree = "<group>"; };
+		9BF18A891D5A0273004D343B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +69,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B788D2D1D59E03D00B2402E /* Algorithms and Data structures.framework in Frameworks */,
+				9B788D2D1D59E03D00B2402E /* Algorithms_and_Data_structures.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BF18A821D5A0273004D343B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BF18A8A1D5A0273004D343B /* Algorithms_and_Data_structures.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +89,7 @@
 			children = (
 				9B788CFE1D59D5CA00B2402E /* Algorithms and Data structures */,
 				9B788D291D59E03D00B2402E /* TreeTests */,
+				9BF18A861D5A0273004D343B /* GraphTests */,
 				9B788CFD1D59D5CA00B2402E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -76,8 +97,9 @@
 		9B788CFD1D59D5CA00B2402E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9B788CFC1D59D5CA00B2402E /* Algorithms and Data structures.framework */,
+				9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */,
 				9B788D281D59E03D00B2402E /* TreeTests.xctest */,
+				9BF18A851D5A0273004D343B /* GraphTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,9 +120,9 @@
 		9B788D071D59D68000B2402E /* Graphs */ = {
 			isa = PBXGroup;
 			children = (
+				9B788D1D1D59DC0300B2402E /* Graph.swift */,
 				9B788D1B1D59DC0300B2402E /* Graph_Hashing.swift */,
 				9B788D1C1D59DC0300B2402E /* Graph_Matrix.swift */,
-				9B788D1D1D59DC0300B2402E /* Graph.swift */,
 			);
 			name = Graphs;
 			path = ..;
@@ -141,6 +163,15 @@
 			path = TreeTests;
 			sourceTree = "<group>";
 		};
+		9BF18A861D5A0273004D343B /* GraphTests */ = {
+			isa = PBXGroup;
+			children = (
+				9BF18A871D5A0273004D343B /* GraphTests.swift */,
+				9BF18A891D5A0273004D343B /* Info.plist */,
+			);
+			path = GraphTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -170,7 +201,7 @@
 			);
 			name = "Algorithms and Data structures";
 			productName = "Algorithms and Data structures";
-			productReference = 9B788CFC1D59D5CA00B2402E /* Algorithms and Data structures.framework */;
+			productReference = 9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		9B788D271D59E03D00B2402E /* TreeTests */ = {
@@ -189,6 +220,24 @@
 			name = TreeTests;
 			productName = TreeTests;
 			productReference = 9B788D281D59E03D00B2402E /* TreeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9BF18A841D5A0273004D343B /* GraphTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9BF18A8F1D5A0273004D343B /* Build configuration list for PBXNativeTarget "GraphTests" */;
+			buildPhases = (
+				9BF18A811D5A0273004D343B /* Sources */,
+				9BF18A821D5A0273004D343B /* Frameworks */,
+				9BF18A831D5A0273004D343B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9BF18A8C1D5A0273004D343B /* PBXTargetDependency */,
+			);
+			name = GraphTests;
+			productName = GraphTests;
+			productReference = 9BF18A851D5A0273004D343B /* GraphTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -212,6 +261,11 @@
 						DevelopmentTeam = TJSHMGE2VX;
 						ProvisioningStyle = Automatic;
 					};
+					9BF18A841D5A0273004D343B = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = TJSHMGE2VX;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 9B788CF61D59D5CA00B2402E /* Build configuration list for PBXProject "Algorithms and Data structures" */;
@@ -228,6 +282,7 @@
 			targets = (
 				9B788CFB1D59D5CA00B2402E /* Algorithms and Data structures */,
 				9B788D271D59E03D00B2402E /* TreeTests */,
+				9BF18A841D5A0273004D343B /* GraphTests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,6 +296,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9B788D261D59E03D00B2402E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BF18A831D5A0273004D343B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -272,6 +334,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9BF18A811D5A0273004D343B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BF18A881D5A0273004D343B /* GraphTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -279,6 +349,11 @@
 			isa = PBXTargetDependency;
 			target = 9B788CFB1D59D5CA00B2402E /* Algorithms and Data structures */;
 			targetProxy = 9B788D2E1D59E03D00B2402E /* PBXContainerItemProxy */;
+		};
+		9BF18A8C1D5A0273004D343B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B788CFB1D59D5CA00B2402E /* Algorithms and Data structures */;
+			targetProxy = 9BF18A8B1D5A0273004D343B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -395,7 +470,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kraft.Algorithms-and-Data-structures";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Algorithms_and_Data_structures;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -418,7 +493,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Kraft.Algorithms-and-Data-structures";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Algorithms_and_Data_structures;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -450,6 +525,32 @@
 			};
 			name = Release;
 		};
+		9BF18A8D1D5A0273004D343B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = TJSHMGE2VX;
+				INFOPLIST_FILE = GraphTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Kraft.GraphTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		9BF18A8E1D5A0273004D343B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = TJSHMGE2VX;
+				INFOPLIST_FILE = GraphTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Kraft.GraphTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -476,6 +577,15 @@
 			buildConfigurations = (
 				9B788D301D59E03D00B2402E /* Debug */,
 				9B788D311D59E03D00B2402E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9BF18A8F1D5A0273004D343B /* Build configuration list for PBXNativeTarget "GraphTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BF18A8D1D5A0273004D343B /* Debug */,
+				9BF18A8E1D5A0273004D343B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
