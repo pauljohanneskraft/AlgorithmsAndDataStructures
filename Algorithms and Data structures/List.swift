@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol List : ExpressibleByArrayLiteral {
+public protocol List : ExpressibleByArrayLiteral, CustomStringConvertible {
 	
 	init()
 	

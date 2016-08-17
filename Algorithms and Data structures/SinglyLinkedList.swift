@@ -123,6 +123,12 @@ public struct SinglyLinkedList < Element > : List {
 
 		}
 	}
+	
+	public var description : String {
+		if root == nil { return "[]" }
+		return root!.description
+	}
+	
 }
 
 private class SinglyLinkedItem<Element> {
@@ -147,6 +153,11 @@ private class SinglyLinkedItem<Element> {
 			next = nil
 			return tmp
 		} else { return next!.popBack() }
+	}
+	
+	var description : String {
+		if next == nil { return "\(data)" }
+		return "\(data) -> \(next!.description)"
 	}
 	
 	func pushBack(_ newData: Element) {
