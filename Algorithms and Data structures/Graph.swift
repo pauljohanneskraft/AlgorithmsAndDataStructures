@@ -8,23 +8,17 @@
 
 import Foundation
 
-public protocol GraphProtocol {
-    associatedtype V : VertexProtocol
-    var vertices: [Int:V] { get }
+public protocol Graph {
+	init()
+	subscript(start: Int) -> [(end: Int, weight: Int?)]? { get }
+	subscript(start: Int, end: Int) -> Int? { get set }
 }
 
-public protocol VertexProtocol : Hashable, Comparable {
-    mutating func removeAllEdges()
-    var edges : [(key: Int, value: Int)] { get }
-    subscript(_: Int) -> Int? { get set }
-    var descriptionIncludingEdges: String { get }
+extension Graph {
+	public init(_ edges: (start: Int, end: Int, weight: Int?)...) {
+		self.init()
+		for e in edges {
+			self[e.start, e.end] = e.weight
+		}
+	}
 }
-
-public func < <V : VertexProtocol>(lhs: V, rhs: V) -> Bool {
-    return lhs.hashValue < rhs.hashValue
-}
-
-public func == <V : VertexProtocol>(lhs: V, rhs: V) -> Bool {
-	return lhs.hashValue == rhs.hashValue
-}
-
