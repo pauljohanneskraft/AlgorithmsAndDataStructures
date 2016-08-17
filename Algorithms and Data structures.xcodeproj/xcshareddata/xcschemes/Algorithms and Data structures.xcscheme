@@ -48,6 +48,26 @@
                ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9BF2BFB71D63EEC8000A875E"
+               BuildableName = "ListTests.xctest"
+               BlueprintName = "ListTests"
+               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9BF2BFC61D63EED9000A875E"
+               BuildableName = "PatternMatchingTests.xctest"
+               BlueprintName = "PatternMatchingTests"
+               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
