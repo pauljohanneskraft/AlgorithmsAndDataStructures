@@ -8,90 +8,81 @@
 
 import Foundation
 
-struct BinomialHeap<Element : Comparable> {
-    var children : [BinomialTreeNode<Element>]
-    var minIndex : Int?
+public struct BinomialHeap<Element : Comparable> {
+    public private(set) var children : [BinomialTreeNode<Element>]
+    public private(set) var minIndex : Int?
+	
+	public init() {
+		children = []
+		minIndex = nil
+	}
     
     mutating func merge(with heads: [BinomialTreeNode<Element>], ignoreMinimum: Bool) {
-        var newChildren = [BinomialTreeNode<Element>]()
-        var carry : BinomialTreeNode<Element>? = nil
-        var rank = 0
-        var treeIndex = 0
-        var headsIndex = 0
-        while true {
-            var a : BinomialTreeNode<Element>? = nil
-            var minRank = 0
-            
-            while treeIndex < children.count {
-                let tree = children[treeIndex]
-                if(ignoreMinimum && minIndex != nil && tree == children[minIndex!]) {
-                    treeIndex += 1
-                    continue
-                }
-                minRank = tree.depth
-                if(tree.depth == rank) {
-                    a = tree
-                    treeIndex += 1
-                }
-                break
-            }
-            /*
-             * Als nächstes prüfen wir, ob es einen Baum in 'heads' vom Rang 'rank'
-             * gibt und aktualisieren den minimalen Rang 'minRank' passend.
-             */
-            var b : BinomialTreeNode<Element>? = nil
-            if headsIndex < heads.count {
-                let tree = heads[headsIndex]
-                if tree.depth < minRank {
-                    minRank = tree.depth
-                }
-                if tree.depth == rank {
-                    b = tree
-                    headsIndex += 1
-                }
-            }
-            
-            if a == nil && b == nil && carry == nil {
-                if treeIndex >= children.count && headsIndex >= heads.count { break }
-                    /*
-                     * Wenn es keine Bäume im Haufen, keine Bäume in 'heads' und kein
-                     * Carry gibt, sind wir fertig.
-                     */
-                else {
-                    /*
-                     * Eine Lücke der Ränge, die sowohl im Haufen, als auch in 'heads'
-                     * existiert, kann übersprungen werden.
-                     */
-                    rank = minRank
-                    continue
-                }
-            } else {
-                rank += 1
-            }
-            /*
-             * Wir berechnen den nächsten Baum und den Carry-Baum.
-             */
-            let result = BinomialHeap.add(a, b, carry: carry)
-            let x = result.0
-            carry = result.1
-            if x != nil {
-                /*
-                 * Evtl. müssen wir das Minimum des neuen Baums aktualisieren.
-                 */
-                if minIndex == nil || x!.element < children[minIndex!].element {
-                    minIndex = newChildren.count
-                }
-                /*
-                 * Wir geben dem Teilbaum ein Callback, welches bei Änderungen durch die decreaseKey()-Operation
-                 * aufgerufen wrid.
-                 */
-                // x.get().setPropagateRootChange(node -> updateTree(sizeCurrent, node));
-                newChildren.append(x!)
-            }
-        }
-        children = newChildren;
+		guard children.count > 0 else { children = heads; resetMinIndex(); return }
+		
+		var minimum : BinomialTreeNode<Element>? = nil
+		var treesNew = [BinomialTreeNode<Element>]()
+		var carry : BinomialTreeNode<Element>? = nil
+		var rank = 0
+		var treeIndex = 0
+		var headsIndex = 0
+		while true {
+			var a : BinomialTreeNode<Element>? = nil
+			var minRank = 0
+			/*
+			* Zunächst prüfen wir, ob es einen Baum im Haufen vom Rang 'rank' gibt. Die
+			* Schleife dient dazu, ggf. den Minimumsbaum zu überspringen, wenn dieser
+			* entfernt werden soll.
+			*/
+			while treeIndex < children.count {
+				let tree = children[treeIndex]
+				if ignoreMinimum && tree == children[minIndex!] {
+					treeIndex += 1
+					continue
+				}
+				minRank = tree.rank
+				if tree.rank == rank {
+					a = tree
+					treeIndex += 1
+				}
+				break
+			}
+			/*
+			* Als nächstes prüfen wir, ob es einen Baum in 'heads' vom Rang 'rank'
+			* gibt und aktualisieren den minimalen Rang 'minRank' passend.
+			*/
+			var b : BinomialTreeNode<Element>? = nil
+
+			if headsIndex < heads.count {
+				let tree = heads[headsIndex]
+				
+				if tree.rank < minRank { minRank = tree.rank }
+				if tree.rank == rank {
+					b = tree
+					headsIndex += 1
+				}
+			}
+			if a == nil && b == nil && carry == nil {
+				if treeIndex >= children.count && headsIndex >= heads.count { break }
+				else { rank = minRank; continue }
+			} else { rank += 1 }
+			
+			let result = BinomialHeap.add(a, b, carry: carry)
+			let x = result.0
+			carry = result.1
+			
+			if x != nil {
+				if minimum == nil || x!.element < minimum!.element {
+					minimum = x
+				}
+				treesNew.append(x!)
+			}
+		}
+		self.children = treesNew;
+		// self.minIndex = minimum
+		resetMinIndex()
     }
-    
+	
     static func add<E : Comparable>(_ a: BinomialTreeNode<E>?, _ b: BinomialTreeNode<E>?, carry: BinomialTreeNode<E>?)
         -> (result: BinomialTreeNode<E>?, carry: BinomialTreeNode<E>?) {
             var nodes = [BinomialTreeNode<E>?](repeating: nil, count: 3)
@@ -121,14 +112,17 @@ struct BinomialHeap<Element : Comparable> {
             
     }
     
-    mutating func insert(_ element: Element) {
+    public mutating func insert(_ element: Element) {
         merge(with: [BinomialTreeNode(element)], ignoreMinimum: false)
     }
     
-    mutating func deleteMin() -> Element? {
+    public mutating func deleteMin() -> Element? {
         if let minIndex = self.minIndex {
             let result = children[minIndex].element
-            
+            let formerMin = children.remove(at: minIndex)
+			
+			merge(with: formerMin.children, ignoreMinimum: false)
+			
             return result
         } else {
             if children.count == 0 { return nil }
@@ -140,12 +134,9 @@ struct BinomialHeap<Element : Comparable> {
     }
     
     mutating func resetMinIndex() {
-        var minElement : Element
-        if minIndex != nil {
-            minElement = children[minIndex!].element
-        } else {
-            minElement = children[0].element
-        }
+		guard children.count > 0 else { minIndex = nil; return }
+        var minElement = children[0].element
+		minIndex = 0
         for i in self.children.indices {
             let currentElement = self.children[i].element
             if currentElement < minElement {
@@ -157,13 +148,31 @@ struct BinomialHeap<Element : Comparable> {
     
 }
 
-struct BinomialTreeNode<Element : Comparable> : Equatable {
+extension BinomialHeap : CustomStringConvertible {
+	public var description : String {
+		var result = "BinomialHeap:\n"
+		for c in children {
+			result += c.description(depth: 1)
+		}
+		return result
+	}
+}
+
+public struct BinomialTreeNode<Element : Comparable> : Equatable {
     var children = [BinomialTreeNode<Element>]()
     var element: Element
     
     init(_ element: Element) {
         self.element = element
     }
+	
+	internal func description(depth: Int) -> String {
+		var result = ""
+		for _ in 0..<depth { result += "\t" }
+		result += "∟\(element)\n"
+		for c in children { result += c.description(depth: depth + 1) }
+		return result
+	}
     
     static func merge<E : Comparable>(_ a: BinomialTreeNode<E>, _ b: BinomialTreeNode<E>) -> BinomialTreeNode<E> {
         assert(a.depth == b.depth)
@@ -177,6 +186,10 @@ struct BinomialTreeNode<Element : Comparable> : Equatable {
         }
         return c
     }
+	
+	var rank : Int {
+		return children.count
+	}
     
     var depth : Int {
         if children.count == 0 { return 1 }
@@ -185,6 +198,6 @@ struct BinomialTreeNode<Element : Comparable> : Equatable {
     
 }
 
-func == <E : Comparable>(lhs: BinomialTreeNode<E>, rhs: BinomialTreeNode<E>) -> Bool {
+public func == <E : Comparable>(lhs: BinomialTreeNode<E>, rhs: BinomialTreeNode<E>) -> Bool {
     return lhs.element == rhs.element
 }
