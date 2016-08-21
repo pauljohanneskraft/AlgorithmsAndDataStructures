@@ -52,6 +52,8 @@ class ListTests: XCTestCase {
 			llRev.append(try! ll.remove(at: i))
 		}
 		
+		XCTAssert(ll.count == 0)
+		
 		// print(sllRev)
 		let arrRev : [Int] = arr.reversed()
 		XCTAssert(llRev == arrRev)
