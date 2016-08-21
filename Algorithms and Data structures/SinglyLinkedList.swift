@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SinglyLinkedList < Element > : List {
+public struct SinglyLinkedList < Element > : _List {
 	
 	mutating public func pushBack(_ element: Element) {
 		if root == nil	{ root = SinglyLinkedItem(data: element) }
@@ -41,16 +41,15 @@ public struct SinglyLinkedList < Element > : List {
 			}
 			
 			var current = root
-			var next	= root?.next
 			var index = index - 1
 			
 			while index > 0 {
 				current = current?.next
-				next	= current?.next
 				assert(current != nil)
 				index -= 1
 			}
-			current!.next = SinglyLinkedItem(data: newValue!, next: next?.next)
+			
+			current!.next = SinglyLinkedItem(data: newValue!, next: current?.next?.next)
 		}
 	}
 	
@@ -62,17 +61,15 @@ public struct SinglyLinkedList < Element > : List {
 		}
 		
 		var current = root
-		var next	= root?.next
 		var index = index - 1
 		
 		while index > 0 {
 			current = current?.next
-			next	= current?.next
 			if current == nil { throw ListError.IndexOutOfRange }
 			index -= 1
 		}
 		
-		current!.next = SinglyLinkedItem(data: data, next: next)
+		current!.next = SinglyLinkedItem(data: data, next: current?.next)
 	}
 	
 	public mutating func remove(at index: Int) throws -> Element {
@@ -85,22 +82,26 @@ public struct SinglyLinkedList < Element > : List {
 		}
 		
 		var current = root
-		var next	= root?.next
 		var index = index - 1
 		
 		while index > 0 {
 			current = current?.next
-			next	= current?.next
 			if current == nil { throw ListError.IndexOutOfRange }
 			index -= 1
 		}
 		
-		let tmp = current!.next!.data
+		let next = current?.next
+		let tmp = next!.data
 		current!.next = next?.next
 		return tmp
 	}
 	
-	private var root : SinglyLinkedItem < Element >?
+	public var count : Int {
+		if root == nil { return 0 }
+		return root!.count
+	}
+	
+	internal var root : SinglyLinkedItem < Element >?
 	
 	public init() { root = nil }
 	
@@ -126,36 +127,25 @@ public struct SinglyLinkedList < Element > : List {
 	
 	public var description : String {
 		if root == nil { return "[]" }
-		return root!.description
+		return "[" + root!.description + "]"
 	}
 	
 }
 
-private class SinglyLinkedItem<Element> {
-    let data : Element
-    var next : SinglyLinkedItem?
-    
-    init(data: Element, next: SinglyLinkedItem? = nil) {
+internal final class SinglyLinkedItem<Element> : _ListItem {
+    public let data : Element
+	public var next : SinglyLinkedItem?
+	
+	public convenience init(data: Element) {
+		self.init(data: data, next: nil)
+	}
+	
+    public init(data: Element, next: SinglyLinkedItem?) {
         self.data = data
         self.next = next
     }
 	
-	var array: [Element] {
-		let result = next?.array
-		if result != nil { return [data] + result! }
-		return [data]
-	}
-	
-	func popBack() -> Element {
-		assert(next != nil)
-		if next!.next == nil {
-			let tmp = next!.data
-			next = nil
-			return tmp
-		} else { return next!.popBack() }
-	}
-	
-	var description : String {
+	internal var description : String {
 		if next == nil { return "\(data)" }
 		return "\(data) -> \(next!.description)"
 	}
