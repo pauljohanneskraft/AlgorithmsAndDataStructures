@@ -15,10 +15,9 @@ public struct Graph_Matrix : Graph, CustomStringConvertible {
 		edges = []
 	}
 	
-	public subscript(start: Int) -> [(end: Int, weight: Int?)]? {
+	public subscript(start: Int) -> [(end: Int, weight: Int)]? {
 		guard edges.indices.contains(start) else { return nil }
-		var i = -1
-		return edges[start].map { i += 1; return (end: i, weight: $0) }
+		return edges[start].indices.filter({ edges[start][$0] != nil }).map { (end: $0, weight: edges[start][$0]!) }
 	}
 	
 	public subscript(start: Int, end: Int) -> Int? {
@@ -54,8 +53,8 @@ public struct Graph_Matrix : Graph, CustomStringConvertible {
 		for startIndex in edges.indices {
 			result += "\t\(startIndex):\t[\t"
 			for i in edges[startIndex] {
-				if i == nil { result += ".\t" }
-				else { result += "\(i!)\t" }
+				if i == nil		{ result +=     ".\t" }
+				else			{ result += "\(i!)\t" }
 			}
 			result += "]\n"
 		}
