@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9B12D8261D6A6FDA00255705 /* Graph_AdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D8251D6A6FDA00255705 /* Graph_AdjacencyList.swift */; };
 		9B12D8281D6A6FF400255705 /* Graph_List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D8271D6A6FF400255705 /* Graph_List.swift */; };
+		9B12D82A1D6AF21C00255705 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D8291D6AF21C00255705 /* Tree.swift */; };
+		9B12D82E1D6AF52C00255705 /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D82D1D6AF52C00255705 /* BinaryTree.swift */; };
 		9B788D011D59D5CA00B2402E /* Algorithms and Data structures.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B788D171D59D7B600B2402E /* BinomialHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D161D59D7B600B2402E /* BinomialHeap.swift */; };
 		9B788D191D59D7D200B2402E /* Pattern_Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D181D59D7D200B2402E /* Pattern_Matching.swift */; };
@@ -63,6 +65,8 @@
 /* Begin PBXFileReference section */
 		9B12D8251D6A6FDA00255705 /* Graph_AdjacencyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graph_AdjacencyList.swift; path = "Algorithms and Data structures/Graph_AdjacencyList.swift"; sourceTree = "<group>"; };
 		9B12D8271D6A6FF400255705 /* Graph_List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Graph_List.swift; path = "Algorithms and Data structures/Graph_List.swift"; sourceTree = "<group>"; };
+		9B12D8291D6AF21C00255705 /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		9B12D82D1D6AF52C00255705 /* BinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
 		9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Algorithms_and_Data_structures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Algorithms and Data structures.h"; sourceTree = "<group>"; };
 		9B788D001D59D5CA00B2402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -197,6 +201,8 @@
 		9B788D091D59D6D200B2402E /* Heaps, Trees */ = {
 			isa = PBXGroup;
 			children = (
+				9B12D8291D6AF21C00255705 /* Tree.swift */,
+				9B12D82D1D6AF52C00255705 /* BinaryTree.swift */,
 				9B788D161D59D7B600B2402E /* BinomialHeap.swift */,
 			);
 			name = "Heaps, Trees";
@@ -459,8 +465,10 @@
 				9B788D201D59DC0300B2402E /* Graph_Hashing.swift in Sources */,
 				9B12D8281D6A6FF400255705 /* Graph_List.swift in Sources */,
 				9BF2BFB31D63C5AD000A875E /* Graph_Algorithms.swift in Sources */,
+				9B12D82E1D6AF52C00255705 /* BinaryTree.swift in Sources */,
 				9B788D231D59DC0300B2402E /* SinglyLinkedList.swift in Sources */,
 				9B788D1F1D59DC0300B2402E /* DoublyLinkedList.swift in Sources */,
+				9B12D82A1D6AF21C00255705 /* Tree.swift in Sources */,
 				9B788D191D59D7D200B2402E /* Pattern_Matching.swift in Sources */,
 				9BA3FC4C1D64874D0017F791 /* List.swift in Sources */,
 			);

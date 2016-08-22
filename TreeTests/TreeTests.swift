@@ -30,7 +30,18 @@ class TreeTests: XCTestCase {
 		}
 		XCTAssert(binHeapArray == rdm.sorted())
 	}
+	
+	func testBinaryTree() {
+		var bin = BinaryTree<Int>()
 		
+		let arr = [9235,25,52,2,5,23,35,65,532,6,54,75,7,56,8,4]
+		
+		for e in arr { bin.insert(e) }
+		
+		print(bin.array)
+		
+		XCTAssert(bin.array == arr.sorted())
+	}
 }
 
 
