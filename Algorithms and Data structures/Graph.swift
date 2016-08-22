@@ -10,13 +10,53 @@ import Foundation
 
 public protocol Graph {
 	init()
-	subscript(start: Int) -> [(end: Int, weight: Int)]? { get }
+	var vertices : Set<Int> { get }
+	var edges : [(start: Int, end: Int, weight: Int)] { get set }
+	subscript(start: Int) -> [(end: Int, weight: Int)] { get }
 	subscript(start: Int, end: Int) -> Int? { get set }
 }
 
 extension Graph {
-	public init(_ edges: (start: Int, end: Int, weight: Int?)...) {
+	
+	public init(_ edges: (start: Int, end: Int, weight: Int)...) {
 		self.init()
-		for e in edges { self[e.start, e.end] = e.weight }
+		self.edges = edges
+	}
+	
+	public func convert(to: Graph.Type) -> Graph {
+		var a = to.init()
+		a.edges = self.edges
+		return a
 	}
 }
+
+public func == <G : Graph, J : Graph>(lhs: G, rhs: J) -> Bool {
+	let le = lhs.edges
+	let re = rhs.edges
+	guard le.count == re.count else { return false }
+	var sl = Set<HashableEdge>()
+	var sr = Set<HashableEdge>()
+	for i in le.indices {
+		sl.insert(HashableEdge(value: le[i]))
+		sr.insert(HashableEdge(value: re[i]))
+	}
+	return sl == sr
+}
+
+private struct HashableEdge : Hashable {
+	var value : (start: Int, end: Int, weight: Int)
+	var hashValue: Int {
+		return (value.start << 32) | value.end
+	}
+}
+
+private func == (lhs: HashableEdge, rhs: HashableEdge) -> Bool {
+	return lhs.value == rhs.value
+}
+
+
+
+
+
+
+
