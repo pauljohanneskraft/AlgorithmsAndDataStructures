@@ -32,8 +32,8 @@ extension Graph {
 	
 	private func djikstraRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
 		// print(start.hashValue)
-		for v in self[start]!.filter({ $0.weight != nil }).sorted(by: { $0.weight! < $1.weight! }) {
-			let weightAfterEdge = weights + v.weight!
+		for v in self[start]!.sorted(by: { $0.weight < $1.weight }) {
+			let weightAfterEdge = weights + v.weight
 			// print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
 			if let existingWeight = visited[v.end]?.weight {
 				if weightAfterEdge < existingWeight {
@@ -53,10 +53,10 @@ extension Graph {
 		bellmanFordRec(start: start, end: end, weights: 0, visited: &visited)
 		
 		var result = [Int]()
-		var current = end.hashValue
-		var next = Optional(end)?.hashValue
+		var current : Int	= end.hashValue
+		var next	: Int?	= current
 		repeat {
-			current = next!.hashValue
+			current = next!
 			next = visited[current]?.last.hashValue
 			result.append(current)
 			if next == nil && current != start.hashValue { return [] }
@@ -66,8 +66,8 @@ extension Graph {
 	
 	private func bellmanFordRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
 		// print(start.hashValue)
-		for v in self[start]!.filter({ $0.weight != nil }).sorted(by: { $0.weight! < $1.weight! }) {
-			let weightAfterEdge = weights + v.weight!
+		for v in self[start]!.sorted(by: { $0.weight < $1.weight }) {
+			let weightAfterEdge = weights + v.weight
 			// print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
 			if let existingWeight = visited[v.end]?.weight {
 				if weightAfterEdge < existingWeight {

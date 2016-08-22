@@ -19,7 +19,7 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 		self.edges = edges
 	}
 	
-	public subscript(start: Int) -> [(end: Int, weight: Int?)]? {
+	public subscript(start: Int) -> [(end: Int, weight: Int)]? {
 		return edges[start]?.map { $0 }
 	}
 	public subscript(start: Int, end: Int) -> Int? {

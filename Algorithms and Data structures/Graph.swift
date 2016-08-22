@@ -10,15 +10,13 @@ import Foundation
 
 public protocol Graph {
 	init()
-	subscript(start: Int) -> [(end: Int, weight: Int?)]? { get }
+	subscript(start: Int) -> [(end: Int, weight: Int)]? { get }
 	subscript(start: Int, end: Int) -> Int? { get set }
 }
 
 extension Graph {
 	public init(_ edges: (start: Int, end: Int, weight: Int?)...) {
 		self.init()
-		for e in edges {
-			self[e.start, e.end] = e.weight
-		}
+		for e in edges { self[e.start, e.end] = e.weight }
 	}
 }

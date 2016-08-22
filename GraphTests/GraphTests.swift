@@ -19,9 +19,18 @@ class GraphTests: XCTestCase {
 		graphTest(graph: Graph_Matrix())
 	}
 	
+	func testGraph_List() {
+		graphTest(graph: Graph_List())
+	}
+	
+	func testGraph_AdjacencyList() {
+		graphTest(graph: Graph_AdjacencyList())
+	}
+	
 	func graphTest<G : Graph>(graph: G) {
 		var graph = graph
 		
+		let start = NSDate().timeIntervalSinceReferenceDate
 		for i in 0..<20 {
 			graph[i, i + 1] = 1
 			graph[i + 1, i] = 1
@@ -30,11 +39,18 @@ class GraphTests: XCTestCase {
 		graph[3,7] = 1
 		graph[7,3] = 1
 		
-		print(graph)
+		let end = NSDate().timeIntervalSinceReferenceDate
 		
+		// print(graph)
+		
+		let start1 = NSDate().timeIntervalSinceReferenceDate
 		let path = graph.djikstra(start: 0, end: 9)
+		let end1 = NSDate().timeIntervalSinceReferenceDate
 		
 		XCTAssert(path == [0, 1, 2, 3, 7, 8, 9])
+		
+		print("Creation:\t", end - start)
+		print("Dijkstra:\t", end1 - start1)
 	}
 	
 }
