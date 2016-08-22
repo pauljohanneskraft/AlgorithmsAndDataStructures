@@ -10,9 +10,67 @@ import Foundation
 
 extension Graph {
 	
+	public func depthFirstSearch<E,F>(
+		start: Int,
+		order: ((end: Int, weight: Int), (end: Int, weight: Int)) -> Bool = { $0.weight < $1.weight },
+		onEntry: (Int) -> E, onFinish: (Int) -> F
+		) -> (onEntry: [E], onFinish: [F]) {
+		
+		var visited = Set<Int>()
+		return dfs_rec(start: start, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
+	}
+	
+	private func dfs_rec<E,F>(
+		start current: Int,
+		order: ((end: Int, weight: Int), (end: Int, weight: Int)) -> Bool,
+		onEntry: (Int) -> E, onFinish: (Int) -> F,
+		visited: inout Set<Int>
+		) -> (onEntry: [E], onFinish: [F]) {
+		
+		var resultE = [onEntry(current)]
+		var resultF = [F]()
+		
+		visited.insert(current)
+		
+		for e in self[current].sorted(by: order) {
+			if !visited.contains(e.end) {
+				let e = dfs_rec(start: e.end, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
+				resultE.append(contentsOf: e.onEntry)
+				resultF.append(contentsOf: e.onFinish)
+			}
+		}
+		
+		resultF.append(onFinish(current))
+		
+		return (resultE, resultF)
+	}
+	
+	public func breadthFirstSearch<T>(start: Int, _ f: (Int) -> T) -> [T] {
+		var visited = [Int:Int]()
+		var list = [start]
+		var result : [T] = []
+		var current : Int
+		
+		visited[start] = start
+		
+		while !list.isEmpty {
+			current = list.remove(at: 0)
+			// print("visiting", current)
+			let ends = self[current]
+			for e in ends {
+				if visited[e.end] == nil {
+					// print(e)
+					list.append(e.end)
+					visited[e.end] = current
+				}
+			}
+			result.append(f(current))
+		}
+		return result
+	}
+	
 	public func djikstra(start: Int, end: Int) -> [Int] {
-		assert(self[start] != nil, "Start is not part of graph.")
-		assert(self[end] != nil, "End is not part of graph.")
+
 		guard start != end else { return [] }
 		var visited = [Int:(weight: Int, last: Int)]()
 		
@@ -32,7 +90,7 @@ extension Graph {
 	
 	private func djikstraRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
 		// print(start.hashValue)
-		for v in self[start]!.sorted(by: { $0.weight < $1.weight }) {
+		for v in self[start].sorted(by: { $0.weight < $1.weight }) {
 			let weightAfterEdge = weights + v.weight
 			// print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
 			if let existingWeight = visited[v.end]?.weight {
@@ -46,7 +104,7 @@ extension Graph {
 	}
 	
 	public func bellmanFord(start: Int, end: Int) -> [Int] {
-		assert(self[start] != nil && self[end] != nil, "Start or end is not part of graph.")
+
 		guard start != end else { return [] }
 		
 		var visited = [Int:(weight: Int, last: Int)]()
@@ -66,7 +124,7 @@ extension Graph {
 	
 	private func bellmanFordRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
 		// print(start.hashValue)
-		for v in self[start]!.sorted(by: { $0.weight < $1.weight }) {
+		for v in self[start].sorted(by: { $0.weight < $1.weight }) {
 			let weightAfterEdge = weights + v.weight
 			// print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
 			if let existingWeight = visited[v.end]?.weight {
