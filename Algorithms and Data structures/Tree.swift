@@ -9,28 +9,20 @@
 import Foundation
 
 
-public protocol BinTree {
-	associatedtype Element
-	
-	init(order : @escaping (Element, Element) -> Bool)
-	
-	var order : (Element, Element) -> Bool { get }
-	
-	mutating func insert(_: Element) throws
-	
+public protocol Tree : PriorityQueue {
 	var array : [Element] { get }
 }
 
-public extension BinTree where Element : Comparable {
-	init() { self.init(order: { $0 < $1 }) }
+public extension Tree where Element : Comparable {
+	init() { self.init { $0 < $1 } }
 	
-	init(arrayLiteral: Element...) {
+	init(arrayLiteral: Element...) throws {
 		self.init()
-		for e in arrayLiteral { try? self.insert(e) }
+		for e in arrayLiteral { try self.push(e) }
 	}
 }
 
-protocol _BinTree : BinTree {
+protocol _BinTree : Tree {
 	associatedtype Node : _BinTreeNode
 	var root : Node? { get set }
 }
@@ -43,7 +35,7 @@ protocol _BinTreeNode {
 	
 	init(data: Element, order: @escaping (Element, Element) -> Bool)
 	
-	mutating func insert(_: Element) throws
+	mutating func push(_: Element) throws
 	
 	var array : [Element] { get }
 }

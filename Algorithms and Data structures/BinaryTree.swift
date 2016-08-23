@@ -9,6 +9,10 @@
 import Foundation
 
 public struct BinaryTree < Element > : _BinTree {
+	mutating public func pop() -> Element? {
+		return nil // TODO!!
+	}
+
 	typealias Node = BinaryTreeNode <Element>
 	
 	var root : BinaryTreeNode<Element>?
@@ -18,12 +22,12 @@ public struct BinaryTree < Element > : _BinTree {
 		self.order = order
 	}
 	
-	public mutating func insert(_ data: Element) {
+	public mutating func push(_ data: Element) {
 		guard root != nil else {
 			root = BinaryTreeNode(data: data, order: order)
 			return
 		}
-		root!.insert(data)
+		root!.push(data)
 	}
 	
 	public var array : [Element] {
@@ -43,13 +47,13 @@ final class BinaryTreeNode <Element> : _BinTreeNode {
 		self.order	= order
 	}
 	
-	func insert(_ newData: Element) {
+	func push(_ newData: Element) {
 		if order(newData, data) {
 			guard left != nil else { left = BinaryTreeNode(data: newData, order: order); return }
-			left!.insert(newData)
+			left!.push(newData)
 		} else {
 			guard right != nil else { right = BinaryTreeNode(data: newData, order: order); return }
-			right!.insert(newData)
+			right!.push(newData)
 		}
 	}
 	

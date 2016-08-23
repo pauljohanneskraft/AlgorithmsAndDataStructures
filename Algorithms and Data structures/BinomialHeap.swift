@@ -8,13 +8,15 @@
 
 import Foundation
 
-public struct BinomialHeap<Element : Comparable> {
+public struct BinomialHeap < Element > : PriorityQueue {
 	public private(set) var children : [BinomialTreeNode<Element>]
 	public private(set) var minIndex : Int?
+	public let order: (Element, Element) -> Bool
 	
-	public init() {
+	public init(order: @escaping (Element, Element) -> Bool) {
 		children = []
 		minIndex = nil
+		self.order = order
 	}
 	
 	mutating func merge(with heads: [BinomialTreeNode<Element>], ignoreMinimum: Bool) {
@@ -32,7 +34,7 @@ public struct BinomialHeap<Element : Comparable> {
 			
 			while treeIndex < children.count {
 				let tree = children[treeIndex]
-				if ignoreMinimum && tree == children[minIndex!] {
+				if ignoreMinimum {
 					treeIndex += 1
 					continue
 				}
@@ -60,12 +62,12 @@ public struct BinomialHeap<Element : Comparable> {
 				else { rank = minRank; continue }
 			} else { rank += 1 }
 			
-			let result = BinomialHeap.add(a, b, carry: carry)
+			let result = add(a, b, carry: carry)
 			let x = result.0
 			carry = result.1
 			
 			if x != nil {
-				if minimum == nil || x!.element < minimum!.element {
+				if minimum == nil || order(x!.element, minimum!.element) {
 					minimum = x
 				}
 				treesNew.append(x!)
@@ -76,9 +78,9 @@ public struct BinomialHeap<Element : Comparable> {
 		resetMinIndex()
 	}
 	
-	static func add<E : Comparable>(_ a: BinomialTreeNode<E>?, _ b: BinomialTreeNode<E>?, carry: BinomialTreeNode<E>?)
-		-> (result: BinomialTreeNode<E>?, carry: BinomialTreeNode<E>?) {
-			var nodes = [BinomialTreeNode<E>?](repeating: nil, count: 3)
+	func add(_ a: BinomialTreeNode<Element>?, _ b: BinomialTreeNode<Element>?, carry: BinomialTreeNode<Element>?)
+		-> (result: BinomialTreeNode<Element>?, carry: BinomialTreeNode<Element>?) {
+			var nodes = [BinomialTreeNode<Element>?](repeating: nil, count: 3)
 			var count = 0
 			if a != nil {
 				nodes[count] = a
@@ -96,20 +98,17 @@ public struct BinomialHeap<Element : Comparable> {
 				return (nodes[0], nil)
 			} else {
 				assert(nodes[0]!.depth == nodes[1]!.depth)
-				let res = nodes[2]
-				let n0 = nodes[0]!
-				let n1 = nodes[1]!
-				let c : BinomialTreeNode<E>? = BinomialTreeNode<E>.merge(n0, n1)
-				return (res, c)
+				let c : BinomialTreeNode<Element>? = merge(nodes[0]!, nodes[1]!)
+				return (nodes[2], c)
 			}
 			
 	}
 	
-	public mutating func insert(_ element: Element) {
+	public mutating func push(_ element: Element) {
 		merge(with: [BinomialTreeNode(element)], ignoreMinimum: false)
 	}
 	
-	public mutating func deleteMin() -> Element? {
+	public mutating func pop() -> Element? {
 		if let minIndex = self.minIndex {
 			let result = children[minIndex].element
 			let formerMin = children.remove(at: minIndex)
@@ -121,9 +120,22 @@ public struct BinomialHeap<Element : Comparable> {
 			if children.count == 0 { return nil }
 			else {
 				resetMinIndex()
-				return deleteMin()
+				return pop()
 			}
 		}
+	}
+	
+	func merge(_ a: BinomialTreeNode<Element>, _ b: BinomialTreeNode<Element>) -> BinomialTreeNode<Element> {
+		assert(a.depth == b.depth)
+		var c : BinomialTreeNode<Element>
+		if self.order(a.element, b.element) {
+			c = a
+			c.children.append(b)
+		} else {
+			c = b
+			c.children.append(a)
+		}
+		return c
 	}
 	
 	mutating func resetMinIndex() {
@@ -132,13 +144,19 @@ public struct BinomialHeap<Element : Comparable> {
 		minIndex = 0
 		for i in self.children.indices {
 			let currentElement = self.children[i].element
-			if currentElement < minElement {
+			if order(currentElement, minElement) {
 				minIndex = i
 				minElement = currentElement
 			}
 		}
 	}
 	
+}
+
+public extension BinomialHeap where Element : Comparable {
+	init() {
+		self.init { $0 < $1 }
+	}
 }
 
 extension BinomialHeap : CustomStringConvertible {
@@ -151,7 +169,7 @@ extension BinomialHeap : CustomStringConvertible {
 	}
 }
 
-public struct BinomialTreeNode<Element : Comparable> : Equatable {
+public struct BinomialTreeNode<Element> {
 	var children = [BinomialTreeNode<Element>]()
 	var element: Element
 	
@@ -167,19 +185,6 @@ public struct BinomialTreeNode<Element : Comparable> : Equatable {
 		return result
 	}
 	
-	static func merge<E : Comparable>(_ a: BinomialTreeNode<E>, _ b: BinomialTreeNode<E>) -> BinomialTreeNode<E> {
-		assert(a.depth == b.depth)
-		var c : BinomialTreeNode<E>
-		if a.element < b.element {
-			c = a
-			c.children.append(b)
-		} else {
-			c = b
-			c.children.append(a)
-		}
-		return c
-	}
-	
 	var rank : Int {
 		return children.count
 	}
@@ -189,8 +194,4 @@ public struct BinomialTreeNode<Element : Comparable> : Equatable {
 		return children.max(by: { $0.children.count > $1.children.count })!.children.count
 	}
 	
-}
-
-public func == <E : Comparable>(lhs: BinomialTreeNode<E>, rhs: BinomialTreeNode<E>) -> Bool {
-	return lhs.element == rhs.element
 }
