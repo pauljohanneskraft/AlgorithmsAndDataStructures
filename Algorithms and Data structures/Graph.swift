@@ -23,7 +23,7 @@ extension Graph {
 		self.edges = edges
 	}
 	
-	public func convert(to: Graph.Type) -> Graph {
+	public func convert< G : Graph >(to: G.Type) -> G {
 		var a = to.init()
 		a.edges = self.edges
 		return a
