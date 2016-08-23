@@ -9,8 +9,14 @@
 import Foundation
 
 public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
+	
+	// stored properties
 	public var _edges : [Int: [(end: Int, weight: Int)] ]
 	
+	// initializers
+	public init() { _edges = [:] }
+	
+	// computed properties
 	public var edges : [(start: Int, end: Int, weight: Int)] {
 		get {
 			var result : [(start: Int, end: Int, weight: Int)] = []
@@ -23,9 +29,7 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		}
 		set {
 			_edges = [:]
-			for e in newValue {
-				self[e.start, e.end] = e.weight
-			}
+			for e in newValue { self[e.start, e.end] = e.weight }
 		}
 	}
 	
@@ -33,6 +37,15 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		return Set(_edges.keys)
 	}
 	
+	public var description : String {
+		var result = "Graph_AdjacencyList:\n"
+		for i in _edges.keys.sorted() {
+			result += "\t\(i):\t\(_edges[i]!)\n"
+		}
+		return result
+	}
+	
+	// subscripts
 	public subscript(start: Int, end: Int) -> Int? {
 		get {
 			let a = _edges[start]
@@ -65,16 +78,6 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 	public subscript(start: Int) -> [(end: Int, weight: Int)] {
 		let e = _edges[start]
 		return e == nil ? [] : e!
-	}
-	
-	public init() { _edges = [:] }
-	
-	public var description : String {
-		var result = "Graph_AdjacencyList:\n"
-		for i in _edges.keys.sorted() {
-			result += "\t\(i):\t\(_edges[i]!)\n"
-		}
-		return result
 	}
 	
 }

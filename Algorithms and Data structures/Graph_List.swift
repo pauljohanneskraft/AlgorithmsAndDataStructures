@@ -7,6 +7,14 @@
 //
 
 public struct Graph_List : Graph {
+	
+	// stored properties
+	public var edges : [(start: Int, end: Int, weight: Int)]
+	
+	// initializiers
+	public init() { edges = [] }
+
+	// computed properties
 	public var vertices: Set<Int> {
 		var set = Set<Int>()
 		for e in edges {
@@ -16,6 +24,7 @@ public struct Graph_List : Graph {
 		return set
 	}
 
+	// subscripts
 	public subscript(start: Int, end: Int) -> Int? {
 		get {
 			for e in edges {
@@ -45,10 +54,4 @@ public struct Graph_List : Graph {
 		return result
 	}
 
-	public var edges : [(start: Int, end: Int, weight: Int)]
-	
-	public init() { edges = [] }
-	
-	
 }
-

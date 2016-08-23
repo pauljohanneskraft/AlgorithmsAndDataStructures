@@ -9,8 +9,15 @@
 import Foundation
 
 public struct Graph_Hashing : Graph, CustomStringConvertible {
+	
+	// stored properties
 	public var _edges : [Int:[Int:Int]]
 	
+	// initializers
+	public init()						{ self._edges = [:]		}
+	public init(edges: [Int:[Int:Int]]) { self._edges = edges	}
+	
+	// computed properties
 	public var edges : [(start: Int, end: Int, weight: Int)] {
 		get {
 			var result = [(start: Int, end: Int, weight: Int)]()
@@ -23,24 +30,24 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 		}
 		set {
 			_edges = [:]
-			for e in newValue {
-				self[e.start, e.end] = e.weight
-			}
+			for e in newValue { self[e.start, e.end] = e.weight }
 		}
 	}
 	
-	public init() {
-		_edges = [:]
+	public var vertices: Set<Int> { return Set(_edges.keys) }
+	
+	public var description: String {
+		var str = "Graph_Hashing:\n"
+		for start in _edges.sorted(by: { $0.0 < $1.0 }) {
+			str += "\tVertex \(start.key):\n"
+			for end in start.value.sorted(by: { $0.0 < $1.0 }) {
+				str += "\t\t- Vertex \(end.key): \(end.value)\n"
+			}
+		}
+		return str
 	}
 	
-	public var vertices: Set<Int> {
-		return Set(_edges.keys)
-	}
-	
-	public init(edges: [Int:[Int:Int]]) {
-		self._edges = edges
-	}
-	
+	// subscripts
 	public subscript(start: Int) -> [(end: Int, weight: Int)] {
 		if _edges[start] == nil { return [] }
 		return _edges[start]!.map { $0 }
@@ -52,15 +59,5 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 			if _edges [  end  ] == nil { _edges [  end  ] = [ : ] }
 			_edges [start]! [end] = newValue
 		}
-	}
-	public var description: String {
-		var str = "Graph_Hashing:\n"
-		for start in _edges.sorted(by: { $0.0 < $1.0 }) {
-			str += "\tVertex \(start.key):\n"
-			for end in start.value.sorted(by: { $0.0 < $1.0 }) {
-				str += "\t\t- Vertex \(end.key): \(end.value)\n"
-			}
-		}
-		return str
 	}
 }
