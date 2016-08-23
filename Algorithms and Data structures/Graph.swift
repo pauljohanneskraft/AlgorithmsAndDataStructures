@@ -30,7 +30,7 @@ extension Graph {
 	}
 }
 
-public func == <G : Graph, J : Graph>(lhs: G, rhs: J) -> Bool {
+public func == (lhs: Graph, rhs: Graph) -> Bool {
 	let le = lhs.edges
 	let re = rhs.edges
 	guard le.count == re.count else { return false }
