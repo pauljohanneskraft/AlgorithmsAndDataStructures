@@ -12,17 +12,17 @@ import Algorithms_and_Data_structures
 class ListTests: XCTestCase {
 	
 	func testSingly() {
-		insertAndRemove(using: SinglyLinkedList<Int>())
+		insertAndRemove(using: SinglyLinkedList<Int>.self)
 	}
 	
 	func testDoubly() {
-		insertAndRemove(using: DoublyLinkedList<Int>())
+		insertAndRemove(using: DoublyLinkedList<Int>.self)
 	}
 	
-	func insertAndRemove<L : List>(using ll: L) where L.Element == Int {
+	func insertAndRemove<L : List>(using ll: L.Type) where L.Element == Int {
 		let arr = [7263,6,35,473,5,4,36,456,2,7,23,1,67,45,7,43537,5,7]
 		
-		var ll = ll
+		var ll = L.init()
 		
 		for i in arr.indices { try! ll.insert(arr[i], at: i) }
 		
@@ -62,35 +62,6 @@ class ListTests: XCTestCase {
 		
 		// print(sll.array)
 		XCTAssert(ll.array == arrRev)
-		
-	}
-	
-	func testSinglyLinkedList1() {
-		let arr = [7263,6,35,473,5,4,36,456,2,7,23,1,67,45,7,43537,5,7]
-		
-		var sll = SinglyLinkedList<Int>()
-		
-		sll.array = arr
-		
-		// print(sll.array)
-		// print(arr)
-		
-		XCTAssert(sll.array == arr)
-		
-		let arrRev : [Int] = arr.reversed()
-		
-		var sllRev = [Int]()
-		
-		while true {
-			let n = sll.popBack()
-			if n != nil { sllRev.append(n!) }
-			else { break }
-		}
-		
-		// print(sllRev)
-		// print(arrRev)
-		
-		XCTAssert(sllRev == arrRev)
 		
 	}
 	

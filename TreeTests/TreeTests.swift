@@ -10,27 +10,53 @@ import XCTest
 import Algorithms_and_Data_structures
 
 class TreeTests: XCTestCase {
-    
+	
+	let arr = [9235,25,52,2,5,23,35,65,532,6,54,75,7,56,8,4]
+	
 	func testBinomialHeap() {
 		var binHeap = BinomialHeap<Int>()
-		let rdm = [9235,25,52,2,5,23,35,65,532,6,54,75,7,56,8,4]
-		for r in rdm {
-			print("\(r):", terminator: "")
-			binHeap.insert(r)
-			print(" ready.")
-			print(binHeap)
+		for r in arr {
+			// print("\(r):", terminator: "")
+			binHeap.push(r)
+			// print(" ready.")
+			// print(binHeap)
 		}
-		print(binHeap.children)
 		var binHeapArray = [Int]()
-		for i in 0..<rdm.count {
-			let min = binHeap.deleteMin()
-			binHeapArray.append(min!)
-			print("\(i):", min)
-			print(binHeap)
+		for _ in arr.indices {
+			let min = binHeap.pop()!
+			binHeapArray.append(min)
+			// print("\(i):", min)
+			// print(binHeap)
 		}
-		XCTAssert(binHeapArray == rdm.sorted())
+		print(binHeapArray)
+		XCTAssert(binHeapArray == arr.sorted())
 	}
+	
+	func testMaxHeap() {
 		
+		var maxHeap = BinaryMaxHeap<Int>()
+		
+		maxHeap.array = arr
+		
+		var sorted = [Int]()
+		
+		for _ in arr.indices {
+			sorted.append(maxHeap.pop()!)
+		}
+		print(sorted)
+		XCTAssert(sorted == arr.sorted().reversed())
+		
+	}
+	
+	func testBinaryTree() {
+		var bin = BinaryTree<Int>()
+				
+		for e in arr { bin.push(e) }
+		
+		print(bin.array)
+		
+		XCTAssert(bin.array == arr.sorted())
+	}
 }
 
 

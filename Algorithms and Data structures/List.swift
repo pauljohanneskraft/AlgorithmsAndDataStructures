@@ -52,8 +52,7 @@ extension _ListItem {
 	
 	var array: [Element] {
 		let result = next?.array
-		if result != nil { return [data] + result! }
-		return [data]
+		return [data] + (result != nil ? result! : [])
 	}
 	
 	mutating func popBack() -> Element {

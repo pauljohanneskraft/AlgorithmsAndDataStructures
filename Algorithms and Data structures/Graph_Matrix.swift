@@ -9,56 +9,95 @@
 import Foundation
 
 public struct Graph_Matrix : Graph, CustomStringConvertible {
-	public private(set) var edges : [[Int?]]
 	
-	public init() {
-		edges = []
-	}
+	// stored properties
+	public private(set) var _edges : [[Int?]]
 	
-	public subscript(start: Int) -> [(end: Int, weight: Int)]? {
-		guard edges.indices.contains(start) else { return nil }
-		return edges[start].indices.filter({ edges[start][$0] != nil }).map { (end: $0, weight: edges[start][$0]!) }
-	}
+	// initializers
+	public init() { _edges = [] }
 	
-	public subscript(start: Int, end: Int) -> Int? {
+	// computed properties
+	public var edges: [(start: Int, end: Int, weight: Int)] {
 		get {
-			guard edges.indices.contains(start) else { return nil }
-			guard edges[start].indices.contains(end) else { return nil }
-			return edges[start][end]
+			var result = [(start: Int, end: Int, weight: Int)]()
+			for i in _edges.indices {
+				let ei = _edges[i]
+				for j in ei.indices {
+					if ei[j] != nil { result.append((i, j, ei[j]!)) }
+				}
+			}
+			return result
 		}
 		set {
-			if edges.count == 0 { edges = [[nil]] }
-			
-			while !edges.indices.contains(start) {
-				edges.append([Int?](repeating: nil, count: edges[0].count))
-			}
-			
-			while !edges[start].indices.contains(end) {
-				for i in edges.indices {
-					edges[i].append(nil)
-				}
-				edges.append([Int?](repeating: nil, count: edges[0].count))
-			}
-			
-			edges[start][end] = newValue
+			_edges = []
+			for e in newValue { self[e.start, e.end] = e.weight }
 		}
+	}
+	
+	public var vertices: Set<Int> {
+		return Set(0..<_edges.count)
 	}
 	
 	public var description: String {
 		var result = "Graph_Matrix:\n\t\t \t"
-		for i in edges.indices {
+		for i in _edges.indices {
 			result += "\(i)\t"
 		}
 		result += " \n"
-		for startIndex in edges.indices {
+		for startIndex in _edges.indices {
 			result += "\t\(startIndex):\t[\t"
-			for i in edges[startIndex] {
+			for i in _edges[startIndex] {
 				if i == nil		{ result +=     ".\t" }
 				else			{ result += "\(i!)\t" }
 			}
 			result += "]\n"
 		}
 		return result
+	}
+	
+	private var invariant : Bool {
+		guard _edges.count > 0 else { return true }
+		let b = _edges[0].count
+		if _edges.count != b { return false }
+		for e in _edges.dropFirst() {
+			if b != e.count { return false }
+		}
+		return true
+	}
+	
+	// subscripts
+	public subscript(start: Int) -> [(end: Int, weight: Int)] {
+		guard _edges.indices.contains(start) else { return [] }
+		return _edges[start].indices.filter({ _edges[start][$0] != nil }).map { (end: $0, weight: _edges[start][$0]!) }
+	}
+	
+	public subscript(start: Int, end: Int) -> Int? {
+		get {
+			guard _edges.indices.contains(start) else { return nil }
+			guard _edges[start].indices.contains(end) else { return nil }
+			assert(invariant)
+			return _edges[start][end]
+		}
+		set {
+			if _edges.count == 0 { _edges = [[nil]] }
+			
+			while !_edges.indices.contains(start) {
+				for i in _edges.indices { _edges[i].append(nil) }
+				_edges.append([Int?](repeating: nil, count: _edges[0].count))
+			}
+			
+			while !_edges[start].indices.contains(end) {
+				for i in _edges.indices { _edges[i].append(nil) }
+				_edges.append([Int?](repeating: nil, count: _edges[0].count))
+			}
+			
+			if !invariant {
+				print(self)
+				assert(invariant)
+			}
+			
+			_edges[start][end] = newValue
+		}
 	}
 	
 }
