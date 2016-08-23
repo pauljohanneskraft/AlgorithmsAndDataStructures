@@ -11,13 +11,13 @@ import Foundation
 public struct SinglyLinkedList < Element > : _List {
 	
 	mutating public func pushBack(_ element: Element) {
-		if root == nil	{ root = SinglyLinkedItem(data: element) }
-		else			{ root!.pushBack(element) }
+		if root == nil	{ root = SinglyLinkedItem(data: element)	}
+		else			{ root!.pushBack(element)					}
 	}
 	
 	public mutating func popBack() -> Element? {
-		if root?.next == nil { let tmp = root?.data; root = nil; return tmp }
-		return root?.popBack()
+		guard root?.next != nil else { let tmp = root?.data; root = nil; return tmp }
+		return root!.popBack()
 	}
 	
 	public subscript(index: Int) -> Element? {
