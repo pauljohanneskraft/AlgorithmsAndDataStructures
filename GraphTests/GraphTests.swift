@@ -12,23 +12,23 @@ import Algorithms_and_Data_structures
 class GraphTests: XCTestCase {
 	
 	func testGraph_Hashing() {
-		graphTest(graph: Graph_Hashing())
+		graphTest(Graph_Hashing.self)
 	}
 	
 	func testGraph_Matrix() {
-		graphTest(graph: Graph_Matrix())
+		graphTest(Graph_Matrix.self)
 	}
 	
 	func testGraph_List() {
-		graphTest(graph: Graph_List())
+		graphTest(Graph_List.self)
 	}
 	
 	func testGraph_AdjacencyList() {
-		graphTest(graph: Graph_AdjacencyList())
+		graphTest(Graph_AdjacencyList.self)
 	}
 	
-	func graphTest<G : Graph>(graph: G) {
-		var graph = graph
+	func graphTest(_ graphType: Graph.Type) {
+		var graph = graphType.init()
 		
 		let time = measureTime {
 			for i in 0..<20 {
@@ -43,7 +43,7 @@ class GraphTests: XCTestCase {
 		print("Creation:\t", time)
 		print(graph)
 		let c = graph.convert(to: Graph_Matrix.self) as! Graph_Matrix
-		let cc = c.convert(to: G.self) as! G
+		let cc = c.convert(to: graphType.self)
 		XCTAssert(cc == graph)
 
 		dijkstra(graph: graph)
@@ -51,7 +51,7 @@ class GraphTests: XCTestCase {
 		dfs(graph: graph)
 	}
 	
-	func dfs<G : Graph>(graph: G) {
+	func dfs(graph: Graph) {
 		var fn : ([Int], [Int]) = ([], [])
 		let time = measureTime {
 			fn = graph.depthFirstSearch(start: 0, order: { $0.end < $1.end }, onEntry: { $0 }, onFinish: { $0 })
@@ -59,7 +59,7 @@ class GraphTests: XCTestCase {
 		print("DFS:\t\t", time, "\t", fn)
 	}
 	
-	func bfs<G : Graph>(graph: G) {
+	func bfs(graph: Graph) {
 		var fn : [Int] = []
 		let time = measureTime {
 			fn = graph.breadthFirstSearch(start: 0) { $0 }
@@ -67,7 +67,7 @@ class GraphTests: XCTestCase {
 		print("BFS:\t\t", time, "\t", fn)
 	}
 	
-	func dijkstra<G : Graph>(graph: G) {
+	func dijkstra(graph: Graph) {
 		var path = [0]
 		
 		let time = measureTime {
