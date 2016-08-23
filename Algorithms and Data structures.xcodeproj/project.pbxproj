@@ -12,6 +12,9 @@
 		9B12D82A1D6AF21C00255705 /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D8291D6AF21C00255705 /* Tree.swift */; };
 		9B12D82E1D6AF52C00255705 /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12D82D1D6AF52C00255705 /* BinaryTree.swift */; };
 		9B666C6A1D6BBDD0004E9FB3 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B666C691D6BBDD0004E9FB3 /* PriorityQueue.swift */; };
+		9B666C6C1D6C594F004E9FB3 /* (a,b)-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B666C6B1D6C594F004E9FB3 /* (a,b)-Tree.swift */; };
+		9B666C6E1D6C5998004E9FB3 /* B-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B666C6D1D6C5998004E9FB3 /* B-Tree.swift */; };
+		9B666C701D6C59C5004E9FB3 /* B+-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B666C6F1D6C59C5004E9FB3 /* B+-Tree.swift */; };
 		9B788D011D59D5CA00B2402E /* Algorithms and Data structures.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9B788D171D59D7B600B2402E /* BinomialHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D161D59D7B600B2402E /* BinomialHeap.swift */; };
 		9B788D191D59D7D200B2402E /* Pattern_Matching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B788D181D59D7D200B2402E /* Pattern_Matching.swift */; };
@@ -75,6 +78,9 @@
 		9B12D8291D6AF21C00255705 /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		9B12D82D1D6AF52C00255705 /* BinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
 		9B666C691D6BBDD0004E9FB3 /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
+		9B666C6B1D6C594F004E9FB3 /* (a,b)-Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "(a,b)-Tree.swift"; sourceTree = "<group>"; };
+		9B666C6D1D6C5998004E9FB3 /* B-Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "B-Tree.swift"; sourceTree = "<group>"; };
+		9B666C6F1D6C59C5004E9FB3 /* B+-Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "B+-Tree.swift"; sourceTree = "<group>"; };
 		9B788CFC1D59D5CA00B2402E /* Algorithms_and_Data_structures.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Algorithms_and_Data_structures.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B788CFF1D59D5CA00B2402E /* Algorithms and Data structures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Algorithms and Data structures.h"; sourceTree = "<group>"; };
 		9B788D001D59D5CA00B2402E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,6 +226,9 @@
 				9BB906C51D6B52F700F3445D /* BinaryTree */,
 				9BB906C41D6B52E800F3445D /* BinaryHeap */,
 				9B788D161D59D7B600B2402E /* BinomialHeap.swift */,
+				9B666C6B1D6C594F004E9FB3 /* (a,b)-Tree.swift */,
+				9B666C6D1D6C5998004E9FB3 /* B-Tree.swift */,
+				9B666C6F1D6C59C5004E9FB3 /* B+-Tree.swift */,
 			);
 			name = "Heaps, Trees";
 			sourceTree = "<group>";
@@ -501,10 +510,12 @@
 				9B788D221D59DC0300B2402E /* Graph.swift in Sources */,
 				9B788D171D59D7B600B2402E /* BinomialHeap.swift in Sources */,
 				9B788D211D59DC0300B2402E /* Graph_Matrix.swift in Sources */,
+				9B666C6E1D6C5998004E9FB3 /* B-Tree.swift in Sources */,
 				9BB906C11D6B52CE00F3445D /* BinaryHeap.swift in Sources */,
 				9B788D201D59DC0300B2402E /* Graph_Hashing.swift in Sources */,
 				9B12D8281D6A6FF400255705 /* Graph_List.swift in Sources */,
 				9BF2BFB31D63C5AD000A875E /* Graph_Algorithms.swift in Sources */,
+				9B666C701D6C59C5004E9FB3 /* B+-Tree.swift in Sources */,
 				9BB906C31D6B52DA00F3445D /* BinaryMaxHeap.swift in Sources */,
 				9BB906BB1D6B528700F3445D /* CompositeBinaryTree.swift in Sources */,
 				9B12D82E1D6AF52C00255705 /* BinaryTree.swift in Sources */,
@@ -515,6 +526,7 @@
 				9B666C6A1D6BBDD0004E9FB3 /* PriorityQueue.swift in Sources */,
 				9BB906BF1D6B52AB00F3445D /* BinaryMinHeap.swift in Sources */,
 				9BA3FC4C1D64874D0017F791 /* List.swift in Sources */,
+				9B666C6C1D6C594F004E9FB3 /* (a,b)-Tree.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
