@@ -49,8 +49,17 @@ class GraphTests: XCTestCase {
 		dijkstra(graph: graph)
 		bfs(graph: graph)
 		dfs(graph: graph)
+		
+		print(graph)
+		
+		XCTAssert(graph[1,4] == nil)
+		XCTAssert(graph[1,2] == 1)
+		XCTAssert(graph[3,7] == 1)
+		XCTAssert(graph[2,5] == nil)
+		
 		print(MemoryLayout.stride(ofValue: graph))
 		print()
+		
 	}
 	
 	func dfs(graph: Graph) {
