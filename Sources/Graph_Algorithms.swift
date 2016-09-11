@@ -13,39 +13,42 @@ extension Graph {
 	public func depthFirstSearch<E,F>(
 		start: Int,
 		order: ((end: Int, weight: Int), (end: Int, weight: Int)) -> Bool = { $0.weight < $1.weight },
-		onEntry: (Int) -> E, onFinish: (Int) -> F
-		) -> (onEntry: [E], onFinish: [F]) {
+		onEntry: (Int) throws -> E, onFinish: (Int) throws -> F
+		) rethrows -> (onEntry: [E], onFinish: [F]) {
 		
 		var visited = Set<Int>()
-		return dfs_rec(start: start, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
+		return try dfs_rec(start: start, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
 	}
 	
 	private func dfs_rec<E,F>(
 		start current: Int,
 		order: ((end: Int, weight: Int), (end: Int, weight: Int)) -> Bool,
-		onEntry: (Int) -> E, onFinish: (Int) -> F,
+		onEntry: (Int) throws -> E, onFinish: (Int) throws -> F,
 		visited: inout Set<Int>
-		) -> (onEntry: [E], onFinish: [F]) {
+		) rethrows -> (onEntry: [E], onFinish: [F]) {
 		
-		var resultE = [onEntry(current)]
+		var resultE = [try onEntry(current)]
 		var resultF = [F]()
 		
 		visited.insert(current)
 		
 		for e in self[current].sorted(by: order) {
 			if !visited.contains(e.end) {
-				let e = dfs_rec(start: e.end, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
+				let e = try dfs_rec(start: e.end, order: order, onEntry: onEntry, onFinish: onFinish, visited: &visited)
 				resultE.append(contentsOf: e.onEntry)
 				resultF.append(contentsOf: e.onFinish)
 			}
 		}
 		
-		resultF.append(onFinish(current))
+		resultF.append(try onFinish(current))
 		
 		return (resultE, resultF)
 	}
+}
+
+extension Graph {
 	
-	public func breadthFirstSearch<T>(start: Int, _ f: (Int) -> T) -> [T] {
+	public func breadthFirstSearch<T>(start: Int, _ f: (Int) throws -> T) rethrows -> [T] {
 		var visited = [Int:Int]()
 		var list = [start]
 		var result : [T] = []
@@ -64,13 +67,15 @@ extension Graph {
 					visited[e.end] = current
 				}
 			}
-			result.append(f(current))
+			result.append(try f(current))
 		}
 		return result
 	}
+}
+
+extension Graph {
 	
 	public func djikstra(start: Int, end: Int) -> [Int] {
-
 		guard start != end else { return [] }
 		var visited = [Int:(weight: Int, last: Int)]()
 		
@@ -102,6 +107,9 @@ extension Graph {
 			djikstraRec(start: v.end, end: end, weights: weightAfterEdge, visited: &visited)
 		}
 	}
+}
+	
+extension Graph {
 	
 	public func bellmanFord(start: Int, end: Int) -> [Int] {
 

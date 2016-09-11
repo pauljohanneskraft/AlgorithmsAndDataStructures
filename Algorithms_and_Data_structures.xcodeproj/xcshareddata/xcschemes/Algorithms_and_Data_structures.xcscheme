@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
+               BlueprintIdentifier = "9B0E85321D85E7280013148D"
                BuildableName = "Algorithms_and_Data_structures.framework"
-               BlueprintName = "Algorithms and Data structures"
-               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+               BlueprintName = "Algorithms_and_Data_structures"
+               ReferencedContainer = "container:Algorithms_and_Data_structures.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,50 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9B788D271D59E03D00B2402E"
-               BuildableName = "TreeTests.xctest"
-               BlueprintName = "TreeTests"
-               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9BF18A841D5A0273004D343B"
-               BuildableName = "GraphTests.xctest"
-               BlueprintName = "GraphTests"
-               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9BF2BFB71D63EEC8000A875E"
-               BuildableName = "ListTests.xctest"
-               BlueprintName = "ListTests"
-               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9BF2BFC61D63EED9000A875E"
-               BuildableName = "PatternMatchingTests.xctest"
-               BlueprintName = "PatternMatchingTests"
-               ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+               BlueprintIdentifier = "9B0E85501D85E76A0013148D"
+               BuildableName = "Tests.xctest"
+               BlueprintName = "Tests"
+               ReferencedContainer = "container:Algorithms_and_Data_structures.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
+            BlueprintIdentifier = "9B0E85321D85E7280013148D"
             BuildableName = "Algorithms_and_Data_structures.framework"
-            BlueprintName = "Algorithms and Data structures"
-            ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            BlueprintName = "Algorithms_and_Data_structures"
+            ReferencedContainer = "container:Algorithms_and_Data_structures.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,10 +64,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
+            BlueprintIdentifier = "9B0E85321D85E7280013148D"
             BuildableName = "Algorithms_and_Data_structures.framework"
-            BlueprintName = "Algorithms and Data structures"
-            ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            BlueprintName = "Algorithms_and_Data_structures"
+            ReferencedContainer = "container:Algorithms_and_Data_structures.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -112,10 +82,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9B788CFB1D59D5CA00B2402E"
+            BlueprintIdentifier = "9B0E85321D85E7280013148D"
             BuildableName = "Algorithms_and_Data_structures.framework"
-            BlueprintName = "Algorithms and Data structures"
-            ReferencedContainer = "container:Algorithms and Data structures.xcodeproj">
+            BlueprintName = "Algorithms_and_Data_structures"
+            ReferencedContainer = "container:Algorithms_and_Data_structures.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
