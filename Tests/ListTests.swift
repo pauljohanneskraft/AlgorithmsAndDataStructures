@@ -36,6 +36,7 @@ class ListTests: XCTestCase {
 		
 		print(ll.description)
 		
+		XCTAssert(ll.count == arr.count)
 		XCTAssert(ll.array == arr)
 		
 		for i in arr.indices {
@@ -63,6 +64,29 @@ class ListTests: XCTestCase {
 		// print(sll.array)
 		XCTAssert(ll.array == arrRev)
 		
+		var arr2 = [Int]()
+		
+		for _ in arrRev.indices {
+			arr2.append(ll.popBack()!)
+		}
+		
+		XCTAssert(arr2 == arr)
+		XCTAssert(ll.count == 0)
+		
+		for e in arr {
+			ll.pushBack(e)
+		}
+		
+		XCTAssert(ll.array == arr, "\(ll.array) != \(arr)")
+		
+		let l : L = [1,2,3]
+		if L.self == SinglyLinkedList<Int>.self {
+			XCTAssert(l.description == "[1 -> 2 -> 3]")
+		} else if L.self == DoublyLinkedList<Int>.self {
+			XCTAssert(l.description == "[1 <-> 2 <-> 3]")
+		} else {
+			XCTAssert(false, "add this type")
+		}
 	}
 	
 }

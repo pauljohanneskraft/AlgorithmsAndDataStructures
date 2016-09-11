@@ -18,11 +18,6 @@ public protocol Graph {
 
 extension Graph {
 	
-	public init(_ edges: (start: Int, end: Int, weight: Int)...) {
-		self.init()
-		self.edges = edges
-	}
-	
 	public init(vertices: Set<Int>, rule: (Int, Int) throws -> Int?) rethrows {
 		self.init()
 		for start in vertices {

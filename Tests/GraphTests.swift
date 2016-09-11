@@ -13,10 +13,10 @@ class GraphTests: XCTestCase {
 	
 	func testGraph_Types() {
 		print()
-		graphTest(Graph_Hashing.self)
-		graphTest(Graph_Matrix.self)
-		graphTest(Graph_List.self)
-		graphTest(Graph_AdjacencyList.self)
+		graphTest(Graph_Hashing			.self)
+		graphTest(Graph_Matrix			.self)
+		graphTest(Graph_List			.self)
+		graphTest(Graph_AdjacencyList	.self)
 	}
 	
 	func graphTest< G : Graph >(_ graphType: G.Type) {
@@ -29,6 +29,7 @@ class GraphTests: XCTestCase {
 				graph[i + 1, i] = 1
 			}
 			
+			graph[3,7] = 325989328
 			graph[3,7] = 1
 			graph[7,3] = 1
 		}
@@ -39,10 +40,12 @@ class GraphTests: XCTestCase {
 		
 		XCTAssert(graph2 == graph, "\(graph2) != \(graph)")
 		
+		XCTAssert(graph.vertices == Set<Int>(0...20))
+		
 		let c = graph.convert(to: Graph_Matrix.self)
 		let cc = c.convert(to: G.self)
 		XCTAssert(cc == graph, "\(cc) != \(graph)")
-		
+				
 		dijkstra(graph: graph)
 		bfs(graph: graph)
 		dfs(graph: graph)
