@@ -22,9 +22,7 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 		get {
 			var result = [(start: Int, end: Int, weight: Int)]()
 			for e in _edges {
-				for i in e.value {
-					result.append((e.key, i.key, i.value))
-				}
+				for i in e.value { result.append((e.key, i.key, i.value)) }
 			}
 			return result
 		}
@@ -52,6 +50,7 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 		if _edges[start] == nil { return [] }
 		return _edges[start]!.map { $0 }
 	}
+	
 	public subscript(start: Int, end: Int) -> Int? {
 		get { return _edges[start]?[end]		}
 		set {

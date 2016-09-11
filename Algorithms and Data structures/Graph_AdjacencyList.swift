@@ -21,9 +21,7 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		get {
 			var result : [(start: Int, end: Int, weight: Int)] = []
 			for e in _edges {
-				for v in e.value {
-					result.append((e.key, v.end, v.weight))
-				}
+				for v in e.value { result.append((e.key, v.end, v.weight)) }
 			}
 			return result
 		}
@@ -33,9 +31,7 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		}
 	}
 	
-	public var vertices: Set<Int> {
-		return Set(_edges.keys)
-	}
+	public var vertices: Set<Int> { return Set(_edges.keys) }
 	
 	public var description : String {
 		var result = "Graph_AdjacencyList:\n"
@@ -50,9 +46,7 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		get {
 			let a = _edges[start]
 			guard a != nil else { return nil }
-			for e in a! {
-				if e.end == end { return e.weight }
-			}
+			for e in a! { guard e.end != end else { return e.weight } }
 			return nil
 		}
 		set {
@@ -63,13 +57,13 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 			else {
 				let e = _edges[start]!
 				for i in e.indices {
-					if e[i].end == end {
+					guard e[i].end != end else {
 						if newValue == nil	{ _edges[start]![i] = (end: end, weight: newValue!) }
 						else				{ _ = _edges[start]!.remove(at: i) }
 						return
 					}
 				}
-				if newValue == nil { return }
+				guard newValue != nil else { return }
 				_edges[start]!.append((end, newValue!))
 			}
 		}

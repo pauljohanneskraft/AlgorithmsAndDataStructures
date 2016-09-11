@@ -10,10 +10,10 @@ import Foundation
 
 public protocol Graph {
 	init()
-	var vertices : Set<Int> { get }
-	var edges : [(start: Int, end: Int, weight: Int)] { get set }
-	subscript(start: Int) -> [(end: Int, weight: Int)] { get }
-	subscript(start: Int, end: Int) -> Int? { get set }
+	var vertices	: Set<Int>								{ get }
+	var edges		: [(start: Int, end: Int, weight: Int)] { get set }
+	subscript(start: Int			) -> [(end: Int, weight: Int)]	{ get }
+	subscript(start: Int, end: Int	) -> Int?						{ get set }
 }
 
 extension Graph {
@@ -21,6 +21,17 @@ extension Graph {
 	public init(_ edges: (start: Int, end: Int, weight: Int)...) {
 		self.init()
 		self.edges = edges
+	}
+	
+	public init(vertices: Set<Int>, rule: (Int, Int) throws -> Int?) rethrows {
+		self.init()
+		for start in vertices {
+			for end in vertices {
+				if let length = try rule(start, end) {
+					self[start, end] = length
+				}
+			}
+		}
 	}
 	
 	public func convert< G : Graph >(to: G.Type) -> G {
