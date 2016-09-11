@@ -50,7 +50,7 @@ class TreeTests: XCTestCase {
 	
 	func testBinaryTree() {
 		var bin = BinaryTree<Int>()
-				
+		
 		for e in arr { bin.push(e) }
 		
 		print(bin.array)
@@ -58,9 +58,3 @@ class TreeTests: XCTestCase {
 		XCTAssert(bin.array == arr.sorted())
 	}
 }
-
-
-
-
-
-

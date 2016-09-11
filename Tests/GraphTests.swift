@@ -42,7 +42,7 @@ class GraphTests: XCTestCase {
 		let c = graph.convert(to: Graph_Matrix.self)
 		let cc = c.convert(to: G.self)
 		XCTAssert(cc == graph, "\(cc) != \(graph)")
-
+		
 		dijkstra(graph: graph)
 		bfs(graph: graph)
 		dfs(graph: graph)
