@@ -69,16 +69,11 @@ public struct BinaryMaxHeap < Element > : PriorityQueue {
 				i = child // sifting down child then
 			} else { return }
 		}
-		
 	}
 	
 }
 
 public extension BinaryMaxHeap where Element : Comparable {
 	public init() { self.init { $0 < $1 } }
-	
-	public init(arrayLiteral: Element...) {
-		self.init(array: arrayLiteral) { $0 < $1 }
-	}
 }
 

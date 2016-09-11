@@ -101,7 +101,6 @@ public struct BinomialHeap < Element > : PriorityQueue {
 				let c : BinomialTreeNode<Element>? = merge(nodes[0]!, nodes[1]!)
 				return (nodes[2], c)
 			}
-			
 	}
 	
 	public mutating func push(_ element: Element) {

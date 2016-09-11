@@ -21,6 +21,8 @@ class TreeTests: XCTestCase {
 			// print(" ready.")
 			// print(binHeap)
 		}
+		print(binHeap)
+		XCTAssert(binHeap.children.count == 1)
 		var binHeapArray = [Int]()
 		for _ in arr.indices {
 			let min = binHeap.pop()!
@@ -38,12 +40,21 @@ class TreeTests: XCTestCase {
 		
 		maxHeap.array = arr
 		
+		var heap2 = BinaryMaxHeap<Int>()
+				
+		for e in arr {
+			heap2.push(e)
+		}
+		
 		var sorted = [Int]()
+		var sorted2 = [Int]()
 		
 		for _ in arr.indices {
 			sorted.append(maxHeap.pop()!)
+			sorted2.append(heap2.pop()!)
 		}
 		print(sorted)
+		XCTAssert(sorted == sorted2)
 		XCTAssert(sorted == arr.sorted().reversed())
 		
 	}
