@@ -108,44 +108,6 @@ extension Graph {
 		}
 	}
 }
-	
-extension Graph {
-	
-	public func bellmanFord(start: Int, end: Int) -> [Int] {
-
-		guard start != end else { return [] }
-		
-		var visited = [Int:(weight: Int, last: Int)]()
-		bellmanFordRec(start: start, end: end, weights: 0, visited: &visited)
-		
-		var result = [Int]()
-		var current : Int	= end.hashValue
-		var next	: Int?	= current
-		repeat {
-			current = next!
-			next = visited[current]?.last.hashValue
-			result.append(current)
-			if next == nil && current != start.hashValue { return [] }
-		} while current != start.hashValue
-		return result.reversed()
-	}
-	
-	private func bellmanFordRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
-		// print(start.hashValue)
-		for v in self[start].sorted(by: { $0.weight < $1.weight }) {
-			let weightAfterEdge = weights + v.weight
-			// print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
-			if let existingWeight = visited[v.end]?.weight {
-				if weightAfterEdge < existingWeight {
-					visited[v.end] = (weight: weightAfterEdge, last: start)
-				} else { continue }
-			} else { visited[v.end] = (weight: weightAfterEdge, last: start) }
-			// print("\tvisited[\(v.key)] =", visited[v.key]!)
-			bellmanFordRec(start: v.end, end: end, weights: weightAfterEdge, visited: &visited)
-		}
-	}
-}
-
 
 
 

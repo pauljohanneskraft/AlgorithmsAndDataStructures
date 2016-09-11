@@ -15,11 +15,6 @@ public protocol Tree : PriorityQueue {
 
 public extension Tree where Element : Comparable {
 	init() { self.init { $0 < $1 } }
-	
-	init(arrayLiteral: Element...) throws {
-		self.init()
-		for e in arrayLiteral { try self.push(e) }
-	}
 }
 
 protocol _BinTree : Tree {

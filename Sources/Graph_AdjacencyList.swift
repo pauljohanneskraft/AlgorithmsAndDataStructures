@@ -51,15 +51,14 @@ public struct Graph_AdjacencyList : Graph, CustomStringConvertible {
 		}
 		set {
 			if _edges[start] == nil {
-				if newValue == nil { return }
+				guard newValue != nil else { return }
 				_edges[start] = [(end, newValue!)]
-			}
-			else {
+			} else {
 				let e = _edges[start]!
 				for i in e.indices {
 					guard e[i].end != end else {
-						if newValue == nil	{ _edges[start]![i] = (end: end, weight: newValue!) }
-						else				{ _ = _edges[start]!.remove(at: i) }
+						if newValue == nil	{ _ = _edges[start]!.remove(at: i)					}
+						else				{ _edges[start]![i] = (end: end, weight: newValue!) }
 						return
 					}
 				}
