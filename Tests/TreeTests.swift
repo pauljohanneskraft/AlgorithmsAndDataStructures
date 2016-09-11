@@ -21,6 +21,8 @@ class TreeTests: XCTestCase {
 			// print(" ready.")
 			// print(binHeap)
 		}
+		print(binHeap)
+		XCTAssert(binHeap.children.count == 1)
 		var binHeapArray = [Int]()
 		for _ in arr.indices {
 			let min = binHeap.pop()!
