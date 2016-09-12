@@ -97,7 +97,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 			if count <= 1 {
 				return (nodes[0], nil)
 			} else {
-				assert(nodes[0]!.depth == nodes[1]!.depth)
+				precondition(nodes[0]!.depth == nodes[1]!.depth, "Depths do not match. \(nodes[0]!.depth) != \(nodes[1]!.depth)")
 				let c : BinomialTreeNode<Element>? = merge(nodes[0]!, nodes[1]!)
 				return (nodes[2], c)
 			}
@@ -125,7 +125,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 	}
 	
 	func merge(_ a: BinomialTreeNode<Element>, _ b: BinomialTreeNode<Element>) -> BinomialTreeNode<Element> {
-		assert(a.depth == b.depth)
+		precondition(a.depth == b.depth, "Depths are not equal. \(a.depth) != \(b.depth)")
 		var c : BinomialTreeNode<Element>
 		if self.order(a.element, b.element) {
 			c = a
@@ -184,9 +184,7 @@ public struct BinomialTreeNode<Element> {
 		return result
 	}
 	
-	var rank : Int {
-		return children.count
-	}
+	var rank : Int { return children.count }
 	
 	var depth : Int {
 		if children.count == 0 { return 1 }

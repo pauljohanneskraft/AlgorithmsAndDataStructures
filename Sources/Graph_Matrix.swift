@@ -75,7 +75,7 @@ public struct Graph_Matrix : Graph, CustomStringConvertible {
 		get {
 			guard _edges.indices.contains(start) else { return nil }
 			guard _edges[start].indices.contains(end) else { return nil }
-			assert(invariant)
+			assert(invariant, "Invariant conflict.")
 			return _edges[start][end]
 		}
 		set {
@@ -93,7 +93,7 @@ public struct Graph_Matrix : Graph, CustomStringConvertible {
 			
 			if !invariant {
 				print(self)
-				assert(invariant)
+				assert(invariant, "Invariant conflict.")
 			}
 			
 			_edges[start][end] = newValue
