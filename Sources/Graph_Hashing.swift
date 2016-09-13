@@ -15,7 +15,6 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 	
 	// initializers
 	public init()						{ self._edges = [:]		}
-	public init(edges: [Int:[Int:Int]]) { self._edges = edges	}
 	
 	// computed properties
 	public var edges : [(start: Int, end: Int, weight: Int)] {
