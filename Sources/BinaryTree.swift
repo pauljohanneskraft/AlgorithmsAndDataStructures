@@ -10,7 +10,25 @@ import Foundation
 
 public struct BinaryTree < Element > : _BinTree {
 	mutating public func pop() -> Element? {
-		return nil // TODO!!
+		var parent	= root
+		var current = root?.left
+		
+		guard current != nil else {
+			let data = root?.data
+			root = root?.right
+			return data
+		}
+		
+		while current?.left != nil {
+			parent	= current
+			current	= current?.left
+		}
+		
+		let data = current?.data
+		
+		parent?.left = current?.right
+		
+		return data // TODO!!
 	}
 
 	typealias Node = BinaryTreeNode <Element>
@@ -32,6 +50,14 @@ public struct BinaryTree < Element > : _BinTree {
 	
 	public var array : [Element] {
 		return root != nil ? root!.array : []
+	}
+}
+
+extension BinaryTree : CustomStringConvertible {
+	public var description : String {
+		let result = "\(BinaryTree<Element>.self)"
+		guard root != nil else { return result + " empty." }
+		return "\(result)\n" + root!.description(depth: 1)
 	}
 }
 
@@ -61,5 +87,19 @@ final class BinaryTreeNode <Element> : _BinTreeNode {
 		let r = right != nil ? right!.array : []
 		let l =  left != nil ?  left!.array : []
 		return l + [data] + r
+	}
+}
+
+extension BinaryTreeNode : CustomStringConvertible {
+	public var description : String {
+		return description(depth: 0)
+	}
+	public func description(depth: UInt) -> String {
+		var result = ""
+		for _ in 0..<depth { result += "\t" }
+		result += "∟\(data)\n"
+		if left != nil { result += left!.description(depth: depth + 1) }
+		if right != nil { result += right!.description(depth: depth + 1) }
+		return result
 	}
 }

@@ -20,6 +20,7 @@ class TreeTests: XCTestCase {
 			}
 			arrs.append(arr)
 		}
+		arrs.append([1,2,3])
 	}
 	
 	var arrs : [[Int]] = []
@@ -83,9 +84,20 @@ class TreeTests: XCTestCase {
 			
 			for e in arr { bin.push(e) }
 			
-			print(bin.array)
+			var a = bin.array
 			
-			XCTAssert(bin.array == arr.sorted())
+			var sorted = arr.sorted()
+			
+			XCTAssert(a == sorted,		"\(bin): array not sorted. \(a) != \(sorted)"		)
+			
+			let p = bin.pop()
+			
+			XCTAssert(p == sorted[0],	"\(bin): pop() failed.     \(p) != \(sorted[0])"	)
+			
+			_ = sorted.remove(at: 0)
+			a = bin.array
+			
+			XCTAssert(a == sorted,		"\(bin): array not sorted. \(a) != \(sorted)"		)
 		}
 	}
 }
