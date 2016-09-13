@@ -151,11 +151,7 @@ public struct DoublyLinkedList < Element > : _List {
 	private var invariant : Bool {
 		var current = root
 		repeat {
-			if current?.next != nil && current?.next?.prev !== current {
-				print(current?.array)
-				print(current?.next?.prev?.data, "!==", current?.data)
-				return false
-			}
+			guard current?.next == nil || (current?.next?.prev === current) else { return false }
 			current = current?.next
 		} while current != nil
 		return true
