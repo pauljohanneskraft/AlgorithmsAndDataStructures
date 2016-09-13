@@ -13,18 +13,18 @@ public struct DoublyLinkedList < Element > : _List {
 	mutating public func pushBack(_ element: Element) {
 		if root == nil	{ root = DoublyLinkedItem(data: element) }
 		else			{ root!.pushBack(element) }
-		assert(invariant)
+		assert(invariant, "Invariant conflict. \(self)")
 	}
 	
 	public mutating func popBack() -> Element? {
 		if root?.next == nil {
 			let tmp = root?.data
 			root = nil
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 			return tmp
 		}
 		let v = root?.popBack()
-		assert(invariant)
+		assert(invariant, "Invariant conflict. \(self)")
 		return v
 	}
 	
@@ -33,7 +33,7 @@ public struct DoublyLinkedList < Element > : _List {
 			guard index >= 0 else { return nil }
 			var current = root
 			for _ in 0..<index { current = current?.next }
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 			return current?.data
 		}
 		set {
@@ -41,14 +41,14 @@ public struct DoublyLinkedList < Element > : _List {
 			guard root != nil else {
 				assert(index == 0, "Index out of bounds")
 				root = DoublyLinkedItem(data: newValue!)
-				assert(invariant)
+				assert(invariant, "Invariant conflict. \(self)")
 				return
 			}
 			
 			if index == 0 {
 				root = DoublyLinkedItem(data: newValue!, next: root?.next)
 				root?.next?.prev = root
-				assert(invariant)
+				assert(invariant, "Invariant conflict. \(self)")
 				return
 			}
 			
@@ -63,7 +63,7 @@ public struct DoublyLinkedList < Element > : _List {
 			let c = current!
 			c.next = DoublyLinkedItem(data: newValue!, prev: c, next: c.next?.next)
 			c.next!.next?.prev = c.next
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 		}
 	}
 	
@@ -71,7 +71,7 @@ public struct DoublyLinkedList < Element > : _List {
 		guard root != nil else {
 			if index == 0	{ root = DoublyLinkedItem(data: data) }
 			else			{ throw ListError.IndexOutOfRange }
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 			return
 		}
 		
@@ -85,11 +85,11 @@ public struct DoublyLinkedList < Element > : _List {
 		}
 		
 		current!.next = DoublyLinkedItem(data: data, prev: current, next: current?.next)
-		assert(invariant)
+		assert(invariant, "Invariant conflict. \(self)")
 	}
 	
 	public mutating func remove(at index: Int) throws -> Element {
-		assert(invariant)
+		assert(invariant, "Invariant conflict. \(self)")
 		guard index >= 0 else { throw ListError.IndexOutOfRange }
 		
 		if index == 0 {
@@ -110,7 +110,7 @@ public struct DoublyLinkedList < Element > : _List {
 		let next = current?.next
 		let tmp = current!.next!.data
 		current!.next = next?.next
-		assert(invariant)
+		assert(invariant, "Invariant conflict. \(self)")
 		return tmp
 	}
 	
@@ -129,13 +129,13 @@ public struct DoublyLinkedList < Element > : _List {
 			return root!.array
 		}
 		set {
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 			guard newValue.count > 0 else { return }
 			self.root = DoublyLinkedItem(data: newValue.first!)
 			for e in newValue.dropFirst() {
 				self.root!.pushBack(e)
 			}
-			assert(invariant)
+			assert(invariant, "Invariant conflict. \(self)")
 		}
 	}
 	
@@ -151,11 +151,7 @@ public struct DoublyLinkedList < Element > : _List {
 	private var invariant : Bool {
 		var current = root
 		repeat {
-			if current?.next != nil && current?.next?.prev !== current {
-				print(current?.array)
-				print(current?.next?.prev?.data, "!==", current?.data)
-				return false
-			}
+			guard current?.next == nil || (current?.next?.prev === current) else { return false }
 			current = current?.next
 		} while current != nil
 		return true

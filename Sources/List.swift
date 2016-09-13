@@ -56,7 +56,7 @@ extension _ListItem {
 	}
 	
 	mutating func popBack() -> Element {
-		assert(next != nil)
+		assert(next != nil, "No following node found.")
 		if next!.next == nil {
 			let tmp = next!.data
 			next = nil

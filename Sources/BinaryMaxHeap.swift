@@ -31,8 +31,8 @@ public struct BinaryMaxHeap < Element > : PriorityQueue {
 		self.array = array
 	}
 	
-	public mutating func push(_ elem: Element) {
-		_array = [elem] + _array
+	public mutating func push(_ elem: Element) { // NEEDS_FIX HIGH_PRIO
+		_array.insert(elem, at: 0)
 		siftDown(at: 0)
 	}
 	

@@ -22,7 +22,6 @@ public struct BinomialHeap < Element > : PriorityQueue {
 	mutating func merge(with heads: [BinomialTreeNode<Element>], ignoreMinimum: Bool) {
 		guard children.count > 0 else { children = heads; resetMinIndex(); return }
 		
-		var minimum : BinomialTreeNode<Element>? = nil
 		var treesNew = [BinomialTreeNode<Element>]()
 		var carry : BinomialTreeNode<Element>? = nil
 		var rank = 0
@@ -66,12 +65,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 			let x = result.0
 			carry = result.1
 			
-			if x != nil {
-				if minimum == nil || order(x!.element, minimum!.element) {
-					minimum = x
-				}
-				treesNew.append(x!)
-			}
+			if x != nil { treesNew.append(x!) }
 		}
 		self.children = treesNew;
 		// self.minIndex = minimum
@@ -94,13 +88,11 @@ public struct BinomialHeap < Element > : PriorityQueue {
 				nodes[count] = carry
 				count += 1
 			}
-			if count <= 1 {
-				return (nodes[0], nil)
-			} else {
-				assert(nodes[0]!.depth == nodes[1]!.depth)
-				let c : BinomialTreeNode<Element>? = merge(nodes[0]!, nodes[1]!)
-				return (nodes[2], c)
-			}
+			guard count > 1 else { return (nodes[0], nil) }
+			
+			precondition(nodes[0]!.depth == nodes[1]!.depth, "Depths do not match. \(nodes[0]!.depth) != \(nodes[1]!.depth)")
+			let c : BinomialTreeNode<Element>? = merge(nodes[0]!, nodes[1]!)
+			return (nodes[2], c)
 	}
 	
 	public mutating func push(_ element: Element) {
@@ -108,24 +100,19 @@ public struct BinomialHeap < Element > : PriorityQueue {
 	}
 	
 	public mutating func pop() -> Element? {
-		if let minIndex = self.minIndex {
-			let result = children[minIndex].element
-			let formerMin = children.remove(at: minIndex)
-			
-			merge(with: formerMin.children, ignoreMinimum: false)
-			
-			return result
-		} else {
-			if children.count == 0 { return nil }
-			else {
-				resetMinIndex()
-				return pop()
-			}
-		}
+		guard children.count > 0 else { return nil }
+		if self.minIndex == nil { assert(false, "minIndex == 0"); resetMinIndex() }
+		let minIndex = self.minIndex!
+		let result = children[minIndex].element
+		let formerMin = children.remove(at: minIndex)
+		
+		merge(with: formerMin.children, ignoreMinimum: false)
+		
+		return result
 	}
 	
 	func merge(_ a: BinomialTreeNode<Element>, _ b: BinomialTreeNode<Element>) -> BinomialTreeNode<Element> {
-		assert(a.depth == b.depth)
+		precondition(a.depth == b.depth, "Depths are not equal. \(a.depth) != \(b.depth)")
 		var c : BinomialTreeNode<Element>
 		if self.order(a.element, b.element) {
 			c = a
@@ -184,9 +171,7 @@ public struct BinomialTreeNode<Element> {
 		return result
 	}
 	
-	var rank : Int {
-		return children.count
-	}
+	var rank : Int { return children.count }
 	
 	var depth : Int {
 		if children.count == 0 { return 1 }
