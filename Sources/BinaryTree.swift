@@ -92,14 +92,16 @@ final class BinaryTreeNode <Element> : _BinTreeNode {
 
 extension BinaryTreeNode : CustomStringConvertible {
 	public var description : String {
-		return description(depth: 0)
+		return "\(BinaryTreeNode<Element>.self)\n" + description(depth: 1)
 	}
 	public func description(depth: UInt) -> String {
-		var result = ""
-		for _ in 0..<depth { result += "\t" }
-		result += "∟\(data)\n"
-		if left != nil { result += left!.description(depth: depth + 1) }
-		if right != nil { result += right!.description(depth: depth + 1) }
+		let tab = "   "
+		var tabs = tab * depth
+		var result = "\(tabs)∟\(data)\n"
+		let d : UInt = depth + 1
+		tabs += tab
+		if left	 != nil { result += left! .description(depth: d) } // else { result += "\(tabs)∟\n" }
+		if right != nil { result += right!.description(depth: d) } // else { result += "\(tabs)∟\n" }
 		return result
 	}
 }

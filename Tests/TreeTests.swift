@@ -90,6 +90,8 @@ class TreeTests: XCTestCase {
 			
 			XCTAssert(a == sorted,		"\(bin): array not sorted. \(a) != \(sorted)"		)
 			
+			print("before pop()", bin)
+			
 			let p = bin.pop()
 			
 			XCTAssert(p == sorted[0],	"\(bin): pop() failed.     \(p) != \(sorted[0])"	)
@@ -98,6 +100,7 @@ class TreeTests: XCTestCase {
 			a = bin.array
 			
 			XCTAssert(a == sorted,		"\(bin): array not sorted. \(a) != \(sorted)"		)
+			print("after pop()", bin)
 		}
 	}
 }
