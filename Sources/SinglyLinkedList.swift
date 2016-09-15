@@ -30,7 +30,7 @@ public struct SinglyLinkedList < Element > : _List {
 		set {
 			guard newValue != nil else { return }
 			guard root != nil else {
-				assert(index == 0)
+				precondition(index == 0, "Index out of bounds. \(index) > 0.")
 				root = SinglyLinkedItem(data: newValue!)
 				return
 			}
@@ -41,12 +41,12 @@ public struct SinglyLinkedList < Element > : _List {
 			}
 			
 			var current = root
-			var index = index - 1
+			var i = index - 1
 			
-			while index > 0 {
+			while i > 0 {
 				current = current?.next
-				assert(current != nil)
-				index -= 1
+				precondition(current != nil, "Index out of bounds. \(index) > \(i)")
+				i -= 1
 			}
 			
 			current!.next = SinglyLinkedItem(data: newValue!, next: current?.next?.next)

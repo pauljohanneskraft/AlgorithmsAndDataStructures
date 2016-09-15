@@ -35,6 +35,7 @@
 		9B1FFF931D85EB8600093309 /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1FFF921D85EB8600093309 /* GraphTests.swift */; };
 		9B1FFF951D85EBBB00093309 /* ListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1FFF941D85EBBB00093309 /* ListTests.swift */; };
 		9B1FFF971D85EBD600093309 /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1FFF961D85EBD600093309 /* TreeTests.swift */; };
+		9BD1903B1D8854CA00F7886D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD1903A1D8854CA00F7886D /* General.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		9B1FFF921D85EB8600093309 /* GraphTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTests.swift; sourceTree = "<group>"; };
 		9B1FFF941D85EBBB00093309 /* ListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTests.swift; sourceTree = "<group>"; };
 		9B1FFF961D85EBD600093309 /* TreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
+		9BD1903A1D8854CA00F7886D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = General.swift; path = Sources/General.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 		9B0E85661D85E8300013148D /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9BD1903A1D8854CA00F7886D /* General.swift */,
 				9B1FFF8C1D85EAC800093309 /* Trees, Heaps */,
 				9B1FFF8E1D85EADD00093309 /* Lists */,
 				9B1FFF8F1D85EAE500093309 /* Graphs */,
@@ -315,6 +318,7 @@
 				9B0E85F21D85E8980013148D /* Pattern_Matching.swift in Sources */,
 				9B0E85E31D85E8980013148D /* B+-Tree.swift in Sources */,
 				9B0E85DF1D85E8980013148D /* (a,b)-Tree.swift in Sources */,
+				9BD1903B1D8854CA00F7886D /* General.swift in Sources */,
 				9B0E85EC1D85E8980013148D /* Graph_Algorithms.swift in Sources */,
 				9B0E85EB1D85E8980013148D /* Graph_AdjacencyList.swift in Sources */,
 				9B0E85F61D85E8980013148D /* Tree.swift in Sources */,
