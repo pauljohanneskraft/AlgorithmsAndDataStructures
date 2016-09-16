@@ -9,7 +9,10 @@ matrix:
       dist: trusty
   allow_failures:
    - os: linux
-
+   
+notifications:
+  slack: pauljohanneskraft:wClcdhufnZn16qEhhljudtlh
+  
 install:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -; fi
 - if [[ $TRAVIS_OS_NAME == linux ]]; then export SWIFT_VERSION=swift-3.0-GM-CANDIDATE; fi
