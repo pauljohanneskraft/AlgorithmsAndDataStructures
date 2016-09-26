@@ -75,11 +75,16 @@ extension Graph {
 
 extension Graph {
 	
-	public func djikstra(start: Int, end: Int) -> [Int] {
-		guard start != end else { return [] }
+	public func djikstra(start: Int) -> [Int:(weight: Int, last: Int)] {
 		var visited = [Int:(weight: Int, last: Int)]()
 		
-		djikstraRec(start: start, end: end, weights: 0, visited: &visited)
+		djikstraRec(start: start, weights: 0, visited: &visited)
+		
+		return visited
+	}
+	
+	public func djikstra(start: Int, end: Int) -> [Int] {
+		let visited = djikstra(start: start)
 		
 		var result = [Int]()
 		var current = end
@@ -93,7 +98,7 @@ extension Graph {
 		return result.reversed()
 	}
 	
-	private func djikstraRec(start: Int, end: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
+	private func djikstraRec(start: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
 		// print(start.hashValue)
 		for v in self[start].sorted(by: { $0.weight < $1.weight }) {
 			let weightAfterEdge = weights + v.weight
@@ -104,10 +109,52 @@ extension Graph {
 				} else { continue }
 			} else { visited[v.end] = (weight: weightAfterEdge, last: start) }
 			// print("\tvisited[\(v.key)] =", visited[v.key]!)
-			djikstraRec(start: v.end, end: end, weights: weightAfterEdge, visited: &visited)
+			djikstraRec(start: v.end, weights: weightAfterEdge, visited: &visited)
+		}
+	}
+	
+	public func bellmanFord(start: Int) -> [Int:(weight: Int, last: Int)] {
+		var visited = [Int:(weight: Int, last: Int)]()
+
+		let edges = self.edges
+		guard edges.count > 0 else { return [:] }
+		visited[start] = (weight: 0, last: start)
+		for _ in vertices {
+			for e in edges {
+				if var newWeight = visited[e.start]?.weight {
+					newWeight += e.weight
+					if let oldWeight = visited[e.end]?.weight {
+						if newWeight < oldWeight {
+							visited[e.end] = (weight: newWeight, last: e.start)
+						}
+					} else { visited[e.end] = (weight: newWeight, last: e.start) }
+				}
+			}
+		}
+		// print("done with djikstra")
+		for e in edges {
+			if var newWeight = visited[e.start]?.weight {
+				if newWeight != Int.min { newWeight += e.weight
+					if let oldWeight = visited[e.end]?.weight {
+						if newWeight < oldWeight {
+							infect(e.start, visited: &visited)
+						}
+					} else { assert(false) }
+				}
+			}
+		}
+		// print("done with bellmanFord")
+		return visited
+	}
+	
+	private func infect(_ start: Int,  visited: inout [Int:(weight: Int, last: Int)]) {
+		// print("infected \(start)")
+		visited[start] = (weight: Int.min, last: visited[start]!.last)
+		for v in self[start] {
+			if visited[v.end]?.weight != Int.min {
+				visited[v.end] = (weight: Int.min, last: start)
+				infect(v.end, visited: &visited)
+			}
 		}
 	}
 }
-
-
-
