@@ -14,9 +14,9 @@ public class Trie < Element : Hashable > {
 	var count : UInt	= 0
 	
 	public func insert(_ word: [Element]) {
-		guard word.count > 0 else { return }
-				
 		count += 1
+
+		guard word.count > 0 else { return }				
 		
 		if let c = children[word[0]] {
 			c.insert(word.dropFirst() + [])

@@ -78,10 +78,10 @@ class TreeTests: XCTestCase {
 	}
 	
 	func testTrie() {
-		let a = [2,3,4,5,6,7,8,9]
-		let b = [3,4,5,6,7,8,9,10]
+		let a = "Hallo".characters.map { $0 }
+		let b = "Hello".characters.map { $0 }
 		var ab = [a, b]
-		Trie<Int>.sort(&ab)
+		Trie<Character>.sort(&ab)
 		print(ab)
 	}
 	
