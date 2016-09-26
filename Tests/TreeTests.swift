@@ -77,6 +77,14 @@ class TreeTests: XCTestCase {
 		}
 	}
 	
+	func testTrie() {
+		let a = [2,3,4,5,6,7,8,9]
+		let b = [3,4,5,6,7,8,9,10]
+		var ab = [a, b]
+		Trie<Int>.sort(&ab)
+		print(ab)
+	}
+	
 	func testBinaryTree() {
 		for arr in arrs {
 			var bin = BinaryTree<Int>()

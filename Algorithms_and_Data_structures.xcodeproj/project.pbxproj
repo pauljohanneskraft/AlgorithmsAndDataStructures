@@ -35,6 +35,7 @@
 		9B1FFF971D85EBD600093309 /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1FFF961D85EBD600093309 /* TreeTests.swift */; };
 		9BB1A2611D8F4869003075DB /* GeneralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BB1A2601D8F4869003075DB /* GeneralTests.swift */; };
 		9BCBB5F91D994DC700ACE439 /* PatternMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCBB5F81D994DC700ACE439 /* PatternMatchingTests.swift */; };
+		9BCBB5FB1D99E55300ACE439 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCBB5FA1D99E55300ACE439 /* Trie.swift */; };
 		9BD1903B1D8854CA00F7886D /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD1903A1D8854CA00F7886D /* General.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		9B1FFF961D85EBD600093309 /* TreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		9BB1A2601D8F4869003075DB /* GeneralTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTests.swift; sourceTree = "<group>"; };
 		9BCBB5F81D994DC700ACE439 /* PatternMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternMatchingTests.swift; sourceTree = "<group>"; };
+		9BCBB5FA1D99E55300ACE439 /* Trie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trie.swift; path = Sources/Trie.swift; sourceTree = "<group>"; };
 		9BD1903A1D8854CA00F7886D /* General.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = General.swift; path = Sources/General.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 				9B0E85CA1D85E8980013148D /* B-Tree.swift */,
 				9B0E85CB1D85E8980013148D /* B+-Tree.swift */,
 				9B0E85CF1D85E8980013148D /* BinaryTree.swift */,
+				9BCBB5FA1D99E55300ACE439 /* Trie.swift */,
 				9B0E85D11D85E8980013148D /* CompositeBinaryTree.swift */,
 			);
 			name = "Trees, Heaps";
@@ -308,6 +311,7 @@
 				9B0E85E21D85E8980013148D /* B-Tree.swift in Sources */,
 				9B0E85F01D85E8980013148D /* Graph.swift in Sources */,
 				9B0E85E71D85E8980013148D /* BinaryTree.swift in Sources */,
+				9BCBB5FB1D99E55300ACE439 /* Trie.swift in Sources */,
 				9B0E85E91D85E8980013148D /* CompositeBinaryTree.swift in Sources */,
 				9B0E85EE1D85E8980013148D /* Graph_List.swift in Sources */,
 				9B0E85F51D85E8980013148D /* StyleGuide.swift in Sources */,
