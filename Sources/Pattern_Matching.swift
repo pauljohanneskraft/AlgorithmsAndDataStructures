@@ -20,14 +20,6 @@ public extension String {
 			case .diagonal:	return "diagonal"
 			}
 		}
-		
-		func change(_ c: (x: Int, y: Int)) -> (x: Int, y: Int) {
-			switch self {
-			case .top:		return (c.x		, c.y-1	)
-			case .left:		return (c.x-1	, c.y	)
-			case .diagonal: return (c.x-1	, c.y-1	)
-			}
-		}
 	}
 	
 	public static func needlemanWunsch(comparing cmp: String, to: String, match: Int = 1, mismatch: Int = -1, insertion: Int = -1, deletion: Int = -1) -> [(String, String)] {

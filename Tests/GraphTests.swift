@@ -14,9 +14,9 @@ class GraphTests: XCTestCase {
 	func testGraph_Types() {
 		print()
 		graphTest(Graph_Hashing			.self)
-		// graphTest(Graph_Matrix			.self)
-		// graphTest(Graph_List			.self)
-		// graphTest(Graph_AdjacencyList	.self)
+		graphTest(Graph_Matrix			.self)
+		graphTest(Graph_List			.self)
+		graphTest(Graph_AdjacencyList	.self)
 	}
 	
 	func graphTest< G : Graph >(_ graphType: G.Type) {
