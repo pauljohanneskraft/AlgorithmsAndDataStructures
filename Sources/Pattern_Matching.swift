@@ -10,16 +10,8 @@ import Foundation
 
 public extension String {
 	
-	private enum NeedlemanWunschDirection : CustomStringConvertible {
+	private enum NeedlemanWunschDirection {
 		case top, left, diagonal
-		
-		var description: String {
-			switch self {
-			case .top:		return "top"
-			case .left:		return "left"
-			case .diagonal:	return "diagonal"
-			}
-		}
 	}
 	
 	public static func needlemanWunsch(comparing cmp: String, to: String, match: Int = 1, mismatch: Int = -1, insertion: Int = -1, deletion: Int = -1) -> [(String, String)] {

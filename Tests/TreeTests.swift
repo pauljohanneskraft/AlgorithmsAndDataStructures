@@ -72,9 +72,8 @@ class TreeTests: XCTestCase {
 			// print(sorted)
 			let revSorted : [Int] = arr.sorted().reversed()
 			XCTAssert(sorted	== revSorted, "\n\(sorted	)\n!=\n\(revSorted	)\n")
-			// XCTAssert(sorted2	== revSorted, "\n\(sorted2	)\n!=\n\(revSorted	)\n")
-			// XCTAssert(sorted	== sorted2	, "\n\(sorted	)\n!=\n\(sorted2	)\n") // HIGH_PRIO
-			if sorted2 == revSorted { print(sorted2) }
+			XCTAssert(sorted2.count	== revSorted.count, "counts don't match.")
+			XCTAssert(sorted2	== revSorted, "\n\(sorted2	)\n!=\n\(revSorted	)\n")
 		}
 	}
 	
