@@ -37,8 +37,8 @@ public extension String {
 		
 		var matrix = [[(Int, [NeedlemanWunschDirection])]](repeating: [(Int, [NeedlemanWunschDirection])](repeating: (0, []), count: cmpc), count: count)
 		
-		for i in 0..<cmpc	{ matrix[0][i] = (-i, []) } // setup
-		for i in 0..<count	{ matrix[i][0] = (-i, []) } // setup
+		for i in 0..<cmpc	{ matrix[0][i] = (-i, [.left]) } // setup
+		for i in 0..<count	{ matrix[i][0] = (-i, [.top ]) } // setup
 		
 		for i in 1..<count {		// rows
 			let ai = to.index(to.startIndex, offsetBy: i-1)

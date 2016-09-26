@@ -11,10 +11,21 @@ import XCTest
 class PatternMatchingTests: XCTestCase {
 
 	func testNeedlemanWunsch() {
-		XCTAssert(String.needlemanWunsch(comparing: "ACGTC", to: "AGTC").description == "[(\"A-GTC\", \"ACGTC\")]")
-		XCTAssert(String.needlemanWunsch(comparing: "GCATGCU", to: "GATTACA").description == "[(\"G-ATTACA\", \"GCATG-CU\"), (\"G-ATTACA\", \"GCAT-GCU\"), (\"G-ATTACA\", \"GCA-TGCU\")]")
-		XCTAssert(String.needlemanWunsch(comparing: "Hallo", to: "Peter").description == "[(\"Peter\", \"Hallo\")]")
-		XCTAssert(String.needlemanWunsch(comparing: "Pinguin", to: "Julian", match: 3, mismatch: 1, insertion: 0, deletion: 0).description == "[(\"J---ulian\", \"Pingu-i-n\")]")
+		
+		let a = String.needlemanWunsch(comparing: "ACGTC", to: "AGTC")
+		XCTAssert("\(a)" == "[(\"A-GTC\", \"ACGTC\")]", "\(a)")
+		
+		let b = String.needlemanWunsch(comparing: "GCATGCU", to: "GATTACA")
+		XCTAssert("\(b)" == "[(\"G-ATTACA\", \"GCATG-CU\"), (\"G-ATTACA\", \"GCAT-GCU\"), (\"G-ATTACA\", \"GCA-TGCU\")]", "\(b)")
+		
+		let c = String.needlemanWunsch(comparing: "Hallo", to: "Peter")
+		XCTAssert("\(c)" == "[(\"Peter\", \"Hallo\")]", "\(c)")
+		
+		let d = String.needlemanWunsch(comparing: "Pinguin", to: "Julian", match: 3, mismatch: 1, insertion: 0, deletion: 0)
+		XCTAssert("\(d)" == "[(\"J---ulian\", \"Pingu-i-n\")]", "\(d)")
+		
+		let e = String.needlemanWunsch(comparing: "MAEHTE", to: "AEHREN")
+		XCTAssert("\(e)" == "[(\"-AEHREN\", \"MAEHTE-\")]", "\(e)")
 
 	}
 }
