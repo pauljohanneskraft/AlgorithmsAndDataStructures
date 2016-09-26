@@ -41,12 +41,12 @@ public struct SinglyLinkedList < Element > : _List {
 			}
 			
 			var current = root
-			var i = index - 1
+			var index = index - 1
 			
-			while i > 0 {
+			while index > 0 {
 				current = current?.next
-				precondition(current != nil, "Index out of bounds. \(index) > \(i)")
-				i -= 1
+				precondition(current != nil, "Index out of bounds.")
+				index -= 1
 			}
 			
 			current!.next = SinglyLinkedItem(data: newValue!, next: current?.next?.next)
