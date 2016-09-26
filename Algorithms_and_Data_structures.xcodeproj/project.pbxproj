@@ -13,9 +13,7 @@
 		9B0E85E11D85E8980013148D /* AVLCompositeBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85C91D85E8980013148D /* AVLCompositeBinaryTree.swift */; };
 		9B0E85E21D85E8980013148D /* B-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CA1D85E8980013148D /* B-Tree.swift */; };
 		9B0E85E31D85E8980013148D /* B+-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CB1D85E8980013148D /* B+-Tree.swift */; };
-		9B0E85E41D85E8980013148D /* BinaryHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CC1D85E8980013148D /* BinaryHeap.swift */; };
 		9B0E85E51D85E8980013148D /* BinaryMaxHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CD1D85E8980013148D /* BinaryMaxHeap.swift */; };
-		9B0E85E61D85E8980013148D /* BinaryMinHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CE1D85E8980013148D /* BinaryMinHeap.swift */; };
 		9B0E85E71D85E8980013148D /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85CF1D85E8980013148D /* BinaryTree.swift */; };
 		9B0E85E81D85E8980013148D /* BinomialHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85D01D85E8980013148D /* BinomialHeap.swift */; };
 		9B0E85E91D85E8980013148D /* CompositeBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0E85D11D85E8980013148D /* CompositeBinaryTree.swift */; };
@@ -59,9 +57,7 @@
 		9B0E85C91D85E8980013148D /* AVLCompositeBinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AVLCompositeBinaryTree.swift; path = Sources/AVLCompositeBinaryTree.swift; sourceTree = "<group>"; };
 		9B0E85CA1D85E8980013148D /* B-Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "B-Tree.swift"; path = "Sources/B-Tree.swift"; sourceTree = "<group>"; };
 		9B0E85CB1D85E8980013148D /* B+-Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "B+-Tree.swift"; path = "Sources/B+-Tree.swift"; sourceTree = "<group>"; };
-		9B0E85CC1D85E8980013148D /* BinaryHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinaryHeap.swift; path = Sources/BinaryHeap.swift; sourceTree = "<group>"; };
 		9B0E85CD1D85E8980013148D /* BinaryMaxHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinaryMaxHeap.swift; path = Sources/BinaryMaxHeap.swift; sourceTree = "<group>"; };
-		9B0E85CE1D85E8980013148D /* BinaryMinHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinaryMinHeap.swift; path = Sources/BinaryMinHeap.swift; sourceTree = "<group>"; };
 		9B0E85CF1D85E8980013148D /* BinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinaryTree.swift; path = Sources/BinaryTree.swift; sourceTree = "<group>"; };
 		9B0E85D01D85E8980013148D /* BinomialHeap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinomialHeap.swift; path = Sources/BinomialHeap.swift; sourceTree = "<group>"; };
 		9B0E85D11D85E8980013148D /* CompositeBinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompositeBinaryTree.swift; path = Sources/CompositeBinaryTree.swift; sourceTree = "<group>"; };
@@ -153,9 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				9B0E85DB1D85E8980013148D /* PriorityQueue.swift */,
-				9B0E85CC1D85E8980013148D /* BinaryHeap.swift */,
 				9B0E85CD1D85E8980013148D /* BinaryMaxHeap.swift */,
-				9B0E85CE1D85E8980013148D /* BinaryMinHeap.swift */,
 				9B0E85D01D85E8980013148D /* BinomialHeap.swift */,
 				9B0E85DE1D85E8980013148D /* Tree.swift */,
 				9B0E85C71D85E8980013148D /* (a,b)-Tree.swift */,
@@ -305,7 +299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B0E85E41D85E8980013148D /* BinaryHeap.swift in Sources */,
 				9B0E85E11D85E8980013148D /* AVLCompositeBinaryTree.swift in Sources */,
 				9B0E85E51D85E8980013148D /* BinaryMaxHeap.swift in Sources */,
 				9B0E85ED1D85E8980013148D /* Graph_Hashing.swift in Sources */,
@@ -320,7 +313,6 @@
 				9B0E85F51D85E8980013148D /* StyleGuide.swift in Sources */,
 				9B0E85EA1D85E8980013148D /* DoublyLinkedList.swift in Sources */,
 				9B0E85E81D85E8980013148D /* BinomialHeap.swift in Sources */,
-				9B0E85E61D85E8980013148D /* BinaryMinHeap.swift in Sources */,
 				9B0E85F21D85E8980013148D /* Pattern_Matching.swift in Sources */,
 				9B0E85E31D85E8980013148D /* B+-Tree.swift in Sources */,
 				9B0E85DF1D85E8980013148D /* (a,b)-Tree.swift in Sources */,
