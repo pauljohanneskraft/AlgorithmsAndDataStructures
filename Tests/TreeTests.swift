@@ -93,6 +93,16 @@ class TreeTests: XCTestCase {
 		XCTAssert("\(t)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t)")
 	}
 	
+	func testTrieComparable() {
+		let a = [TestTrieComparable(hashValue: 7), TestTrieComparable(hashValue: 22), TestTrieComparable(hashValue: 5)]
+		let b = [TestTrieComparable(hashValue: 7), TestTrieComparable(hashValue: 21), TestTrieComparable(hashValue: 6)]
+		var ab = [a, b]
+		Trie<TestTrieComparable>.sort(&ab)
+		XCTAssert("\(ab)" == "[[7, 22, 5], [7, 21, 6]]")
+		Trie<TestTrieComparable>.sort(&ab, by: { $0.hashValue < $1.hashValue })
+		XCTAssert("\(ab)" == "[[7, 21, 6], [7, 22, 5]]")
+	}
+	
 	func testBinaryTree() {
 		for arr in arrs {
 			var bin = BinaryTree<Int>()
@@ -120,9 +130,11 @@ class TreeTests: XCTestCase {
 	}
 }
 
-struct TestTrieComparable : Comparable, Hashable {
-	init() {}
+struct TestTrieComparable : Comparable, Hashable, CustomStringConvertible {
+	init() { self.init(hashValue: Int(arc4random())) }
+	init(hashValue: Int) { self.hashValue = hashValue }
 	var hashValue: Int = Int(arc4random())
+	var description: String { return hashValue.description }
 }
 
 func < (lhs: TestTrieComparable, rhs: TestTrieComparable) -> Bool {
