@@ -80,9 +80,18 @@ class TreeTests: XCTestCase {
 	func testTrie() {
 		let a = "Hallo".characters.map { $0 }
 		let b = "Hello".characters.map { $0 }
-		var ab = [a, b]
-		Trie<Character>.sort(&ab)
-		print(ab)
+		let c = "Bonjour".characters.map { $0 }
+		var list = [a, b, c]
+		Trie<Character>.sort(&list)
+		XCTAssert("\(list)" == "[[\"B\", \"o\", \"n\", \"j\", \"o\", \"u\", \"r\"], [\"H\", \"a\", \"l\", \"l\", \"o\"], [\"H\", \"e\", \"l\", \"l\", \"o\"]]")
+		let t = Trie<Character>()
+		t.insert(a)
+		t.insert(a)
+		t.insert(a.dropLast() + [])
+		t.insert(b)
+		t.insert(c)
+		XCTAssert("\(t)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t)")
+		
 	}
 	
 	func testBinaryTree() {
@@ -124,3 +133,4 @@ extension Int {
 		return c
 	}
 }
+

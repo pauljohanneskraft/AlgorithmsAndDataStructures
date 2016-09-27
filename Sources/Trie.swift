@@ -10,13 +10,14 @@ import Foundation
 
 public class Trie < Element : Hashable > {
 	
+	public init() {}
+	
 	var children		= [Element:Trie<Element>]()
 	var count : UInt	= 0
 	
 	public func insert(_ word: [Element]) {
-		count += 1
-
-		guard word.count > 0 else { return }				
+		
+		guard word.count > 0 else { count += 1; return }
 		
 		if let c = children[word[0]] {
 			c.insert(word.dropFirst() + [])
@@ -31,18 +32,13 @@ public class Trie < Element : Hashable > {
 	
 	private func getArray(appending: [Element]) -> [[Element]] {
 		
-		var c : UInt = 0
 		var result = [[Element]]()
 		
 		for k in children.keys.sorted(by: { $0.hashValue < $1.hashValue }) {
 			result.append(contentsOf: children[k]!.getArray(appending: appending + [k]))
-			c += children[k]!.count
 		}
 		
-		while c < count {
-			result.append(appending)
-			c += 1
-		}
+		for _ in 0..<count { result.append(appending) }
 		
 		return result
 	}
@@ -51,5 +47,20 @@ public class Trie < Element : Hashable > {
 		let t = Trie()
 		for item in list { t.insert(item) }
 		list = t.array
+	}
+}
+
+extension Trie : CustomStringConvertible {
+	public var description : String {
+		return "\(Trie<Element>.self)" + description(depth: 1)
+	}
+	
+	private func description(depth: UInt) -> String {
+		var result = count == 0 ? "" : " - \(count)"
+		let spacing = " " * depth
+		for k in children.keys.sorted(by: { $0.hashValue < $1.hashValue }) {
+			result += "\n" + spacing + "∟ \(k)" + children[k]!.description(depth: depth + 1)
+		}
+		return result
 	}
 }
