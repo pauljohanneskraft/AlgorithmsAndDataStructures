@@ -72,10 +72,35 @@ class TreeTests: XCTestCase {
 			// print(sorted)
 			let revSorted : [Int] = arr.sorted().reversed()
 			XCTAssert(sorted	== revSorted, "\n\(sorted	)\n!=\n\(revSorted	)\n")
-			// XCTAssert(sorted2	== revSorted, "\n\(sorted2	)\n!=\n\(revSorted	)\n")
-			// XCTAssert(sorted	== sorted2	, "\n\(sorted	)\n!=\n\(sorted2	)\n") // HIGH_PRIO
-			if sorted2 == revSorted { print(sorted2) }
+			XCTAssert(sorted2.count	== revSorted.count, "counts don't match.")
+			XCTAssert(sorted2	== revSorted, "\n\(sorted2	)\n!=\n\(revSorted	)\n")
 		}
+	}
+	
+	func testTrie() {
+		let a = "Hallo".characters.map { $0 }
+		let b = "Hello".characters.map { $0 }
+		let c = "Bonjour".characters.map { $0 }
+		var list = [a, b, c]
+		Trie<Character>.sort(&list)
+		XCTAssert("\(list)" == "[[\"B\", \"o\", \"n\", \"j\", \"o\", \"u\", \"r\"], [\"H\", \"a\", \"l\", \"l\", \"o\"], [\"H\", \"e\", \"l\", \"l\", \"o\"]]")
+		let t = Trie<Character>()
+		t.insert(a)
+		t.insert(a)
+		t.insert(a.dropLast() + [])
+		t.insert(b)
+		t.insert(c)
+		XCTAssert("\(t)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t)")
+	}
+	
+	func testTrieComparable() {
+		let a = [TestTrieComparable(hashValue: 7), TestTrieComparable(hashValue: 22), TestTrieComparable(hashValue: 5)]
+		let b = [TestTrieComparable(hashValue: 7), TestTrieComparable(hashValue: 21), TestTrieComparable(hashValue: 6)]
+		var ab = [a, b]
+		Trie<TestTrieComparable>.sort(&ab)
+		XCTAssert("\(ab)" == "[[7, 22, 5], [7, 21, 6]]")
+		Trie<TestTrieComparable>.sort(&ab, by: { $0.hashValue < $1.hashValue })
+		XCTAssert("\(ab)" == "[[7, 21, 6], [7, 22, 5]]")
 	}
 	
 	func testBinaryTree() {
@@ -105,6 +130,20 @@ class TreeTests: XCTestCase {
 	}
 }
 
+struct TestTrieComparable : Comparable, Hashable, CustomStringConvertible {
+	init() { self.init(hashValue: Int(arc4random())) }
+	init(hashValue: Int) { self.hashValue = hashValue }
+	var hashValue: Int = Int(arc4random())
+	var description: String { return hashValue.description }
+}
+
+func < (lhs: TestTrieComparable, rhs: TestTrieComparable) -> Bool {
+	return lhs.hashValue > rhs.hashValue
+}
+
+func == (lhs: TestTrieComparable, rhs: TestTrieComparable) -> Bool {
+	return lhs.hashValue == rhs.hashValue
+}
 
 extension Int {
 	var bitCount : Int {
@@ -117,3 +156,4 @@ extension Int {
 		return c
 	}
 }
+

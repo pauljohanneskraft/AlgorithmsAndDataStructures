@@ -49,6 +49,7 @@ class GraphTests: XCTestCase {
 		dijkstra(graph: graph)
 		bfs(graph: graph)
 		dfs(graph: graph)
+		bellmanFord(graph: G.self)
 		
 		print(graph)
 		
@@ -91,6 +92,26 @@ class GraphTests: XCTestCase {
 		XCTAssert(path == [0, 1, 2, 3, 7, 8, 9], "\(path)")
 		
 		print("Dijkstra:\t", time)
+	}
+	
+	func bellmanFord< G : Graph >(graph: G.Type) {
+		var g = G()
+		for i in 0..<10 {
+			g[i, i + 1] = 1
+		}
+		g[7, 5] = -20
+		let start = Date()
+		let visited = g.bellmanFord(start: 0)
+		let time = -start.timeIntervalSinceNow
+		print(visited.map { "\($0.key) - \($0.value.last): \($0.value.last)" })
+		for v in visited {
+			if v.key >= 5 {
+				XCTAssert(v.value.weight == Int.min)
+			} else {
+				XCTAssert(v.value.weight == v.key)
+			}
+		}
+		print("BellmanFord:", time)
 	}
 }
 

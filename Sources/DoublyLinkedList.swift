@@ -39,7 +39,7 @@ public struct DoublyLinkedList < Element > : _List {
 		set {
 			guard newValue != nil else { return }
 			guard root != nil else {
-				assert(index == 0, "Index out of bounds")
+				precondition(index == 0, "Index out of bounds. \(index) > 0.")
 				root = DoublyLinkedItem(data: newValue!)
 				assert(invariant, "Invariant conflict. \(self)")
 				return
@@ -57,7 +57,7 @@ public struct DoublyLinkedList < Element > : _List {
 			
 			while index > 0 {
 				current = current?.next
-				assert(current != nil, "Index out of bounds")
+				precondition(current != nil, "Index out of bounds.")
 				index -= 1
 			}
 			let c = current!

@@ -90,10 +90,7 @@ final class BinaryTreeNode <Element> : _BinTreeNode {
 	}
 }
 
-extension BinaryTreeNode : CustomStringConvertible {
-	public var description : String {
-		return "\(BinaryTreeNode<Element>.self)\n" + description(depth: 1)
-	}
+extension BinaryTreeNode {
 	public func description(depth: UInt) -> String {
 		let tab = "   "
 		var tabs = tab * depth
