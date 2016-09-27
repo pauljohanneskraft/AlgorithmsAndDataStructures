@@ -91,7 +91,6 @@ class TreeTests: XCTestCase {
 		t.insert(b)
 		t.insert(c)
 		XCTAssert("\(t)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t)")
-		
 	}
 	
 	func testBinaryTree() {
@@ -121,6 +120,18 @@ class TreeTests: XCTestCase {
 	}
 }
 
+struct TestTrieComparable : Comparable, Hashable {
+	init() {}
+	var hashValue: Int = Int(arc4random())
+}
+
+func < (lhs: TestTrieComparable, rhs: TestTrieComparable) -> Bool {
+	return lhs.hashValue > rhs.hashValue
+}
+
+func == (lhs: TestTrieComparable, rhs: TestTrieComparable) -> Bool {
+	return lhs.hashValue == rhs.hashValue
+}
 
 extension Int {
 	var bitCount : Int {
