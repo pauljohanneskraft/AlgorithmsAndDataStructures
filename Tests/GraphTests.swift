@@ -50,6 +50,7 @@ class GraphTests: XCTestCase {
 		bfs(graph: graph)
 		dfs(graph: graph)
 		bellmanFord(graph: G.self)
+		nearestNeighbor(graph: G.self)
 		
 		print(graph)
 		
@@ -94,6 +95,145 @@ class GraphTests: XCTestCase {
 		print("Dijkstra:\t", time)
 	}
 	
+	func hierholzer< G : Graph >(graph: G.Type) {
+		
+		/*
+		
+		0----3----4
+		|    |\  /
+		|    | \/
+		1----2  5
+		
+		*/
+		
+		
+		var g0 = G()
+		g0[0, 1] = 1
+		g0[1, 2] = 1
+		g0[2, 3] = 1
+		g0[3, 0] = 1
+		g0[3, 4] = 1
+		g0[4, 5] = 1
+		g0[5, 3] = 1
+		
+		// print(g0)
+		// print(g0.eulerian)
+		// print(g0.semiEulerian)
+		XCTAssert(g0.hierholzer() == nil) // TODO: Hierholzer also for directed, (semi-)eulerian graphs
+		
+		var g1 = G()
+		
+		g1[0, 1] = 1
+		g1[1, 0] = 1
+		
+		g1[1, 2] = 1
+		g1[2, 1] = 1
+		
+		g1[2, 3] = 1
+		g1[3, 2] = 1
+		
+		g1[3, 0] = 1
+		g1[0, 3] = 1
+		
+		g1[3, 4] = 1
+		g1[4, 3] = 1
+		
+		g1[4, 5] = 1
+		g1[5, 4] = 1
+		
+		g1[5, 3] = 1
+		g1[3, 5] = 1
+		
+		// print(g1)
+		print(g1.hierholzer()!)
+		
+		var g2 = G()
+		
+		g2[0, 1] = 1
+		g2[1, 0] = 1
+		
+		g2[1, 2] = 1
+		g2[2, 1] = 1
+		
+		g2[2, 3] = 1
+		g2[3, 2] = 1
+		
+		g2[3, 0] = 1
+		g2[0, 3] = 1
+		
+		g2[3, 4] = 1
+		g2[4, 3] = 1
+		
+		g2[4, 5] = 1
+		g2[5, 4] = 1
+		
+		g2[5, 3] = 1
+		// g2[3, 5] = 1
+		
+		// print(g2)
+		XCTAssert(g2.hierholzer() == nil)
+		
+		var g3 = G()
+		
+		g3[0, 1] = 1
+		g3[1, 0] = 1
+		
+		g3[1, 2] = 1
+		g3[2, 1] = 1
+		
+		g3[2, 3] = 1
+		g3[3, 2] = 1
+		
+		g3[3, 0] = 1
+		g3[0, 3] = 1
+		
+		g3[3, 4] = 1
+		g3[4, 3] = 1
+		
+		g3[5, 3] = 1
+		g3[3, 5] = 1
+		
+		// print(g3)
+		print(g3.hierholzer()!)
+	}
+	
+	func testKruskal() {
+		kruskal(graph: Graph_Hashing.self)
+	}
+	
+	func kruskal< G : Graph >(graph: G.Type) {
+		var g0 = G()
+		
+		g0[0, 1] = 1
+		g0[0, 2] = 4
+		g0[1, 2] = 1
+		g0[2, 1] = -3
+		
+		XCTAssert(g0.kruskal() == nil)
+		
+		var g1 = G()
+		
+		g1[0, 1] = 1
+		g1[1, 0] = 1
+		g1[0, 2] = 4
+		g1[2, 0] = 4
+		g1[1, 2] = -3
+		g1[2, 1] = -3
+		
+		print(g1.kruskal()!)
+	}
+	
+	func nearestNeighbor< G : Graph >(graph: G.Type) {
+		var g = G()
+		for i in 0..<10 { g[i, i + 1] = 1 }
+		g[5, 7] = -20
+		XCTAssert(g.nearestNeighbor(start: 0) == nil)
+		g[10, 6] = 1
+		let gnN = g.nearestNeighbor(start: 0)!
+		XCTAssert(gnN.0 == [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 6])
+		XCTAssert(gnN.1 == -11)
+	}
+	
 	func bellmanFord< G : Graph >(graph: G.Type) {
 		var g = G()
 		for i in 0..<10 {
@@ -103,7 +243,7 @@ class GraphTests: XCTestCase {
 		let start = Date()
 		let visited = g.bellmanFord(start: 0)
 		let time = -start.timeIntervalSinceNow
-		print(visited.map { "\($0.key) - \($0.value.last): \($0.value.last)" })
+		print(visited.map { "\($0.key) - \($0.value.last): \($0.value.weight)" })
 		for v in visited {
 			if v.key >= 5 {
 				XCTAssert(v.value.weight == Int.min)
