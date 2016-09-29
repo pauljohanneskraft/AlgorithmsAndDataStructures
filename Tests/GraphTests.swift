@@ -51,6 +51,8 @@ class GraphTests: XCTestCase {
 		dfs(graph: graph)
 		bellmanFord(graph: G.self)
 		nearestNeighbor(graph: G.self)
+		kruskal(graph: G.self)
+		hierholzer(graph: G.self)
 		
 		print(graph)
 		
@@ -195,10 +197,6 @@ class GraphTests: XCTestCase {
 		
 		// print(g3)
 		print(g3.hierholzer()!)
-	}
-	
-	func testKruskal() {
-		kruskal(graph: Graph_Hashing.self)
 	}
 	
 	func kruskal< G : Graph >(graph: G.Type) {
