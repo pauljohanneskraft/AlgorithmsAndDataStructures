@@ -16,7 +16,7 @@ public class Trie < Element : Hashable > {
 	
 	var children		= [Element:Trie<Element>]()
 	var count : UInt	= 0
-	var order : (Element, Element) -> Bool
+	let order : (Element, Element) -> Bool
 	
 	public func insert(_ word: [Element]) {
 		
