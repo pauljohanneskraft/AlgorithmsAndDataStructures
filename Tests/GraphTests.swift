@@ -34,7 +34,7 @@ class GraphTests: XCTestCase {
 			graph[7,3] = 1
 		}
 		
-		print("Creation:\t", time)
+		print("Creation:\t\t", time)
 		
 		let graph2 = G.init(vertices: Set<Int>(0...20), rule: { return abs($0 - $1) == 1 ? 1 : (($0, $1) == (3,7) || ($0, $1) == (7,3) ? 1 : nil) })
 		
@@ -54,14 +54,14 @@ class GraphTests: XCTestCase {
 		kruskal(graph: G.self)
 		hierholzer(graph: G.self)
 		
-		print(graph)
+		// print(graph)
 		
 		XCTAssert(graph[1,4] == nil)
 		XCTAssert(graph[1,2] == 1)
 		XCTAssert(graph[3,7] == 1)
 		XCTAssert(graph[2,5] == nil)
 		
-		print(MemoryLayout.stride(ofValue: graph))
+		// print(MemoryLayout.stride(ofValue: graph))
 		print()
 		
 	}
@@ -73,7 +73,7 @@ class GraphTests: XCTestCase {
 		}
 		XCTAssert(fn.0 == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
 		XCTAssert(fn.1 == [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "\(fn)")
-		print("DFS:\t\t", time)
+		print("DFS:\t\t\t", time)
 	}
 	
 	func bfs(graph: Graph) {
@@ -82,7 +82,7 @@ class GraphTests: XCTestCase {
 			fn = graph.breadthFirstSearch(start: 0) { $0 }
 		}
 		XCTAssert(fn == [0, 1, 2, 3, 4, 7, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
-		print("BFS:\t\t", time)
+		print("BFS:\t\t\t", time)
 	}
 	
 	func dijkstra(graph: Graph) {
@@ -94,11 +94,11 @@ class GraphTests: XCTestCase {
 		
 		XCTAssert(path == [0, 1, 2, 3, 7, 8, 9], "\(path)")
 		
-		print("Dijkstra:\t", time)
+		print("Dijkstra:\t\t", time)
 	}
 	
 	func hierholzer< G : Graph >(graph: G.Type) {
-		
+		let start = Date()
 		/*
 		
 		0----3----4
@@ -147,7 +147,7 @@ class GraphTests: XCTestCase {
 		g1[3, 5] = 1
 		
 		// print(g1)
-		print(g1.hierholzer()!)
+		_ = g1.hierholzer()!
 		
 		var g2 = G()
 		
@@ -196,10 +196,13 @@ class GraphTests: XCTestCase {
 		g3[3, 5] = 1
 		
 		// print(g3)
-		print(g3.hierholzer()!)
+		_ = g3.hierholzer()!
+		
+		print("Hierholzer:\t\t", -start.timeIntervalSinceNow)
 	}
 	
 	func kruskal< G : Graph >(graph: G.Type) {
+		let start = Date()
 		var g0 = G()
 		
 		g0[0, 1] = 1
@@ -218,10 +221,13 @@ class GraphTests: XCTestCase {
 		g1[1, 2] = -3
 		g1[2, 1] = -3
 		
-		print(g1.kruskal()!)
+		_ = g1.kruskal()!
+		
+		print("Kruskal:\t\t", -start.timeIntervalSinceNow)
 	}
 	
 	func nearestNeighbor< G : Graph >(graph: G.Type) {
+		let start = Date()
 		var g = G()
 		for i in 0..<10 { g[i, i + 1] = 1 }
 		g[5, 7] = -20
@@ -230,6 +236,7 @@ class GraphTests: XCTestCase {
 		let gnN = g.nearestNeighbor(start: 0)!
 		XCTAssert(gnN.0 == [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 6])
 		XCTAssert(gnN.1 == -11)
+		print("NearestNeighbor:", -start.timeIntervalSinceNow)
 	}
 	
 	func bellmanFord< G : Graph >(graph: G.Type) {
@@ -241,7 +248,7 @@ class GraphTests: XCTestCase {
 		let start = Date()
 		let visited = g.bellmanFord(start: 0)
 		let time = -start.timeIntervalSinceNow
-		print(visited.map { "\($0.key) - \($0.value.last): \($0.value.weight)" })
+		// print(visited.map { "\($0.key) - \($0.value.last): \($0.value.weight)" })
 		for v in visited {
 			if v.key >= 5 {
 				XCTAssert(v.value.weight == Int.min)
@@ -249,7 +256,7 @@ class GraphTests: XCTestCase {
 				XCTAssert(v.value.weight == v.key)
 			}
 		}
-		print("BellmanFord:", time)
+		print("BellmanFord:\t", time)
 	}
 }
 
