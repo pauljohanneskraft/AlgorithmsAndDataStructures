@@ -98,7 +98,6 @@ class GraphTests: XCTestCase {
 	}
 	
 	func hierholzer< G : Graph >(graph: G.Type) {
-		let start = Date()
 		/*
 		
 		0----3----4
@@ -121,7 +120,6 @@ class GraphTests: XCTestCase {
 		// print(g0)
 		// print(g0.eulerian)
 		// print(g0.semiEulerian)
-		XCTAssert(g0.hierholzer() == nil) // TODO: Hierholzer also for directed, (semi-)eulerian graphs
 		
 		var g1 = G()
 		
@@ -147,7 +145,6 @@ class GraphTests: XCTestCase {
 		g1[3, 5] = 1
 		
 		// print(g1)
-		_ = g1.hierholzer()!
 		
 		var g2 = G()
 		
@@ -173,7 +170,6 @@ class GraphTests: XCTestCase {
 		// g2[3, 5] = 1
 		
 		// print(g2)
-		XCTAssert(g2.hierholzer() == nil)
 		
 		var g3 = G()
 		
@@ -196,13 +192,21 @@ class GraphTests: XCTestCase {
 		g3[3, 5] = 1
 		
 		// print(g3)
+		
+		let start = Date()
+		
+		XCTAssert(g0.hierholzer() == nil) // TODO: Hierholzer also for directed, (semi-)eulerian graphs
+		
+		_ = g1.hierholzer()!
+
+		XCTAssert(g2.hierholzer() == nil)
+
 		_ = g3.hierholzer()!
 		
 		print("Hierholzer:\t\t", -start.timeIntervalSinceNow)
 	}
 	
 	func kruskal< G : Graph >(graph: G.Type) {
-		let start = Date()
 		var g0 = G()
 		
 		g0[0, 1] = 1
@@ -210,7 +214,6 @@ class GraphTests: XCTestCase {
 		g0[1, 2] = 1
 		g0[2, 1] = -3
 		
-		XCTAssert(g0.kruskal() == nil)
 		
 		var g1 = G()
 		
@@ -221,6 +224,9 @@ class GraphTests: XCTestCase {
 		g1[1, 2] = -3
 		g1[2, 1] = -3
 		
+		let start = Date()
+		
+		XCTAssert(g0.kruskal() == nil)
 		_ = g1.kruskal()!
 		
 		print("Kruskal:\t\t", -start.timeIntervalSinceNow)
