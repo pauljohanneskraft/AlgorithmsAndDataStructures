@@ -34,6 +34,8 @@ class GraphTests: XCTestCase {
 			graph[7,3] = 1
 		}
 		
+		print(graph)
+		
 		print("Creation:\t\t", time)
 		
 		let graph2 = G.init(vertices: Set<Int>(0...20), rule: { return abs($0 - $1) == 1 ? 1 : (($0, $1) == (3,7) || ($0, $1) == (7,3) ? 1 : nil) })
