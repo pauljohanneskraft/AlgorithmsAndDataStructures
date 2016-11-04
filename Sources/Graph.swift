@@ -29,6 +29,87 @@ extension Graph {
 		}
 	}
 	
+	public var noEmtpyVertices : Bool {
+		for v in vertices {
+			guard self[v].count > 0 else { return false }
+		}
+		return true
+	}
+
+	public var unEvenVertices : Int? {
+		var counts = [Int: (incoming: Int, outgoing: Int)]()
+		for v in vertices { counts[v] = (0, 0) }
+		for e in edges {
+			let cstart	= counts[e.start]!
+			let cend	= counts[e.end	]!
+			counts[e.start	]! = (cstart.0,		cstart.1 + 1)
+			counts[e.end	]! = (cend.0 + 1,	cend.1		)
+		}
+		var count = 0
+		for v in vertices {
+			let c = counts[v]!
+			if c.0 != c.1 {
+				if abs(c.0 - c.1) == 1 {
+					count += 1
+				} else { return nil }
+			}
+		}
+		return count
+
+	}
+	
+	public var directed : Bool { return !simple }
+	
+	public var simple : Bool {
+		for v in vertices {
+			for e in self[v] {
+				guard self[e.end].contains(where: { $0.end == v }) else { return false }
+			}
+		}
+		return true
+	}
+	
+	public var semiEulerian : Bool {
+		var counts = [Int: (incoming: Int, outgoing: Int)]()
+		for v in vertices { counts[v] = (0, 0) }
+		for e in edges {
+			let cstart	= counts[e.start]!
+			let cend	= counts[e.end	]!
+			counts[e.start	]! = (cstart.0,		cstart.1 + 1)
+			counts[e.end	]! = (cend.0 + 1,	cend.1		)
+		}
+		var count = 0
+		for v in vertices {
+			let c = counts[v]!
+			if c.0 != c.1 {
+				if abs(c.0 - c.1) == 1 {
+					count += 1
+				} else { return false }
+			}
+		}
+		return count == 2 || count == 0
+	}
+	
+	public var eulerian : Bool {
+		var counts = [Int: (incoming: Int, outgoing: Int)]()
+		for v in vertices { counts[v] = (0, 0) }
+		for e in edges {
+			let cstart	= counts[e.start]!
+			let cend	= counts[e.end	]!
+			counts[e.start	]! = (cstart.0,		cstart.1 + 1)
+			counts[e.end	]! = (cend.0 + 1,	cend.1		)
+		}
+		for v in vertices {
+			let c = counts[v]!
+			guard c.0 == c.1 else { return false }
+		}
+		return true
+	}
+	
+	public func degree(of vertex: Int) -> Int {
+		return self[vertex].count
+	}
+	
 	public func convert< G : Graph >(to: G.Type) -> G {
 		var a = to.init()
 		a.edges = self.edges
@@ -49,14 +130,12 @@ public func == (lhs: Graph, rhs: Graph) -> Bool {
 	return sl == sr
 }
 
-private struct HashableEdge : Hashable {
+internal struct HashableEdge : Hashable {
 	var value : (start: Int, end: Int, weight: Int)
-	var hashValue: Int {
-		return (value.start << 32) | value.end
-	}
+	var hashValue: Int { return (value.start << 32) | value.end }
 }
 
-private func == (lhs: HashableEdge, rhs: HashableEdge) -> Bool {
+internal func == (lhs: HashableEdge, rhs: HashableEdge) -> Bool {
 	return lhs.value == rhs.value
 }
 
