@@ -102,4 +102,83 @@ class ListTests: XCTestCase {
 		}
 	}
 	
+    func testLazyLists() {
+        var interval = [Int]()
+        for _ in 0..<20000 {
+            interval.append(Int(arc4random() % 3000))
+        }
+        let start1 = Date()
+        let lpowers2 = LazyList<Int>(start: 1) { (a: Int) -> Int in return a + 2 }
+        for i in interval { _ = lpowers2[i] }
+        for i in interval { _ = lpowers2[i] }
+        let negation = LazyList<Bool>(start: false) { !$0 }
+        for i in interval { _ = negation[i] }
+        for i in interval { _ = negation[i] }
+        print(Date().timeIntervalSince(start1))
+        let start2 = Date()
+        let lpowers2buff = BufferedLazyList<Int>(start: 1) { (a: Int) -> Int in return a + 2 }
+        for i in interval { _ = (lpowers2buff[i]) }
+        for i in interval { _ = (lpowers2buff[i]) }
+        let negationbuff = BufferedLazyList<Bool>(start: false) { !$0 }
+        for i in interval { _ = (negationbuff[i]) }
+        for i in interval { _ = (negationbuff[i]) }
+        print(Date().timeIntervalSince(start2))
+        let start3 = Date()
+        let lpowers2sbuff = SmartBufferedLazyList<Int>(start: 1) { (a: Int) -> Int in return a + 2 }
+        for i in interval { _ = (lpowers2sbuff[i]) }
+        for i in interval { _ = (lpowers2sbuff[i]) }
+        let negationsbuff = SmartBufferedLazyList<Bool>(start: false) { !$0 }
+        for i in interval { _ = (negationsbuff[i]) }
+        for i in interval { _ = (negationsbuff[i]) }
+        print(Date().timeIntervalSince(start3))
+        for i in interval {
+            let nb = lpowers2[i]
+            let db = lpowers2buff[i]
+            let sd = lpowers2sbuff[i]
+            if nb != db || sd != db { print("error") }
+            // print(i, nb, db, sd)
+        }
+        print(lpowers2buff.bufferCount)
+        print(lpowers2sbuff.bufferCount)
+        
+    }
+    
+    func testCollatz() {
+        func collatz(of num: Int) -> Int {
+            if num & 0x1 == 0 {
+                return num >> 1
+            } else {
+                return 3*num + 1
+            }
+        }
+        
+        var endresults = Set([1])
+        
+        for i in 1..<Int.max {
+            var res = [i]
+            var accu = i
+            while !endresults.contains(accu) {
+                accu = collatz(of: accu)
+                res.append(accu)
+            }
+            if i & 0xFFFFFF == 0 { print(i) }
+            endresults.formUnion(Set(res))
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

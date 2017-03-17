@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Sources/SmartBufferedLazyList.swift">
+   </FileRef>
+   <FileRef
       location = "container:Algorithms_and_Data_structures.xcodeproj">
    </FileRef>
 </Workspace>

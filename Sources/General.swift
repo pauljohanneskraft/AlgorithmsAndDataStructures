@@ -16,3 +16,15 @@ public func * (lhs: String, rhs: UInt) -> String {
 }
 
 public func * (lhs: String, rhs: Int) -> String { return lhs * UInt(rhs) }
+
+public enum DataStructureError : Error {
+    case notIn
+}
+
+public protocol DataStructure {
+    associatedtype DataElement
+    func insert(_: DataElement) throws
+    func remove(_: DataElement) throws
+    var count : UInt { get }
+    var array : [DataElement] { get set }
+}

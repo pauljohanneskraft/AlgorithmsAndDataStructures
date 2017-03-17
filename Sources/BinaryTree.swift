@@ -28,7 +28,7 @@ public struct BinaryTree < Element > : _BinTree {
 		
 		parent?.left = current?.right
 		
-		return data // TODO!!
+		return data
 	}
 
 	typealias Node = BinaryTreeNode <Element>
