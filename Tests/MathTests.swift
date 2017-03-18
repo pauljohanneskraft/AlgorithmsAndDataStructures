@@ -14,6 +14,7 @@ class MathTests: XCTestCase {
     func testFibonacci() {
         
         print(fibonacci_ite_optimized(55))
+        XCTAssert(fibonacci_rec(3) == 2)
         XCTAssert(fibonacci_ite(0) == 0)
         XCTAssert(fibonacci_rec(0) == 0)
         XCTAssert(fibonacci_ite_optimized(0) == 0)
@@ -40,11 +41,7 @@ class MathTests: XCTestCase {
             
             print("result: ran for", t_ite, " or ", t_iteo, "seconds.")
             
-            guard u == o else {
-                print("didn't match:", u, o)
-                return
-            }
-
+            XCTAssert(u == o)
         }
     }
 
