@@ -9,17 +9,17 @@
 import Foundation
 
 public func fibonacci_rec(_ num: Int) -> Int {
-    guard num >= 2 else {
-        guard num == 1 else { return 0 }
-        return 1
+    guard num > 2 else {
+        guard num < 1 else { return 1 }
+        return 0
     }
     return fibonacci_rec(num - 1) + fibonacci_rec(num - 2)
 }
 
 public func fibonacci_ite(_ num: Int) -> Int {
-    guard num >= 2 else {
-        guard num == 1 else { return 0 }
-        return 1
+    guard num > 2 else {
+        guard num < 1 else { return 1 }
+        return 0
     }
     
     var x = 0
@@ -36,7 +36,7 @@ public func fibonacci_ite(_ num: Int) -> Int {
 
 public func fibonacci_ite_optimized(_ num: Int) -> Int {
     guard num > 2 else {
-        guard num <= 0 else { return 1 }
+        guard num < 1 else { return 1 }
         return 0
     }
 

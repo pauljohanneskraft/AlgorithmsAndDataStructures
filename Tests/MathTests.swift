@@ -14,6 +14,16 @@ class MathTests: XCTestCase {
     func testFibonacci() {
         
         print(fibonacci_ite_optimized(55))
+        XCTAssert(fibonacci_ite(0) == 0)
+        XCTAssert(fibonacci_rec(0) == 0)
+        XCTAssert(fibonacci_ite_optimized(0) == 0)
+        XCTAssert(fibonacci_ite(1) == 1)
+        XCTAssert(fibonacci_rec(1) == 1)
+        XCTAssert(fibonacci_ite_optimized(1) == 1)
+        XCTAssert(fibonacci_ite(2) == 1)
+        XCTAssert(fibonacci_rec(2) == 1)
+        XCTAssert(fibonacci_ite_optimized(2) == 1)
+
         for _ in 0..<1 {
             var u = [Int]()
             var o = [Int]()
