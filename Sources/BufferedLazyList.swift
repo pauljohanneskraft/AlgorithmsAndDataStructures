@@ -52,8 +52,9 @@ public struct BufferedLazyList < Element > {
 extension BufferedLazyList : Collection {
     
     public mutating func reduceBufferSize(to: Int) {
-        guard buffer.count > to else { return }
-        self.buffer = Buffer<Element>(value: Array(buffer[0..<to]))!
+        let endIndex = to < 1 ? 1 : to
+        guard buffer.count > endIndex else { return }
+        self.buffer = Buffer<Element>(value: Array(buffer[0..<endIndex]))!
     }
     
     public mutating func clearBuffer() {

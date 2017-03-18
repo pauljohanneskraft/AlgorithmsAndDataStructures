@@ -62,7 +62,9 @@ class StableMarriageProblem: XCTestCase {
         for g in guys {
             print("\(g.data) is engaged to \(g.fiancee!.data)")
         }
-        print("Stable = \(isStable(guys: guys, gals: gals))");
+        XCTAssert(isStable(guys: guys, gals: gals))
+        ivy.candidates.reverse()
+        XCTAssert(!isStable(guys: guys, gals: gals))
     }
 
 }

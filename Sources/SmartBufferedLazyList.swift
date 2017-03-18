@@ -21,8 +21,9 @@ public struct SmartBufferedLazyList<Element> {
 
 extension SmartBufferedLazyList : Collection {
     public mutating func reduceBufferSize(to: Int) {
-        guard buffer.count > to else { return }
-        self.buffer = Buffer<Element>(value: Array(buffer[0..<to]))!
+        let endIndex = to < 1 ? 1 : to
+        guard buffer.count > endIndex else { return }
+        self.buffer = Buffer<Element>(value: Array(buffer[0..<endIndex]))!
     }
     
     public var bufferCount: Int { return buffer.count }

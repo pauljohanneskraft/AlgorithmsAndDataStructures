@@ -166,9 +166,18 @@ class ListTests: XCTestCase {
             XCTAssert(nb == db && nb == sd)
             // print(i, nb, db, sd)
         }
-        print(lpowers2buff.bufferCount)
-        print(lpowers2sbuff.bufferCount)
-        
+        var l1 = lpowers2sbuff
+        var l2 = lpowers2buff
+        XCTAssert(l1.bufferCount > 10)
+        XCTAssert(l2.bufferCount > 10)
+        l1.reduceBufferSize(to: 9)
+        l2.reduceBufferSize(to: 9)
+        XCTAssert(l1.bufferCount == 9)
+        XCTAssert(l2.bufferCount == 9)
+        l1.reduceBufferSize(to: 0)
+        l2.reduceBufferSize(to: 0)
+        XCTAssert(l1.bufferCount == 1)
+        XCTAssert(l2.bufferCount == 1)
     }
     /*
     func testCollatz() {
