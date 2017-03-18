@@ -144,7 +144,11 @@ class ListTests: XCTestCase {
         min1sbuff.clearBuffer()
         XCTAssert(min1buffer.bufferCount == 1)
         XCTAssert(min1sbuff.bufferCount == 1)
+        XCTAssert(minus1.first == min1buffer.first)
         XCTAssert(min1sbuff.first == min1buffer.first)
+        XCTAssert(minus1.index(after: 24) == 25)
+        XCTAssert(min1buffer.index(after: 24) == 25)
+        XCTAssert(min1sbuff.index(after: 24) == 25)
         for i in interval {
             let nb = lpowers2[i]
             let db = lpowers2buff[i]
