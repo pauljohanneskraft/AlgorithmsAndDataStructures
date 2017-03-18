@@ -104,8 +104,8 @@ class ListTests: XCTestCase {
 	
     func testLazyLists() {
         var interval = [Int]()
-        for _ in 0..<20000 {
-            interval.append(Int(arc4random() % 3000))
+        for _ in 0..<200 {
+            interval.append(Int(arc4random() % 300))
         }
         let start1 = Date()
         let lpowers2 = LazyList<Int>(start: 1) { (a: Int) -> Int in return a + 2 }
@@ -135,7 +135,7 @@ class ListTests: XCTestCase {
             let nb = lpowers2[i]
             let db = lpowers2buff[i]
             let sd = lpowers2sbuff[i]
-            if nb != db || sd != db { print("error") }
+            XCTAssert(nb == db && nb == sd)
             // print(i, nb, db, sd)
         }
         print(lpowers2buff.bufferCount)
