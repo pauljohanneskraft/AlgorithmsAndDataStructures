@@ -25,8 +25,8 @@ class GraphTests: XCTestCase {
 		
 		let time = measureTime {
 			for i in 0..<20 {
-				graph[i, i + 1] = 1
-				graph[i + 1, i] = 1
+				graph[i, i + 1] = 2
+				graph[i + 1, i] = 2
 			}
 			
 			graph[3,7] = 325989328
@@ -38,7 +38,7 @@ class GraphTests: XCTestCase {
 		
 		print("Creation:\t\t", time)
 		
-		let graph2 = G.init(vertices: Set<Int>(0...20), rule: { return abs($0 - $1) == 1 ? 1 : (($0, $1) == (3,7) || ($0, $1) == (7,3) ? 1 : nil) })
+		let graph2 = G.init(vertices: Set<Int>(0...20), rule: { return abs($0 - $1) == 1 ? 2 : (($0, $1) == (3,7) || ($0, $1) == (7,3) ? 1 : nil) })
 		
 		XCTAssert(graph2 == graph, "\(graph2) != \(graph)")
 		
@@ -61,7 +61,7 @@ class GraphTests: XCTestCase {
 		// print(graph)
 		
 		XCTAssert(graph[1,4] == nil)
-		XCTAssert(graph[1,2] == 1)
+		XCTAssert(graph[1,2] == 2)
 		XCTAssert(graph[3,7] == 1)
 		XCTAssert(graph[2,5] == nil)
 		
@@ -77,7 +77,12 @@ class GraphTests: XCTestCase {
 		}
 		XCTAssert(fn.0 == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
 		XCTAssert(fn.1 == [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "\(fn)")
-		print("DFS:\t\t\t\t", time)
+        let time2 = measureTime {
+            fn = graph.depthFirstSearch(start: 0, order: { $0.end < $1.end }, onEntry: { $0 }, onFinish: { $0 })
+        }
+        XCTAssert(fn.0 == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
+        XCTAssert(fn.1 == [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "\(fn)")
+		print("DFS:\t\t\t\t", time + time2)
 	}
 	
 	func bfs(graph: Graph) {
