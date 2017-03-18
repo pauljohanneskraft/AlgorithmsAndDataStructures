@@ -230,21 +230,24 @@ extension Graph {
 
 extension Graph {
 	
-	public func nearestNeighbor(start: Int) -> ([Int], Int)? {
-		var visited = Set<Int>()
-		var route = [Int]()
+    public func nearestNeighbor(start: Int, lastPath finish: Bool = true) -> (path: [Int], distance: Int)? {
+		var remaining = vertices
+		var route = [start]
 		var current = start
+        remaining.remove(start)
 		var length = 0
-		while true {
-			// print(current, "->", terminator: "")
-			route.append(current)
-			visited.insert(current)
-			guard visited != vertices else { return (route, length) }
-			let v = self[current].min(by: { !visited.contains($0.end) && $0.weight < $1.weight })
-			guard v != nil && !visited.contains(v!.end) else { return nil }
-			current = v!.end
-			length += v!.weight
-		}
+        for _ in 1..<vertices.count {
+            guard let v = self[current].filter({ remaining.contains($0.end) }).min(by: { $0.weight < $1.weight }) else { return nil }
+            current = v.end
+            route.append(current)
+            remaining.remove(current)
+            length += v.weight
+
+        }
+        guard finish else { return (route, length) }
+        guard let lastPath = self[route.last!, start] else { return nil }
+        route.append(start)
+        return (route, length + lastPath)
 	}
 	
 }
@@ -290,6 +293,92 @@ extension Graph {
 	
 	
 }
+
+public extension Graph {
+    public func bellmanHeldKarp(start: Int) -> (path: [Int], distance: Int)? {
+        let semaphore = DispatchSemaphore(value: 1)
+        
+        guard var nearestNeighbor = self.nearestNeighbor(start: start, lastPath: true) else { return nil }
+        
+        var bestAnswer = nearestNeighbor // { didSet { print(bestAnswer) } }
+        
+        func heldKarp_rec(from: Int, start: Int, path visited: [Int], visit: Set<Int>, distance: Int, maxDistance: Int) -> Int {
+            guard distance < maxDistance else { return maxDistance }
+            let visited = visited + [start]
+            var visit = visit
+            _ = visit.remove(start)
+            guard !visit.isEmpty else {
+                if let lastPath = self[start, from] {
+                    let fullDistance = distance + lastPath
+                    if fullDistance < maxDistance {
+                        let result = (path: visited + [from], distance: fullDistance)
+                        semaphore.wait()
+                        defer { semaphore.signal() }
+                        if result.distance < bestAnswer.distance {
+                            bestAnswer = result
+                            // print(bestAnswer)
+                        }
+                        return bestAnswer.distance
+                    }
+                    
+                }
+                return maxDistance
+            }
+            var minDistance = maxDistance
+            // print(visit.count)
+            // print(start, visit.sorted(), visited, distance)
+            for v in visit.filter({ if let w = self[start, $0] { return distance + w < minDistance } else { return false } }).sorted(by: {
+                self[start, $0]! < self[start, $1]!
+            }) {
+                // print(minDistance)
+                // guard v != start else { continue }
+                if let edge_weight = self[start, v] {
+                    visit.remove(v)
+                    let m = heldKarp_rec(from: from, start: v, path: visited, visit: visit, distance: edge_weight + distance, maxDistance: minDistance)
+                    minDistance = max(minDistance, m)
+                    visit.insert(v)
+                }
+            }
+            
+            return minDistance
+        }
+        
+        let queue = DispatchQueue(label: "heldKarp", attributes: .concurrent)
+        let group = DispatchGroup()
+        var vs = vertices
+        vs.remove(start)
+        // print("start", start, vs.sorted())
+        var minDistance = nearestNeighbor.distance
+        var i = 0
+        for e in self[start].sorted(by: { $0.weight < $1.weight }) {
+            i += 1
+            guard e.end != start else { continue }
+            queue.async(group: group) {
+                let m = heldKarp_rec(from: start, start: e.end, path: [start], visit: vs, distance: e.weight, maxDistance: minDistance)
+                semaphore.wait()
+                minDistance = max(minDistance, m)
+                semaphore.signal()
+                // print("e.end \(e.end) done")
+            }
+            if i % 5 == 4 {
+                group.wait()
+                semaphore.wait()
+                minDistance = bestAnswer.distance
+                semaphore.signal()
+            }
+        }
+        group.wait()
+        // print("answers", answers)
+        return bestAnswer
+    }
+    
+}
+
+
+
+/*
+ */
+
 
 
 

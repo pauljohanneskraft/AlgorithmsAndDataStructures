@@ -52,6 +52,7 @@ class GraphTests: XCTestCase {
 		bfs(graph: graph)
 		dfs(graph: graph)
 		bellmanFord(graph: G.self)
+        heldKarp(graph: G.self)
 		nearestNeighbor(graph: G.self)
 		kruskal(graph: G.self)
 		hierholzer(graph: G.self)
@@ -75,7 +76,7 @@ class GraphTests: XCTestCase {
 		}
 		XCTAssert(fn.0 == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
 		XCTAssert(fn.1 == [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], "\(fn)")
-		print("DFS:\t\t\t", time)
+		print("DFS:\t\t\t\t", time)
 	}
 	
 	func bfs(graph: Graph) {
@@ -84,7 +85,7 @@ class GraphTests: XCTestCase {
 			fn = graph.breadthFirstSearch(start: 0) { $0 }
 		}
 		XCTAssert(fn == [0, 1, 2, 3, 4, 7, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
-		print("BFS:\t\t\t", time)
+		print("BFS:\t\t\t\t", time)
 	}
 	
 	func dijkstra(graph: Graph) {
@@ -194,7 +195,6 @@ class GraphTests: XCTestCase {
 		g3[3, 5] = 1
 		
 		// print(g3)
-		
 		let start = Date()
 		
 		XCTAssert(g0.hierholzer() == nil) // TODO: Hierholzer also for directed, (semi-)eulerian graphs
@@ -207,6 +207,45 @@ class GraphTests: XCTestCase {
 		
 		print("Hierholzer:\t\t", -start.timeIntervalSinceNow)
 	}
+    
+    func heldKarp< G : Graph >(graph: G.Type) {
+        // var g0 = Graph_Hashing()
+        
+        // let m = [[nil, 10, 15, 20], [5, nil, 9, 10], [6, 13, nil, 12], [8, 8, 9, nil]]
+        
+        // let g1 = Graph_Matrix(m)
+        
+        // print(g1.bellmanHeldKarp(start: 0)!)
+        /*
+        g0[0, 1] = 1
+        g0[0, 2] = 4
+        g0[1, 2] = 1
+        g0[2, 0] = 3
+        g0[2, 1] = 2
+        g0[0, 0] = 1
+        
+        print("done with init")
+        
+        print(g0.bellmanHeldKarp(start: 0)!)
+ */
+        let start = Date()
+        let matrix = [
+            [0, 82, 46, 68, 52, 72, 42, 51, 55],
+            [29, 0, 46, 42, 43, 43, 23, 23, 31],
+            [82, 55, 0, 46, 55, 23, 43, 41, 29],
+            [46, 46, 68, 0, 15, 72, 31, 62, 42],
+            [68, 42, 46, 82, 0, 23, 52, 21, 46],
+            [52, 43, 55, 15, 74, 0, 23, 55, 31],
+            [72, 43, 23, 72, 23, 61, 0, 23, 31],
+            [42, 23, 43, 31, 52, 23, 42, 0, 15],
+            [51, 23, 41, 62, 21, 55, 23, 33, 0],
+        ]
+        let g = Graph_Matrix(matrix).convert(to: G.self)
+        let res = g.bellmanHeldKarp(start: 0)!
+        XCTAssert(res.0 == [0, 6, 2, 5, 3, 4, 7, 8, 1, 0])
+        XCTAssert(res.1 == 206)
+        print("ballmanHeldKarp:\t", -start.timeIntervalSinceNow)
+    }
 	
 	func kruskal< G : Graph >(graph: G.Type) {
 		var g0 = G()
@@ -231,7 +270,7 @@ class GraphTests: XCTestCase {
 		XCTAssert(g0.kruskal() == nil)
 		_ = g1.kruskal()!
 		
-		print("Kruskal:\t\t", -start.timeIntervalSinceNow)
+		print("Kruskal:\t\t\t", -start.timeIntervalSinceNow)
 	}
 	
 	func nearestNeighbor< G : Graph >(graph: G.Type) {
@@ -241,10 +280,8 @@ class GraphTests: XCTestCase {
 		g[5, 7] = -20
 		XCTAssert(g.nearestNeighbor(start: 0) == nil)
 		g[10, 6] = 1
-		let gnN = g.nearestNeighbor(start: 0)!
-		XCTAssert(gnN.0 == [0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 6])
-		XCTAssert(gnN.1 == -11)
-		print("NearestNeighbor:", -start.timeIntervalSinceNow)
+        XCTAssert(g.nearestNeighbor(start: 0) == nil)
+		print("NearestNeighbor:\t", -start.timeIntervalSinceNow)
 	}
 	
 	func bellmanFord< G : Graph >(graph: G.Type) {
@@ -264,7 +301,7 @@ class GraphTests: XCTestCase {
 				XCTAssert(v.value.weight == v.key)
 			}
 		}
-		print("BellmanFord:\t", time)
+		print("BellmanFord:\t\t", time)
 	}
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct SmartBufferedLazyList<Element> {
-    fileprivate(set) var buffer : Buffer<Element>
+    fileprivate(set) var buffer : Buffer<Element> // Buffer is defined in BufferedLazyList.swift
     public init(start: Element, bufferDistance: Int = 5, rule: @escaping (Element) -> Element) {
         self.buffer = Buffer<Element>(start: start)
         self.rule = rule

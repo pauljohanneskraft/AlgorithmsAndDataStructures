@@ -27,27 +27,17 @@ public struct Graph_List : Graph {
 	// subscripts
 	public subscript(start: Int, end: Int) -> Int? {
 		get {
-			for e in edges { guard e.start != start || e.end != end else { return e.weight } }
-			return nil
+            return edges.filter({ $0.start == start && $0.end == end }).first?.weight
 		}
 		set {
-			for i in edges.indices {
-				let e = edges[i]
-				guard e.start != start || e.end != end else {
-					if newValue == nil	{ _ = edges.remove(at: i) }
-					else				{ edges[i] = (start, end, newValue!) }
-					return
-				}
-			}
-			guard newValue != nil else { return }
-			edges.append((start, end, newValue!))
+            let ind = edges.indices.filter( { edges[$0].start == start && edges[$0].end == end } )
+            for i in ind.reversed() { edges.remove(at: i) }
+            if newValue != nil { edges.append((start, end, newValue!)) }
 		}
 	}
 
 	public subscript(start: Int) -> [(end: Int, weight: Int)] {
-		var result = [(end: Int, weight: Int)]()
-		for e in edges { if start == e.start { result.append((e.end, e.weight)) } }
-		return result
+        return edges.filter({ $0.start == start }).map { (end: $0.end, weight: $0.weight) }
 	}
 
 }
