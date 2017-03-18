@@ -142,7 +142,7 @@ class ListTests: XCTestCase {
         print(lpowers2sbuff.bufferCount)
         
     }
-    
+    /*
     func testCollatz() {
         func collatz(of num: Int) -> Int {
             if num & 0x1 == 0 {
@@ -165,6 +165,7 @@ class ListTests: XCTestCase {
             endresults.formUnion(Set(res))
         }
     }
+ */
     
     
     
