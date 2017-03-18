@@ -24,12 +24,12 @@ public struct LazyList < Element > {
 
 extension LazyList : Collection {
     
-    func map(_ transform: @escaping (Element) -> Element) -> LazyList<Element> {
+    public func lazymap(_ transform: @escaping (Element) -> Element) -> LazyList<Element> {
         let rule = self.rule
-        return LazyList<Element>(start: transform(current)) { transform(rule($0)) }
+        return LazyList<Element>(start: current) { transform(rule($0)) }
     }
     
-    func get(first: UInt) -> [Element] {
+    public func get(first: UInt) -> [Element] {
         var elems = [Element]()
         var currentList = self
         for _ in 0..<first {

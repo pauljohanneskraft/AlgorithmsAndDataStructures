@@ -56,6 +56,7 @@ class GraphTests: XCTestCase {
 		nearestNeighbor(graph: G.self)
 		kruskal(graph: G.self)
 		hierholzer(graph: G.self)
+        eulerian(graph: G.self)
 		
 		// print(graph)
 		
@@ -240,7 +241,6 @@ class GraphTests: XCTestCase {
         ]
         let g = Graph_Matrix(matrix).convert(to: G.self)
         let res = g.bellmanHeldKarp(start: 0)!
-        print(res)
         XCTAssert(res.0 == [0, 6, 2, 5, 3, 4, 1, 0])
         XCTAssert(res.1 == 189)
         print("ballmanHeldKarp:\t", -start.timeIntervalSinceNow)
@@ -302,6 +302,27 @@ class GraphTests: XCTestCase {
 		}
 		print("BellmanFord:\t\t", time)
 	}
+    
+    func eulerian< G : Graph >(graph: G.Type) {
+        let start = Date()
+        var g = G()
+        g[0, 1] = 1
+        g[0, 2] = 4
+        g[1, 2] = 1
+        g[2, 1] = -3
+        XCTAssert(g.unEvenVertices == nil)
+        XCTAssert(g.semiEulerian == false)
+        XCTAssert(g.eulerian == false)
+        g[1, 0] = 2
+        XCTAssert(g.unEvenVertices! == 2)
+        XCTAssert(g.semiEulerian == true)
+        XCTAssert(g.eulerian == false)
+        g[2, 0] = 10
+        XCTAssert(g.unEvenVertices! == 0)
+        XCTAssert(g.semiEulerian == true)
+        XCTAssert(g.eulerian == true)
+        print("Eulerian:\t\t", -start.timeIntervalSinceNow)
+    }
 }
 
 func measureTime(_ f: () throws -> ()) rethrows -> Double {

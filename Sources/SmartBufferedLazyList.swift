@@ -20,33 +20,31 @@ public struct SmartBufferedLazyList<Element> {
 }
 
 extension SmartBufferedLazyList : Collection {
-    mutating func reduceBufferSize(to: Int) {
+    public mutating func reduceBufferSize(to: Int) {
         guard buffer.count > to else { return }
         self.buffer = Buffer<Element>(value: Array(buffer[0..<to]))!
     }
     
     public var bufferCount: Int { return buffer.count }
     
-    mutating func clearBuffer() {
+    public mutating func clearBuffer() {
         self.buffer = Buffer<Element>(start: self.buffer.first)
     }
     
-    func map(_ transform: @escaping (Element) -> Element) -> SmartBufferedLazyList<Element> {
+    public func lazymap(_ transform: @escaping (Element) -> Element) -> SmartBufferedLazyList<Element> {
         let rule = self.rule
-        var ll = SmartBufferedLazyList<Element>(start: transform(buffer.first)) { transform(rule($0)) }
-        ll.buffer = buffer.map { transform($0) }
-        return ll
+        return SmartBufferedLazyList<Element>(start: buffer.first) { transform(rule($0)) }
     }
     
-    /*
-    func get(first: Int) -> [Element] {
-        guard first >= 0 else { fatalError() }
-        guard first > buffer.count else { return Array(buffer[0..<first]) }
-        
-        for _ in buffer.count..<first { buffer.append(rule(buffer.last)) }
-        return buffer.array
+    public func get(first: UInt) -> [Element] {
+        var elems = [Element]()
+        var curr = buffer.first
+        for _ in 0..<first {
+            elems.append(curr)
+            curr = rule(curr)
+        }
+        return elems
     }
-     */
     
     public subscript(index: Int) -> Element {
         get {

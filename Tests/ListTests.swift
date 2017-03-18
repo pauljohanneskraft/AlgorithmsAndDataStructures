@@ -138,6 +138,34 @@ class ListTests: XCTestCase {
             XCTAssert(nb == db && nb == sd)
             // print(i, nb, db, sd)
         }
+        let minus1      = lpowers2      .lazymap { $0 - 3 }
+        var min1buffer  = lpowers2buff  .lazymap { $0 - 3 }
+        var min1sbuff   = lpowers2sbuff .lazymap { $0 - 3 }
+        XCTAssert(minus1.startIndex == 0)
+        XCTAssert(min1buffer.startIndex == 0)
+        XCTAssert(min1sbuff.startIndex == 0)
+        XCTAssert(minus1.endIndex == Int.max)
+        XCTAssert(min1buffer.endIndex == Int.max)
+        XCTAssert(min1sbuff.endIndex == Int.max)
+        XCTAssert(minus1.count == Int.max)
+        XCTAssert(min1buffer.count == Int.max)
+        XCTAssert(min1sbuff.count == Int.max)
+        XCTAssert(minus1.get(first: 10) == min1buffer.get(first: 10))
+        XCTAssert(min1sbuff.get(first: 10) == min1sbuff.get(first: 10))
+        XCTAssert(min1buffer.bufferCount > 0)
+        XCTAssert(min1sbuff.bufferCount > 0)
+        min1buffer.clearBuffer()
+        min1sbuff.clearBuffer()
+        XCTAssert(min1buffer.bufferCount == 1)
+        XCTAssert(min1sbuff.bufferCount == 1)
+        XCTAssert(min1sbuff.first == min1buffer.first)
+        for i in interval {
+            let nb = lpowers2[i]
+            let db = lpowers2buff[i]
+            let sd = lpowers2sbuff[i]
+            XCTAssert(nb == db && nb == sd)
+            // print(i, nb, db, sd)
+        }
         print(lpowers2buff.bufferCount)
         print(lpowers2sbuff.bufferCount)
         

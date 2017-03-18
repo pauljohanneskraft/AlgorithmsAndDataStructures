@@ -172,7 +172,7 @@ extension Graph {
 	*/
 	
 	public func hierholzer() -> [Int]? {
-		guard noEmtpyVertices && simple else { return nil }
+		guard noEmtpyVertices && !directed else { return nil }
 		let unEvenVertices = self.unEvenVertices
 		guard unEvenVertices == 0 || unEvenVertices == 2 else { return nil }
 		guard var start = vertices.first else { return nil }
@@ -255,7 +255,7 @@ extension Graph {
 extension Graph {
 	
 	public func kruskal() -> [(start: Int, end: Int, weight: Int)]? {
-		guard self.simple else { return nil }
+		guard !directed else { return nil }
 		
 		func hasCircle(from: Int, visited: Set<Int> = [], edges: [Int: Set<Int>]) -> Bool {
 			var visited = visited

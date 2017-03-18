@@ -57,16 +57,14 @@ extension Graph {
 		return count
 
 	}
-	
-	public var directed : Bool { return !simple }
-	
-	public var simple : Bool {
+		
+	public var directed : Bool {
 		for v in vertices {
 			for e in self[v] {
-				guard self[e.end].contains(where: { $0.end == v }) else { return false }
+				guard self[e.end].contains(where: { $0.end == v }) else { return true }
 			}
 		}
-		return true
+		return false
 	}
 	
 	public var semiEulerian : Bool {

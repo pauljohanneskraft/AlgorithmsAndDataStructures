@@ -17,11 +17,6 @@ class Buffer<Element> { // needs to be class, so that BufferedLazyList is not mu
     
     private var value: [Element] = []
     
-    func map(_ transform: (Element) -> Element) -> Buffer<Element> {
-        return Buffer(value: value.map(transform))!
-    }
-    
-    
     var last : Element { return value.last! }
     
     var array : [Element] { return value }
@@ -56,25 +51,23 @@ public struct BufferedLazyList < Element > {
 
 extension BufferedLazyList : Collection {
     
-    mutating func reduceBufferSize(to: Int) {
+    public mutating func reduceBufferSize(to: Int) {
         guard buffer.count > to else { return }
         self.buffer = Buffer<Element>(value: Array(buffer[0..<to]))!
     }
     
-    mutating func clearBuffer() {
+    public mutating func clearBuffer() {
         self.buffer = Buffer<Element>(start: self.buffer.first)
     }
     
     public var bufferCount: Int { return buffer.count }
     
-    func map(_ transform: @escaping (Element) -> Element) -> BufferedLazyList<Element> {
+    public func lazymap(_ transform: @escaping (Element) -> Element) -> BufferedLazyList<Element> {
         let rule = self.rule
-        var ll = BufferedLazyList<Element>(start: transform(buffer.first)) { transform(rule($0)) }
-        ll.buffer = buffer.map { transform($0) }
-        return ll
+        return BufferedLazyList<Element>(start: buffer.first) { transform(rule($0)) }
     }
     
-    func get(first: Int) -> [Element] {
+    public func get(first: Int) -> [Element] {
         guard first >= 0 else { fatalError() }
         guard first > buffer.count else { return Array(buffer[0..<first]) }
         
