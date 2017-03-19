@@ -65,7 +65,7 @@ class GraphTests: XCTestCase {
 		XCTAssert(graph[3,7] == 1)
 		XCTAssert(graph[2,5] == nil)
 		
-		// print(MemoryLayout.stride(ofValue: graph))
+		print("\(G.self)", MemoryLayout.stride(ofValue: graph))
 		print()
 		
 	}
@@ -202,14 +202,47 @@ class GraphTests: XCTestCase {
 		
 		// print(g3)
 		let start = Date()
-		
-		XCTAssert(g0.hierholzer() == nil) // TODO: Hierholzer also for directed, (semi-)eulerian graphs
-		
-		_ = g1.hierholzer()!
+		let hh0 = g0.hierholzer()
+		XCTAssert(hh0 != nil && (hh0! == [4, 5, 3, 0, 1, 2, 3, 4] || hh0! == [5, 3, 0, 1, 2, 3, 4, 5]), "\(hh0)") // TODO: Hierholzer also for directed, (semi-)eulerian graphs
+		let hh = g1.hierholzer()!
+		XCTAssert(hh == [4, 5, 3, 2, 1, 0, 3, 4] || hh == [5, 4, 3, 0, 1, 2, 3, 5], "\(hh)")
 
-		XCTAssert(g2.hierholzer() == nil)
+        let hh2 = g2.hierholzer()
+		XCTAssert(hh2 != nil && (hh2! == [5, 3, 2, 1, 0, 3, 4, 5] || hh2! == [3, 4, 5, 3, 2, 1, 0, 3] || hh2! == [4, 5, 3, 2, 1, 0, 3, 4]), "\(hh2)")
 
-		_ = g3.hierholzer()!
+        let hh3 = g3.hierholzer()
+		XCTAssert(hh3 != nil && (hh3! == [5, 3, 2, 1, 0, 3, 4]), "\(hh3)")
+        
+        var g4 = G()
+        
+        g4[0, 1] = 1
+        g4[0, 5] = 1
+        g4[1, 0] = 1
+        g4[1, 4] = 1
+        g4[1, 2] = 1
+        g4[2, 1] = 1
+        g4[2, 3] = 1
+        g4[3, 2] = 1
+        g4[3, 4] = 1
+        g4[4, 1] = 1
+        g4[4, 3] = 1
+        g4[4, 5] = 1
+        g4[5, 0] = 1
+        g4[5, 4] = 1
+        
+        XCTAssert(g4.semiEulerian)
+        XCTAssert(g4.unEvenVertices(directed: false)! == 2)
+        
+        /*
+         
+         5 -- 4 -- 3
+         |    |    |
+         |    |    |
+         0 -- 1 -- 2
+         
+         */
+        let hh4 = g4.hierholzer()!
+        XCTAssert(hh4 == [4, 5, 0, 1, 2, 3, 4, 1] || hh4 == [1, 2, 3, 4, 5, 0, 1, 4], "\(hh4)")
 		
 		print("Hierholzer:\t\t", -start.timeIntervalSinceNow)
 	}
@@ -315,15 +348,15 @@ class GraphTests: XCTestCase {
         g[0, 2] = 4
         g[1, 2] = 1
         g[2, 1] = -3
-        XCTAssert(g.unEvenVertices == nil)
+        XCTAssert(g.unEvenVertices(directed: g.directed) == nil)
         XCTAssert(g.semiEulerian == false)
         XCTAssert(g.eulerian == false)
         g[1, 0] = 2
-        XCTAssert(g.unEvenVertices! == 2)
+        XCTAssert(g.unEvenVertices(directed: g.directed)! == 2)
         XCTAssert(g.semiEulerian == true)
         XCTAssert(g.eulerian == false)
         g[2, 0] = 10
-        XCTAssert(g.unEvenVertices! == 0)
+        XCTAssert(g.unEvenVertices(directed: g.directed)! == 0)
         XCTAssert(g.semiEulerian == true)
         XCTAssert(g.eulerian == true)
         print("Eulerian:\t\t", -start.timeIntervalSinceNow)
