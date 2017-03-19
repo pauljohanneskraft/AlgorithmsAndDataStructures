@@ -293,6 +293,63 @@ class GraphTests: XCTestCase {
         
         let hh4 = g4.hierholzer()!
         XCTAssert(hh4 == [4, 5, 0, 1, 2, 3, 4, 1] || hh4 == [1, 2, 3, 4, 5, 0, 1, 4], "\(hh4)")
+        
+        /*
+            0
+           / \
+          /   \
+         1 --- 2
+         |     |
+         |     |
+         3 --- 4
+         
+        */
+        
+        var house = G()
+        
+        house[0, 1] = 1
+        house[1, 0] = 1
+        
+        house[0, 2] = 1
+        house[2, 0] = 1
+        
+        house[2, 1] = 1
+        house[1, 2] = 1
+        
+        house[3, 1] = 1
+        house[1, 3] = 1
+        
+        house[2, 4] = 1
+        house[4, 2] = 1
+        
+        house[3, 4] = 1
+        house[4, 3] = 1
+        
+        let househh = house.hierholzer()
+        // print(househh ?? [])
+        XCTAssert(househh != nil && (househh! == [2, 0, 1, 2, 4, 3, 1]), "\(househh)")
+        
+        house[3, 2] = 1
+        house[2, 3] = 1
+        
+        house[1, 4] = 1
+        house[4, 1] = 1
+        
+        /*
+            0
+           / \
+          /   \
+         1 --- 2
+         | \ / |
+         | / \ |
+         3 --- 4
+         
+         */
+        
+        let santahh = house.hierholzer()
+        // print(santahh ?? [])
+        XCTAssert(santahh != nil && (santahh! == [3, 2, 0, 1, 2, 4, 3, 1, 4] || santahh! == [4, 2, 0, 1, 2, 3, 4, 1, 3] || santahh! == [3, 2, 4, 3, 1, 2, 0, 1, 4]), "\(santahh)")
+        
 		
 		print("Hierholzer:\t\t", -start.timeIntervalSinceNow)
 	}
@@ -332,7 +389,7 @@ class GraphTests: XCTestCase {
         // print(res)
         XCTAssert(res.0 == [0, 1, 6, 2, 3, 4, 5, 0])
         XCTAssert(res.1 == 182)
-        print("ballmanHeldKarp:\t", -start.timeIntervalSinceNow)
+        print("bellmanHeldKarp:\t", -start.timeIntervalSinceNow)
     }
 	
 	func kruskal< G : Graph >(graph: G.Type) {

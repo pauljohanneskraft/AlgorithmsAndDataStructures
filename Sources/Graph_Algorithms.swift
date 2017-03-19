@@ -175,8 +175,8 @@ extension Graph {
         guard noEmtpyVertices else { return nil }
         let unEvenVertices = self.unEvenVertices(directed: directed)
 		guard unEvenVertices == 0 || unEvenVertices == 2 else { return nil }
-        guard var start = vertices.first else { return nil }
-        var end = start
+        guard var startv = vertices.first else { return nil }
+        var end = startv
 		if unEvenVertices == 2 {
 			// print("semiEulerian")
             var endpoints = [Int]()
@@ -189,7 +189,7 @@ extension Graph {
 			}
             // print("endpoints", endpoints)
             if endpoints.count > 1 {
-                start = endpoints[0]
+                startv = endpoints[0]
                 end = endpoints[1]
             }
             
@@ -205,7 +205,8 @@ extension Graph {
                 remainingEdges[v] = Set(self[v].map { $0.end })
             }
             var visited : [Int: Set<Int>] = [:]
-            
+            var start = startv
+
             repeat {
                 subtour = [start]
                 var current = start
@@ -213,9 +214,8 @@ extension Graph {
                 repeat {
                     // print(current, subtour, remainingEdges)
                     guard let next = remainingEdges[current]?.first(where: { self[$0, current] == nil }) ?? remainingEdges[current]?.first else {
-                        if end != start {
-                            swap(&start, &end)
-                            // print("switching start and end")
+                        if end != startv {
+                            swap(&startv, &end)
                             return hierholzer_rec()
                         }
                         return nil
@@ -253,7 +253,7 @@ extension Graph {
                 } while !remainingEdges.isEmpty && (current != end || current != start)
                 tours.append(subtour)
                 start = remainingEdges.keys.first ?? start
-                // print("end of subtour \(subtour) \(tours) \(remainingEdges)")
+                // print("end of subtour \(subtour) \(tours) \(remainingEdges), next starts at: \(start)")
             } while !remainingEdges.isEmpty
             return tours
         }
