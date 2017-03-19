@@ -109,8 +109,8 @@ public extension Graph {
             guard let edgeS = candidates.min(by: { heuristic($0) < heuristic($1) }) else { return nil }
             // print("visiting", edgeS)
             edgeStart = edgeS
-            visited.insert(edgeStart)
             candidates.remove(edgeS)
+            visited.insert(edgeS)
             if edgeStart == end { break }
             for c in self[edgeStart].filter( { !(visited.contains($0.end)) && !(candidates.contains($0.end)) } ) {
                 candidates.insert(c.end)
@@ -121,7 +121,8 @@ public extension Graph {
         var path = [edgeStart]
         
         while edgeStart != start {
-            edgeStart = predecessor[edgeStart]!
+            guard let pred = predecessor[edgeStart] else { return nil }
+            edgeStart = pred
             path.append(edgeStart)
         }
         
@@ -134,20 +135,16 @@ public extension Graph {
         
         var edgeStart = start
         var candidates = Set([start])
-        var visited = Set<Int>()
-        var maxCost = Int.max
         var nodeInfo = [Int : (predecessor: Int, cost: Int)]()
         nodeInfo[edgeStart] = (predecessor: edgeStart, cost: 0)
         while !candidates.isEmpty {
             guard let edgeS = candidates.min(by: { nodeInfo[$0]!.cost + heuristic($0) < heuristic($1) + nodeInfo[$1]!.cost }) else { return nil }
             edgeStart = edgeS
-            visited.insert(edgeStart)
             candidates.remove(edgeS)
             let edgeStartInfo = nodeInfo[edgeStart]!
-            guard edgeStart != end else { maxCost = edgeStartInfo.cost; continue }
-            for c in self[edgeStart].filter( { !(candidates.contains($0.end)) } ) {
+            let edgeStartHeur = heuristic(edgeStart)
+            for c in self[edgeStart].filter( { !(candidates.contains($0.end)) && heuristic($0.end) <= edgeStartHeur } ) {
                 let cost = edgeStartInfo.cost + self[edgeStart, c.end]!
-                guard cost < maxCost else { continue }
                 if let ni = nodeInfo[c.end], ni.cost <= cost {} else {
                     candidates.insert(c.end)
                     nodeInfo[c.end] = (predecessor: edgeStart, cost: cost)
@@ -159,7 +156,8 @@ public extension Graph {
         var path = [edgeStart]
         
         while edgeStart != start {
-            edgeStart = nodeInfo[edgeStart]!.predecessor
+            guard let pred = nodeInfo[edgeStart]?.predecessor else { return nil }
+            edgeStart = pred
             path.append(edgeStart)
         }
         

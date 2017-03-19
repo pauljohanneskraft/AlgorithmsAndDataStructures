@@ -140,9 +140,9 @@ class GraphTests: XCTestCase {
                       [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
                       [false, false, false, false, false, false, false, false, false, false]
                       ]
-        
+        // print(matrix.count, matrix[0].count)
         func id(x: Int, y: Int) -> Int {
-            return matrix[0].count * x + y
+            return matrix[0].count * y + x
         }
         
         func reverse(id: Int) -> (x: Int, y: Int) {
@@ -155,7 +155,7 @@ class GraphTests: XCTestCase {
         
         g.edges = edgeList(ofMap: matrix)
         
-        let end : Int = (matrix[0].count * (matrix.count - 1)) - 2
+        let end : Int = id(x: 5, y: 10) // (matrix[0].count * (matrix.count - 1)) - 2
         let endreverse = reverse(id: end)
         
         var path0 = [Int]()
@@ -164,9 +164,9 @@ class GraphTests: XCTestCase {
 
         let heuristic : (Int) -> Int = { (a: Int) -> Int in
             let ra = reverse(id: a)
-            let dx = ra.x - endreverse.x
-            let dy = ra.y - endreverse.y
-            return dx * dx + dy * dy
+            let dx = abs(ra.x - endreverse.x)
+            let dy = abs(ra.y - endreverse.y)
+            return dx + dy
         }
         let start = id(x: 1, y: 1)
         let time0 = measureTime {
@@ -193,17 +193,17 @@ class GraphTests: XCTestCase {
         XCTAssert(distance(of: path0, in: g) == path0.count - 1)
         XCTAssert(distance(of: path1, in: g) == path1.count - 1)
         XCTAssert(distance(of: path2, in: g) == path2.count - 1)
-        XCTAssert(path0 == [11, 21, 31, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path0)")
-        XCTAssert(path2 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path2)")
-        XCTAssert(path1 == [11, 21, 31, 32, 42, 52, 53, 63, 64, 65, 75, 85, 84, 83, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path1)")
+        XCTAssert(path0 == [11, 21, 31, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105], "\(path0)")
+        XCTAssert(path2 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105], "\(path2)")
+        XCTAssert(path1 == [11, 12, 22, 32, 42, 52, 53, 54, 55, 65, 75, 85, 84, 83, 82, 92, 102, 103, 104, 105], "\(path1)")
         /*
         for p in [path0, path1, path2] {
             let pathCoordinates = p.map { reverse(id: $0) }
             var map = matrix.map { a in a.map { $0 ? " " : "█" } }
             for c in pathCoordinates { map[c.1][c.0] = "X" }
             for m in map { print(m.reduce("", { $0 + $1 })) }
-        }
-        */
+        }*/
+        
         print("Pathfinding:\t\t", -starttime.timeIntervalSinceNow, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2))")
     }
 	
