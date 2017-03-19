@@ -378,6 +378,7 @@ extension Graph {
 	
 }
 
+#if !os(Linux)
 public extension Graph {
     public func bellmanHeldKarp(start: Int) -> (path: [Int], distance: Int)? {
         let semaphore = DispatchSemaphore(value: 1)
@@ -455,9 +456,8 @@ public extension Graph {
         // print("answers", answers)
         return bestAnswer
     }
-    
 }
-
+#endif
 
 
 /*

@@ -52,7 +52,9 @@ class GraphTests: XCTestCase {
 		bfs(graph: graph)
 		dfs(graph: graph)
 		bellmanFord(graph: G.self)
+        #if !os(Linux)
         heldKarp(graph: G.self)
+        #endif
 		nearestNeighbor(graph: G.self)
 		kruskal(graph: G.self)
 		hierholzer(graph: G.self)
