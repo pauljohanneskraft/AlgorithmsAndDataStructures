@@ -36,7 +36,7 @@ extension Graph {
 		return true
 	}
 
-	public var unEvenVertices : Int? {
+    public func unEvenVertices(directed: Bool) -> Int? {
 		var counts = [Int: (incoming: Int, outgoing: Int)]()
 		for v in vertices { counts[v] = (0, 0) }
 		for e in edges {
@@ -46,6 +46,13 @@ extension Graph {
 			counts[e.end	]! = (cend.0 + 1,	cend.1		)
 		}
 		var count = 0
+        guard directed else {
+            for c in counts {
+                guard c.value.incoming == c.value.outgoing else { return nil }
+                if c.value.incoming % 2 == 1 { count += 1 }
+            }
+            return count
+        }
 		for v in vertices {
 			let c = counts[v]!
 			if c.0 != c.1 {
@@ -57,16 +64,14 @@ extension Graph {
 		return count
 
 	}
-	
-	public var directed : Bool { return !simple }
-	
-	public var simple : Bool {
+		
+	public var directed : Bool {
 		for v in vertices {
 			for e in self[v] {
-				guard self[e.end].contains(where: { $0.end == v }) else { return false }
+				guard self[e.end].contains(where: { $0.end == v }) else { return true }
 			}
 		}
-		return true
+		return false
 	}
 	
 	public var semiEulerian : Bool {
