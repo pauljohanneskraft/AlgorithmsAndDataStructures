@@ -172,57 +172,141 @@ extension Graph {
 	*/
 	
 	public func hierholzer() -> [Int]? {
-		guard noEmtpyVertices && simple else { return nil }
-		let unEvenVertices = self.unEvenVertices
+        guard noEmtpyVertices else { return nil }
+        let unEvenVertices = self.unEvenVertices(directed: directed)
 		guard unEvenVertices == 0 || unEvenVertices == 2 else { return nil }
-		guard var start = vertices.first else { return nil }
+        guard var start = vertices.first else { return nil }
+        var end = start
 		if unEvenVertices == 2 {
-			print("semiEulerian")
+			// print("semiEulerian")
+            var endpoints = [Int]()
 			for v in vertices {
 				if self[v].count % 2 == 1 {
-					start = v
-					break
-				}
+                    // print(v, "is start")
+					endpoints.append(v)
+                    if endpoints.count > 1 { break }
+                }
 			}
+            // print("endpoints", endpoints)
+            if endpoints.count > 1 {
+                start = endpoints[0]
+                end = endpoints[1]
+            }
+            
 		}
+        
+        // print(start)
 		
-		var subtour = [Int]()
-		var tour = [Int]()
-		var remainingEdges : [Int: Set<Int>] = [:]
-		remainingEdges[start] = Set(self[start].map { $0.end })
-		var visited : [Int: Set<Int>] = [:]
-		
-		repeat {
-			start = remainingEdges.keys.first!
-			subtour = [start]
-			var current = start
-			// print("new subtour starting at \(start) with remainingEdges:", remainingEdges)
-			repeat {
-				let end = remainingEdges[current]!.first!
-				// print("\tvisiting \(end)")
-
-				remainingEdges[current]!.remove(end)
-				if remainingEdges[current]!.isEmpty { remainingEdges[current] = nil }
-				if visited[current] != nil	{ visited[current]!.insert(end) }
-				else						{ visited[current] = [end] }
-				
-				// print("\tbefore testing", remainingEdges)
-				
-				if remainingEdges[end] == nil {
-					let set = Set(self[end].map { $0.end }).subtracting(visited[end] == nil ? [] : visited[end]!)
-					if !set.isEmpty { remainingEdges[end] = set }
-				}
-				
-				subtour.append(end)
-				current = end
-				
-				// print("\tdid visit \(end)", remainingEdges, visited)
-				
-			} while current != start
-			tour.append(contentsOf: subtour)
-			// print("end of subtour \(subtour)")
-		} while !remainingEdges.keys.isEmpty
-		
+        func hierholzer_rec() -> [[Int]]? {
+            var subtour = [Int]()
+            var tours = [[Int]]()
+            var remainingEdges : [Int: Set<Int>] = [:]
+            for v in vertices {
+                remainingEdges[v] = Set(self[v].map { $0.end })
+            }
+            var visited : [Int: Set<Int>] = [:]
+            
+            repeat {
+                subtour = [start]
+                var current = start
+                // print("new subtour starting at \(start) with remainingEdges:", remainingEdges)
+                repeat {
+                    // print(current, subtour, remainingEdges)
+                    guard let next = remainingEdges[current]?.first(where: { self[$0, current] == nil }) ?? remainingEdges[current]?.first else {
+                        if end != start {
+                            swap(&start, &end)
+                            // print("switching start and end")
+                            return hierholzer_rec()
+                        }
+                        return nil
+                    }
+                    // print("\tvisiting \(end)")
+                    
+                    remainingEdges[current]!.remove(next)
+                    _ = remainingEdges[next]?.remove(current)
+                    if remainingEdges[current]!.isEmpty {
+                        remainingEdges[current] = nil
+                    }
+                    if remainingEdges[next]?.isEmpty ?? false {
+                        remainingEdges[next] = nil
+                    }
+                    
+                    if visited[current] != nil	{ visited[current]!.insert(next) }
+                    else						{ visited[current] = [next] }
+                    if visited[next] != nil      { visited[next]!.insert(current) }
+                    else						{ visited[next] = [current] }
+                    
+                    // print("\tbefore testing", remainingEdges)
+                    
+                    /*
+                     if remainingEdges[end] == nil {
+                     let set = Set(self[end].map { $0.end }).subtracting(visited[end] == nil ? [] : visited[end]!)
+                     if !set.isEmpty { remainingEdges[end] = set }
+                     }
+                     */
+                    
+                    subtour.append(next)
+                    current = next
+                    
+                    // print("\tdid visit \(end)", remainingEdges, visited)
+                    
+                } while !remainingEdges.isEmpty && (current != end || current != start)
+                tours.append(subtour)
+                start = remainingEdges.keys.first ?? start
+                // print("end of subtour \(subtour) \(tours) \(remainingEdges)")
+            } while !remainingEdges.isEmpty
+            return tours
+        }
+        
+        guard var tours = hierholzer_rec() else { return nil }
+        // print("tries to join \(tours)")
+        
+        var tour = tours.first(where: { $0[$0.startIndex] == $0[$0.endIndex - 1] }) ?? tours[0]
+        
+        var didNotWork = 0
+        tours.remove(at: 0)
+        
+        while !tours.isEmpty {
+            // print(tours)
+            guard didNotWork < tours.count else { /*print("failed to assemble");*/ return nil }
+            var t = tours.first!
+            if t[t.startIndex] == t[t.endIndex - 1] {
+                if var index = tour.indices.first(where: { t.contains(tour[$0]) }) {
+                    let i = t.indices.first(where: { tour[index] == t[$0] })!
+                    // print(tour, t, "contains", tour[index], "at", i)
+                    _ = t.popLast()
+                    for _ in 0..<i { t.append(t.remove(at: 0)) }
+                    for n in t {
+                        tour.insert(n, at: index)
+                        index += 1
+                    }
+                    didNotWork = 0
+                    tours.remove(at: 0)
+                    // print(t, "join successful \(tours)")
+                } else {
+                    didNotWork += 1
+                    tours.append(tours.remove(at: 0))
+                }
+            } else if tours.count == 1 {
+                // print("did enter")
+                tour.remove(at: 0)
+                var i = 0
+                while tour.last! != t.first! {
+                    guard i < tour.count else { return nil }
+                    i += 1
+                    tour.append(tour.remove(at: 0))
+                }
+                tours.remove(at: 0)
+                tour.remove(at: tour.endIndex - 1)
+                tour.insert(t.first!, at: 0)
+                tour.append(contentsOf: t)
+            } else {
+                didNotWork += 1
+                tours.append(tours.remove(at: 0))
+            }
+            
+        }
+        
 		return tour
 	}
 	
@@ -230,21 +314,24 @@ extension Graph {
 
 extension Graph {
 	
-	public func nearestNeighbor(start: Int) -> ([Int], Int)? {
-		var visited = Set<Int>()
-		var route = [Int]()
+    public func nearestNeighbor(start: Int, lastPath finish: Bool = true) -> (path: [Int], distance: Int)? {
+		var remaining = vertices
+		var route = [start]
 		var current = start
+        remaining.remove(start)
 		var length = 0
-		while true {
-			// print(current, "->", terminator: "")
-			route.append(current)
-			visited.insert(current)
-			guard visited != vertices else { return (route, length) }
-			let v = self[current].min(by: { !visited.contains($0.end) && $0.weight < $1.weight })
-			guard v != nil && !visited.contains(v!.end) else { return nil }
-			current = v!.end
-			length += v!.weight
-		}
+        for _ in 1..<vertices.count {
+            guard let v = self[current].filter({ remaining.contains($0.end) }).min(by: { $0.weight < $1.weight }) else { return nil }
+            current = v.end
+            route.append(current)
+            remaining.remove(current)
+            length += v.weight
+
+        }
+        guard finish else { return (route, length) }
+        guard let lastPath = self[route.last!, start] else { return nil }
+        route.append(start)
+        return (route, length + lastPath)
 	}
 	
 }
@@ -252,7 +339,7 @@ extension Graph {
 extension Graph {
 	
 	public func kruskal() -> [(start: Int, end: Int, weight: Int)]? {
-		guard self.simple else { return nil }
+		guard !directed else { return nil }
 		
 		func hasCircle(from: Int, visited: Set<Int> = [], edges: [Int: Set<Int>]) -> Bool {
 			var visited = visited
@@ -290,6 +377,92 @@ extension Graph {
 	
 	
 }
+
+#if !os(Linux)
+public extension Graph {
+    public func bellmanHeldKarp(start: Int) -> (path: [Int], distance: Int)? {
+        let semaphore = DispatchSemaphore(value: 1)
+        
+        guard var nearestNeighbor = self.nearestNeighbor(start: start, lastPath: true) else { return nil }
+        
+        var bestAnswer = nearestNeighbor // { didSet { print(bestAnswer) } }
+        
+        func heldKarp_rec(from: Int, start: Int, path visited: [Int], visit: Set<Int>, distance: Int, maxDistance: Int) -> Int {
+            guard distance < maxDistance else { return maxDistance }
+            let visited = visited + [start]
+            var visit = visit
+            _ = visit.remove(start)
+            guard !visit.isEmpty else {
+                if let lastPath = self[start, from] {
+                    let fullDistance = distance + lastPath
+                    if fullDistance < maxDistance {
+                        let result = (path: visited + [from], distance: fullDistance)
+                        semaphore.wait()
+                        defer { semaphore.signal() }
+                        if result.distance < bestAnswer.distance {
+                            bestAnswer = result
+                            // print(bestAnswer)
+                        }
+                        return bestAnswer.distance
+                    }
+                    
+                }
+                return maxDistance
+            }
+            var minDistance = maxDistance
+            // print(visit.count)
+            // print(start, visit.sorted(), visited, distance)
+            for v in visit.filter({ if let w = self[start, $0] { return distance + w < minDistance } else { return false } }).sorted(by: {
+                self[start, $0]! < self[start, $1]!
+            }) {
+                // print(minDistance)
+                // guard v != start else { continue }
+                if let edge_weight = self[start, v] {
+                    visit.remove(v)
+                    let m = heldKarp_rec(from: from, start: v, path: visited, visit: visit, distance: edge_weight + distance, maxDistance: minDistance)
+                    minDistance = max(minDistance, m)
+                    visit.insert(v)
+                }
+            }
+            
+            return minDistance
+        }
+        
+        let queue = DispatchQueue(label: "heldKarp", attributes: .concurrent)
+        let group = DispatchGroup()
+        var vs = vertices
+        vs.remove(start)
+        // print("start", start, vs.sorted())
+        var minDistance = nearestNeighbor.distance
+        var i = 0
+        for e in self[start].sorted(by: { $0.weight < $1.weight }) {
+            i += 1
+            guard e.end != start else { continue }
+            queue.async(group: group) {
+                let m = heldKarp_rec(from: start, start: e.end, path: [start], visit: vs, distance: e.weight, maxDistance: minDistance)
+                semaphore.wait()
+                minDistance = max(minDistance, m)
+                semaphore.signal()
+                // print("e.end \(e.end) done")
+            }
+            if i % 5 == 4 {
+                group.wait()
+                semaphore.wait()
+                minDistance = bestAnswer.distance
+                semaphore.signal()
+            }
+        }
+        group.wait()
+        // print("answers", answers)
+        return bestAnswer
+    }
+}
+#endif
+
+
+/*
+ */
+
 
 
 

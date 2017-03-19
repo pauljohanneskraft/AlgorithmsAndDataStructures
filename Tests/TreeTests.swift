@@ -90,7 +90,18 @@ class TreeTests: XCTestCase {
 		t.insert(a.dropLast() + [])
 		t.insert(b)
 		t.insert(c)
-		XCTAssert("\(t)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t)")
+        print(t.count)
+		XCTAssert("\(t.description)" == "Trie<Character>\n ∟ B\n  ∟ o\n   ∟ n\n    ∟ j\n     ∟ o\n      ∟ u\n       ∟ r - 1\n ∟ H\n  ∟ a\n   ∟ l\n    ∟ l - 1\n     ∟ o - 2\n  ∟ e\n   ∟ l\n    ∟ l\n     ∟ o - 1", "\(t.description)")
+        try? t.remove(a)
+        print(t.description)
+        try? t.remove(a.dropLast() + [])
+        print(t.description)
+        try? t.remove(a)
+        print(t.description)
+        try? t.remove(b)
+        print(t.description)
+        try? t.remove(c)
+        print(t.description)
 	}
 	
 	func testTrieComparable() {

@@ -15,6 +15,10 @@ public struct Graph_Matrix : Graph, CustomStringConvertible {
 	
 	// initializers
 	public init() { _edges = [] }
+    
+    public init(_ matrix: [[Int?]]) {
+        self._edges = matrix
+    }
 	
 	// computed properties
 	public var edges: [(start: Int, end: Int, weight: Int)] {

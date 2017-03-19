@@ -14,14 +14,14 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 	public var _edges : [Int:[Int:Int]]
 	
 	// initializers
-	public init()						{ self._edges = [:]		}
+	public init() { self._edges = [:] }
 	
 	// computed properties
 	public var edges : [(start: Int, end: Int, weight: Int)] {
 		get {
 			var result = [(start: Int, end: Int, weight: Int)]()
 			for e in _edges {
-				for i in e.value { result.append((e.key, i.key, i.value)) }
+                result.append(contentsOf: e.value.map { (e.key, $0.key, $0.value) })
 			}
 			return result
 		}
@@ -53,8 +53,8 @@ public struct Graph_Hashing : Graph, CustomStringConvertible {
 	public subscript(start: Int, end: Int) -> Int? {
 		get { return _edges[start]?[end]		}
 		set {
-			if _edges [ start ] == nil { _edges [ start ] = [ : ] }
-			if _edges [  end  ] == nil { _edges [  end  ] = [ : ] }
+			if _edges [ start ] == nil { _edges [ start ] = [:] }
+			if _edges [  end  ] == nil { _edges [  end  ] = [:] }
 			_edges [start]! [end] = newValue
 		}
 	}
