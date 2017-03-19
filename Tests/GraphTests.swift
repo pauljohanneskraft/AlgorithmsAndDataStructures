@@ -111,10 +111,10 @@ class GraphTests: XCTestCase {
 	func hierholzer< G : Graph >(graph: G.Type) {
 		/*
 		
-		0----3----4
-		|    |\  /
-		|    | \/
-		1----2  5
+		0 <- 3 <-- 5
+		|    ^\   ^
+        °    | ° /
+		1 -> 2  4
 		
 		*/
 		
@@ -204,14 +204,61 @@ class GraphTests: XCTestCase {
 		
 		// print(g3)
 		let start = Date()
+        
+        /*
+         
+         g0:
+         
+         0 <- 3 <-- 5
+         |    ^\   ^
+         °    | ° /
+         1 -> 2  4
+         
+         °, ^, >, < is always the end of an arrow
+         
+         */
+        
 		let hh0 = g0.hierholzer()
-		XCTAssert(hh0 != nil && (hh0! == [4, 5, 3, 0, 1, 2, 3, 4] || hh0! == [5, 3, 0, 1, 2, 3, 4, 5]), "\(hh0)") // TODO: Hierholzer also for directed, (semi-)eulerian graphs
+		XCTAssert(hh0 != nil && (hh0! == [4, 5, 3, 0, 1, 2, 3, 4] || hh0! == [5, 3, 0, 1, 2, 3, 4, 5]), "\(hh0)")
+        /*
+         
+         g1:
+         
+         0 -- 3 --- 5
+         |    |\   /
+         |    | \ /
+         1 -- 2  4
+         
+         */
+        
 		let hh = g1.hierholzer()!
 		XCTAssert(hh == [4, 5, 3, 2, 1, 0, 3, 4] || hh == [5, 4, 3, 0, 1, 2, 3, 5], "\(hh)")
 
+        /*
+         
+         g2:
+         
+         0 -- 3 <-- 5
+         |    |\   /
+         |    | \ /
+         1 -- 2  4
+         
+         */
+        
         let hh2 = g2.hierholzer()
 		XCTAssert(hh2 != nil && (hh2! == [5, 3, 2, 1, 0, 3, 4, 5] || hh2! == [3, 4, 5, 3, 2, 1, 0, 3] || hh2! == [4, 5, 3, 2, 1, 0, 3, 4]), "\(hh2)")
 
+        /*
+         
+         g3:
+         
+         1 -- 2  5
+         |    | /
+         |    |/
+         0 -- 3 -- 4
+         
+         */
+        
         let hh3 = g3.hierholzer()
 		XCTAssert(hh3 != nil && (hh3! == [5, 3, 2, 1, 0, 3, 4]), "\(hh3)")
         
@@ -243,6 +290,7 @@ class GraphTests: XCTestCase {
          0 -- 1 -- 2
          
          */
+        
         let hh4 = g4.hierholzer()!
         XCTAssert(hh4 == [4, 5, 0, 1, 2, 3, 4, 1] || hh4 == [1, 2, 3, 4, 5, 0, 1, 4], "\(hh4)")
 		
@@ -351,14 +399,17 @@ class GraphTests: XCTestCase {
         g[0, 2] = 4
         g[1, 2] = 1
         g[2, 1] = -3
+        XCTAssert(g.directed == true)
         XCTAssert(g.unEvenVertices(directed: g.directed) == nil)
         XCTAssert(g.semiEulerian == false)
         XCTAssert(g.eulerian == false)
         g[1, 0] = 2
+        XCTAssert(g.directed == true)
         XCTAssert(g.unEvenVertices(directed: g.directed)! == 2)
         XCTAssert(g.semiEulerian == true)
         XCTAssert(g.eulerian == false)
         g[2, 0] = 10
+        XCTAssert(g.directed == false)
         XCTAssert(g.unEvenVertices(directed: g.directed)! == 0)
         XCTAssert(g.semiEulerian == true)
         XCTAssert(g.eulerian == true)
