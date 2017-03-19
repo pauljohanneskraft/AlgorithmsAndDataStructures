@@ -104,9 +104,11 @@ public struct DoublyLinkedList < Element > : _List {
 		
 		while index > 0 {
 			current = current?.next
-			if current == nil { throw ListError.IndexOutOfRange }
 			index -= 1
 		}
+        
+        guard current != nil else { throw ListError.IndexOutOfRange }
+
 		
 		let next = current?.next
 		let tmp = current!.next!.data
