@@ -48,7 +48,6 @@ class GraphTests: XCTestCase {
 		let cc = c.convert(to: G.self)
 		XCTAssert(cc == graph, "\(cc) != \(graph)")
 				
-		dijkstra(graph: graph)
 		bfs(graph: graph)
 		dfs(graph: graph)
 		bellmanFord(graph: G.self)
@@ -56,6 +55,7 @@ class GraphTests: XCTestCase {
         heldKarp(graph: G.self)
         #endif
 		nearestNeighbor(graph: G.self)
+        pathfinding(graph: G.self)
 		kruskal(graph: G.self)
 		hierholzer(graph: G.self)
         eulerian(graph: G.self)
@@ -95,18 +95,117 @@ class GraphTests: XCTestCase {
 		XCTAssert(fn == [0, 1, 2, 3, 4, 7, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "\(fn)")
 		print("BFS:\t\t\t\t", time)
 	}
-	
-	func dijkstra(graph: Graph) {
-		var path = [0]
-		
-		let time = measureTime {
-			path = graph.djikstra(start: 0, end: 9)
-		}
-		
-		XCTAssert(path == [0, 1, 2, 3, 7, 8, 9], "\(path)")
-		
-		print("Dijkstra:\t\t", time)
-	}
+    
+    func edgeList(ofMap map: [[Bool]]) -> [(start: Int, end: Int, weight: Int)] {
+        guard map.count > 0 else { return [] }
+        let width = map[0].count
+        let height = map.count
+        
+        func identifier(i: Int, j: Int) -> Int {
+            return i * width + j
+        }
+        
+        var edges = [(start: Int, end: Int, weight: Int)]()
+        for i in map.indices {
+            for j in map[i].indices {
+                if let up = i > 0 ? map[i - 1][j] : nil, up == true {
+                    edges.append((start: identifier(i: i, j: j), end: identifier(i: i - 1, j: j), weight: 1))
+                }
+                if let left = j > 0 ? map[i][j - 1] : nil, left == true {
+                    edges.append((start: identifier(i: i, j: j), end: identifier(i: i, j: j - 1), weight: 1))
+                }
+                if let right = j < map[i].count - 1 ? map[i][j + 1] : nil, right == true {
+                    edges.append((start: identifier(i: i, j: j), end: identifier(i: i, j: j + 1), weight: 1))
+                }
+                if let down = i < map.count - 1 ? map[i + 1][j] : nil, down == true {
+                    edges.append((start: identifier(i: i, j: j), end: identifier(i: i + 1, j: j), weight: 1))
+                }
+            }
+        }
+        return edges
+    }
+    
+    func pathfinding<G : Graph>(graph: G.Type) {
+        
+        let matrix = [[false, false, false, false, false, false, false, false, false, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true, false, false, false, false, false, false, false],
+                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false, false, false, false, false, false, false, false, false, false]
+                      ]
+        
+        func id(x: Int, y: Int) -> Int {
+            return matrix[0].count * x + y
+        }
+        
+        func reverse(id: Int) -> (x: Int, y: Int) {
+            let x = id % matrix[0].count
+            let y = id / matrix[0].count
+            return (x, y)
+        }
+        let starttime = Date()
+        var g = G()
+        
+        g.edges = edgeList(ofMap: matrix)
+        
+        let end : Int = (matrix[0].count * (matrix.count - 1)) - 2
+        let endreverse = reverse(id: end)
+        
+        var path0 = [Int]()
+        var path1 = [Int]()
+        var path2 = [Int]()
+
+        let heuristic : (Int) -> Int = { (a: Int) -> Int in
+            let ra = reverse(id: a)
+            let dx = ra.x - endreverse.x
+            let dy = ra.y - endreverse.y
+            return dx * dx + dy * dy
+        }
+        let start = id(x: 1, y: 1)
+        let time0 = measureTime {
+            path0 = g.aStar(start: start, end: end, heuristic: heuristic)!
+        }
+        let time1 = measureTime {
+            path1 = g.bestFirst(start: start, end: end, heuristic: heuristic)!
+        }
+        let time2 = measureTime {
+            path2 = g.djikstra(start: start, end: end)
+        }
+        
+        func distance(of path: [Int], in graph: G) -> Int {
+            guard path.count > 0 else { return 0 }
+            var dist = 0
+            var prev = path.first!
+            for i in path.dropFirst() {
+                dist += graph[prev, i]!
+                prev = i
+            }
+            return dist
+        }
+        XCTAssert(distance(of: path0, in: g) == distance(of: path2, in: g))
+        XCTAssert(distance(of: path0, in: g) == path0.count - 1)
+        XCTAssert(distance(of: path1, in: g) == path1.count - 1)
+        XCTAssert(distance(of: path2, in: g) == path2.count - 1)
+        XCTAssert(path0 == [11, 21, 31, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path0)")
+        XCTAssert(path2 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path2)")
+        XCTAssert(path1 == [11, 21, 31, 32, 42, 52, 53, 63, 64, 65, 75, 85, 84, 83, 82, 92, 102, 103, 104, 105, 106, 107, 108], "\(path1)")
+        /*
+        for p in [path0, path1, path2] {
+            let pathCoordinates = p.map { reverse(id: $0) }
+            var map = matrix.map { a in a.map { $0 ? " " : "█" } }
+            for c in pathCoordinates { map[c.1][c.0] = "X" }
+            for m in map { print(m.reduce("", { $0 + $1 })) }
+        }
+        */
+        print("Pathfinding:\t\t", -starttime.timeIntervalSinceNow, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2))")
+    }
 	
 	func hierholzer< G : Graph >(graph: G.Type) {
 		/*
