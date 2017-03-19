@@ -271,18 +271,19 @@ class GraphTests: XCTestCase {
  */
         let start = Date()
         let matrix = [
-            [0, 82, 46, 68, 52, 72, 42],
-            [29, 0, 46, 42, 43, 43, 23],
-            [82, 55, 0, 46, 55, 23, 43],
+            [0, 23, 46, 68, 52, 72, 42],
+            [29, 0, 23, 42, 43, 43, 23],
+            [82, 55, 0, 23, 55, 23, 43],
             [46, 46, 68, 0, 15, 72, 31],
             [68, 42, 46, 82, 0, 23, 52],
             [52, 43, 55, 15, 74, 0, 23],
-            [72, 43, 23, 72, 23, 61, 0],
+            [450, 43, 23, 72, 23, 61, 0],
         ]
         let g = Graph_Matrix(matrix).convert(to: G.self)
         let res = g.bellmanHeldKarp(start: 0)!
-        XCTAssert(res.0 == [0, 6, 2, 5, 3, 4, 1, 0])
-        XCTAssert(res.1 == 189)
+        // print(res)
+        XCTAssert(res.0 == [0, 1, 6, 2, 3, 4, 5, 0])
+        XCTAssert(res.1 == 182)
         print("ballmanHeldKarp:\t", -start.timeIntervalSinceNow)
     }
 	

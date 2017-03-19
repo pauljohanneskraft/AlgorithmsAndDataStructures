@@ -384,7 +384,6 @@ public extension Graph {
         let semaphore = DispatchSemaphore(value: 1)
         
         guard var nearestNeighbor = self.nearestNeighbor(start: start, lastPath: true) else { return nil }
-        
         var bestAnswer = nearestNeighbor // { didSet { print(bestAnswer) } }
         
         func heldKarp_rec(from: Int, start: Int, path visited: [Int], visit: Set<Int>, distance: Int, maxDistance: Int) -> Int {
@@ -401,7 +400,6 @@ public extension Graph {
                         defer { semaphore.signal() }
                         if result.distance < bestAnswer.distance {
                             bestAnswer = result
-                            // print(bestAnswer)
                         }
                         return bestAnswer.distance
                     }
