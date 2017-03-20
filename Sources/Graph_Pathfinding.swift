@@ -10,8 +10,8 @@ import Foundation
 
 extension Graph {
     
-    public func djikstra(start: Int) -> [Int:(weight: Int, last: Int)] {
-        var visited = [Int:(weight: Int, last: Int)]()
+    public func djikstra(start: Int) -> [Int:(weight: Int, predecessor: Int)] {
+        var visited = [Int:(weight: Int, predecessor: Int)]()
         
         djikstraRec(start: start, weights: 0, visited: &visited)
         
@@ -26,23 +26,23 @@ extension Graph {
         var next = Optional(end)
         repeat {
             current = next!
-            next = visited[current]?.last
+            next = visited[current]?.predecessor
             result.append(current)
             if next == nil && current != start { return [] }
         } while current != start
         return result.reversed()
     }
     
-    private func djikstraRec(start: Int, weights: Int, visited: inout [Int:(weight: Int, last: Int)]) {
+    private func djikstraRec(start: Int, weights: Int, visited: inout [Int:(weight: Int, predecessor: Int)]) {
         // print(start.hashValue)
         for v in self[start].sorted(by: { $0.weight < $1.weight }) {
             let weightAfterEdge = weights + v.weight
             // print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
             if let existingWeight = visited[v.end]?.weight {
                 if weightAfterEdge < existingWeight {
-                    visited[v.end] = (weight: weightAfterEdge, last: start)
+                    visited[v.end] = (weight: weightAfterEdge, predecessor: start)
                 } else { continue }
-            } else { visited[v.end] = (weight: weightAfterEdge, last: start) }
+            } else { visited[v.end] = (weight: weightAfterEdge, predecessor: start) }
             // print("\tvisited[\(v.key)] =", visited[v.key]!)
             djikstraRec(start: v.end, weights: weightAfterEdge, visited: &visited)
         }
@@ -149,7 +149,6 @@ public extension Graph {
                     candidates.insert(c.end)
                     nodeInfo[c.end] = (predecessor: edgeStart, cost: cost)
                 }
-                
             }
         }
         edgeStart = end
