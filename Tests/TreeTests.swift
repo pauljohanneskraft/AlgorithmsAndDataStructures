@@ -96,6 +96,10 @@ class TreeTests: XCTestCase {
                 XCTAssert(res != nil && r == res!)
             }
             
+            for r in insertArray {
+                XCTAssert(!btree.contains(r))
+            }
+            
             btree.insert(2)
             print(btree)
         }
