@@ -19,7 +19,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 		self.order = order
 	}
 	
-	mutating func merge(with heads: [BinomialTreeNode<Element>], ignoreMinimum: Bool) {
+	mutating func merge(with heads: [BinomialTreeNode<Element>]) {
 		guard children.count > 0 else { children = heads; resetMinIndex(); return }
 		
 		var treesNew = [BinomialTreeNode<Element>]()
@@ -31,19 +31,15 @@ public struct BinomialHeap < Element > : PriorityQueue {
 			var a : BinomialTreeNode<Element>? = nil
 			var minRank = 0
 			
-			while treeIndex < children.count {
-				let tree = children[treeIndex]
-				if ignoreMinimum {
-					treeIndex += 1
-					continue
-				}
-				minRank = tree.rank
-				if tree.rank == rank {
-					a = tree
-					treeIndex += 1
-				}
-				break
-			}
+            while treeIndex < children.count {
+                let tree = children[treeIndex]
+                minRank = tree.rank
+                if tree.rank == rank {
+                    a = tree
+                    treeIndex += 1
+                }
+                break
+            }
 			
 			var b : BinomialTreeNode<Element>? = nil
 			
@@ -96,7 +92,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 	}
 	
 	public mutating func push(_ element: Element) {
-		merge(with: [BinomialTreeNode(element)], ignoreMinimum: false)
+		merge(with: [BinomialTreeNode(element)])
 	}
 	
 	public mutating func pop() -> Element? {
@@ -106,7 +102,7 @@ public struct BinomialHeap < Element > : PriorityQueue {
 		let result = children[minIndex].element
 		let formerMin = children.remove(at: minIndex)
 		
-		merge(with: formerMin.children, ignoreMinimum: false)
+		merge(with: formerMin.children)
 		
 		return result
 	}

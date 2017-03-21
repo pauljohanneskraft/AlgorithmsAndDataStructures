@@ -65,9 +65,10 @@ public struct SinglyLinkedList < Element > : _List {
 		
 		while index > 0 {
 			current = current?.next
-			if current == nil { throw ListError.IndexOutOfRange }
 			index -= 1
 		}
+        
+        guard current != nil else { throw ListError.IndexOutOfRange }
 		
 		current!.next = SinglyLinkedItem(data: data, next: current?.next)
 	}
@@ -86,9 +87,10 @@ public struct SinglyLinkedList < Element > : _List {
 		
 		while index > 0 {
 			current = current?.next
-			if current == nil { throw ListError.IndexOutOfRange }
 			index -= 1
 		}
+        
+        guard current != nil else { throw ListError.IndexOutOfRange }
 		
 		let next = current?.next
 		let tmp = next!.data

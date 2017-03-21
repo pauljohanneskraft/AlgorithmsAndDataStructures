@@ -18,7 +18,7 @@ public func * (lhs: String, rhs: UInt) -> String {
 public func * (lhs: String, rhs: Int) -> String { return lhs * UInt(rhs) }
 
 public enum DataStructureError : Error {
-    case notIn
+    case notIn, alreadyIn
 }
 
 public protocol DataStructure {
