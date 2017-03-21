@@ -185,19 +185,19 @@ extension Graph {
 extension Graph {
 	
 	public func kruskal() -> [(start: Int, end: Int, weight: Int)]? {
-		guard !directed else { return nil }
+		// guard !directed else { return nil }
 		
 		func hasCircle(from: Int, visited: Set<Int> = [], edges: [Int: Set<Int>]) -> Bool {
 			var visited = visited
 			var edges = edges
 			for v in edges[from]! {
-				edges[v]!.remove(from)
+				// edges[v]!.remove(from)
 				// print("\tlooking at (\(from),\(v))", visited)
 				guard !visited.contains(v) else { return true }
 				visited.insert(v)
 				guard !hasCircle(from: v, visited: visited, edges: edges) else { return true }
 				visited.remove(v)
-				edges[v]!.insert(from)
+				// edges[v]!.insert(from)
 			}
 			return false
 		}
@@ -211,7 +211,7 @@ extension Graph {
 			// print("checking out \(e)")
 			spanningTree.append(e)
 			visited[e.start	]!.insert(e.end		)
-			visited[e.end	]!.insert(e.start	)
+			// visited[e.end	]!.insert(e.start	)
 			if hasCircle(from: e.start, edges: visited) || hasCircle(from: e.end, edges: visited) {
 				// print("removing \(e)")
 				spanningTree.removeLast()

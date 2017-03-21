@@ -510,9 +510,11 @@ class GraphTests: XCTestCase {
 		g1[2, 1] = -3
 		
 		let start = Date()
-		
-		XCTAssert(g0.kruskal() == nil)
-		_ = g1.kruskal()!
+        let k0 = g0.kruskal() ?? []
+		XCTAssert("\(k0)" == "[(2, 1, -3), (0, 1, 1), (0, 2, 4)]", "\(k0)")
+		// XCTAssert(g0.kruskal() == nil)
+        let k1 = g1.kruskal() ?? []
+		XCTAssert("\(k1)" == "[(2, 1, -3), (0, 1, 1), (2, 0, 4)]" || "\(k1)" == "[(1, 2, -3), (0, 1, 1), (0, 2, 4)]", "\(k1)")
 		
 		print("Kruskal:\t\t\t", -start.timeIntervalSinceNow)
 	}
