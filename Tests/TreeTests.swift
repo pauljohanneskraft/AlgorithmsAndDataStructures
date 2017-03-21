@@ -34,7 +34,7 @@ class TreeTests: XCTestCase {
             print(btree)
             btree.remove(hashValue: 2)
             print(btree)
-            try? btree.insert(2)
+            try! btree.insert(2)
             let interval = 0..<50
             for i in interval { try? btree.insert(i) }
             XCTAssert(btree.count == 50)
@@ -53,6 +53,9 @@ class TreeTests: XCTestCase {
             
             for i in interval { btree.replace(i) }
             
+            let a = (try? btree.insert(47)) == nil
+            XCTAssert(a)
+            
             let bheight2 = btree.height
             XCTAssert(bheight2 >= minHeight || bheight2 <= maxHeight, "\(bheight2) \(minHeight) \(maxHeight) \(i)")
             
@@ -68,7 +71,7 @@ class TreeTests: XCTestCase {
                 for r in arr { insertArray.insert(r) }
             }
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
-                try? btree.insert(r)
+                try! btree.insert(r)
             }
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 XCTAssert(btree.contains(r))
@@ -100,7 +103,7 @@ class TreeTests: XCTestCase {
                 XCTAssert(!btree.contains(r))
             }
             
-            try? btree.insert(2)
+            try! btree.insert(2)
             print(btree)
         }
     }
