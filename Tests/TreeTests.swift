@@ -24,6 +24,66 @@ class TreeTests: XCTestCase {
 	}
 	
 	var arrs : [[Int]] = []
+    
+    func testBTree() {
+        var btree = BTree<Int>(maxNodeSize: 10)!
+        btree.replace(2)
+        print(btree)
+        btree.remove(hashValue: 2)
+        print(btree)
+        btree.insert(2)
+        let interval = 0..<50
+        for i in interval {
+            btree.insert(i)
+        }
+        XCTAssert(btree.count == 50)
+        XCTAssert(btree.height == 2)
+        print(btree)
+        for i in interval.reversed() {
+            // print(i, btree)
+            XCTAssert(i == btree.remove(hashValue: i)!)
+        }
+        XCTAssert(btree.count == 0)
+        XCTAssert(btree.height == 0)
+        
+        var insertArray = Set<Int>()
+        for arr in arrs.dropLast(20) {
+            for r in arr { insertArray.insert(r) }
+        }
+        for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+            btree.insert(r)
+        }
+        for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+            XCTAssert(btree.contains(r))
+        }
+        for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+            let countBefore = btree.count
+            XCTAssert(btree[r] == r)
+            btree.replace(r)
+            XCTAssert(btree.count == countBefore)
+        }
+        for _ in 0..<100 {
+            let countBefore = btree.count
+            var r = Int(arc4random() & 0xFFFF)
+            while insertArray.contains(r) {
+                r = Int(arc4random() & 0xFFFF)
+            }
+            XCTAssert(!btree.contains(r))
+            XCTAssert(btree[r] == nil)
+            XCTAssert(btree.remove(hashValue: r) == nil)
+            XCTAssert(btree.count == countBefore)
+        }
+        print(btree)
+        for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+            let res = btree.remove(hashValue: r)
+            XCTAssert(res != nil && r == res!)
+        }
+ 
+        btree.insert(2)
+        print(btree)
+
+        
+    }
 	
 	// let arr = [9235,25,52,2,5,23,35,65,532,6,54,75,7,56,8,4]
 	
