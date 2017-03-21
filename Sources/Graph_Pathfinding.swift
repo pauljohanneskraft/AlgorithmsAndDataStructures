@@ -13,7 +13,22 @@ extension Graph {
     public func djikstra(start: Int) -> [Int:(weight: Int, predecessor: Int)] {
         var visited = [Int:(weight: Int, predecessor: Int)]()
         
-        djikstraRec(start: start, weights: 0, visited: &visited)
+        func djikstraRec(start: Int, weights: Int) {
+            // print(start.hashValue)
+            for v in self[start].sorted(by: { $0.weight < $1.weight }) {
+                let weightAfterEdge = weights + v.weight
+                // print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
+                if let existingWeight = visited[v.end]?.weight {
+                    if weightAfterEdge < existingWeight {
+                        visited[v.end] = (weight: weightAfterEdge, predecessor: start)
+                    } else { continue }
+                } else { visited[v.end] = (weight: weightAfterEdge, predecessor: start) }
+                // print("\tvisited[\(v.key)] =", visited[v.key]!)
+                djikstraRec(start: v.end, weights: weightAfterEdge)
+            }
+        }
+        
+        djikstraRec(start: start, weights: 0)
         
         return visited
     }
@@ -33,20 +48,7 @@ extension Graph {
         return result.reversed()
     }
     
-    private func djikstraRec(start: Int, weights: Int, visited: inout [Int:(weight: Int, predecessor: Int)]) {
-        // print(start.hashValue)
-        for v in self[start].sorted(by: { $0.weight < $1.weight }) {
-            let weightAfterEdge = weights + v.weight
-            // print(start.hashValue, " -?-> ", v.key, " with weight: ", weightAfterEdge)
-            if let existingWeight = visited[v.end]?.weight {
-                if weightAfterEdge < existingWeight {
-                    visited[v.end] = (weight: weightAfterEdge, predecessor: start)
-                } else { continue }
-            } else { visited[v.end] = (weight: weightAfterEdge, predecessor: start) }
-            // print("\tvisited[\(v.key)] =", visited[v.key]!)
-            djikstraRec(start: v.end, weights: weightAfterEdge, visited: &visited)
-        }
-    }
+    
 }
 
 extension Graph {
@@ -151,6 +153,7 @@ public extension Graph {
                 }
             }
         }
+        
         edgeStart = end
         var path = [edgeStart]
         

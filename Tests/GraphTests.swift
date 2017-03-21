@@ -316,7 +316,7 @@ class GraphTests: XCTestCase {
          °, ^, >, < is always the end of an arrow
          
          */
-        
+        //print("G0")
 		let hh0 = g0.hierholzer()
 		XCTAssert(hh0 != nil && (hh0! == [4, 5, 3, 0, 1, 2, 3, 4] || hh0! == [5, 3, 0, 1, 2, 3, 4, 5]), "\(hh0)")
         /*
@@ -330,8 +330,9 @@ class GraphTests: XCTestCase {
          
          */
         
-		let hh = g1.hierholzer()!
-		XCTAssert(hh == [4, 5, 3, 2, 1, 0, 3, 4] || hh == [5, 4, 3, 0, 1, 2, 3, 5], "\(hh)")
+        //print("G1")
+		let hh = g1.hierholzer()
+		XCTAssert(hh != nil && (hh! == [4, 5, 3, 2, 1, 0, 3, 4] || hh! == [5, 4, 3, 0, 1, 2, 3, 5]), "\(hh)")
 
         /*
          
@@ -344,6 +345,7 @@ class GraphTests: XCTestCase {
          
          */
         
+        //print("G2")
         let hh2 = g2.hierholzer()
 		XCTAssert(hh2 != nil && (hh2! == [5, 3, 2, 1, 0, 3, 4, 5] || hh2! == [3, 4, 5, 3, 2, 1, 0, 3] || hh2! == [4, 5, 3, 2, 1, 0, 3, 4]), "\(hh2)")
 
@@ -358,6 +360,7 @@ class GraphTests: XCTestCase {
          
          */
         
+        //print("G3")
         let hh3 = g3.hierholzer()
 		XCTAssert(hh3 != nil && (hh3! == [5, 3, 2, 1, 0, 3, 4]), "\(hh3)")
         
@@ -390,8 +393,9 @@ class GraphTests: XCTestCase {
          
          */
         
-        let hh4 = g4.hierholzer()!
-        XCTAssert(hh4 == [4, 5, 0, 1, 2, 3, 4, 1] || hh4 == [1, 2, 3, 4, 5, 0, 1, 4], "\(hh4)")
+        //print("G4")
+        let hh4 = g4.hierholzer()
+        XCTAssert(hh4 != nil && (hh4! == [4, 5, 0, 1, 2, 3, 4, 1] || hh4! == [1, 2, 3, 4, 5, 0, 1, 4]), "\(hh4)")
         
         /*
             0
@@ -424,6 +428,7 @@ class GraphTests: XCTestCase {
         house[3, 4] = 1
         house[4, 3] = 1
         
+        //print("HOUSE")
         let househh = house.hierholzer()
         // print(househh ?? [])
         XCTAssert(househh != nil && (househh! == [2, 0, 1, 2, 4, 3, 1]), "\(househh)")
@@ -445,6 +450,7 @@ class GraphTests: XCTestCase {
          
          */
         
+        //print("SANTA")
         let santahh = house.hierholzer()
         // print(santahh ?? [])
         XCTAssert(santahh != nil && (santahh! == [3, 2, 0, 1, 2, 4, 3, 1, 4] || santahh! == [4, 2, 0, 1, 2, 3, 4, 1, 3] || santahh! == [3, 2, 4, 3, 1, 2, 0, 1, 4]), "\(santahh)")
@@ -510,9 +516,11 @@ class GraphTests: XCTestCase {
 		g1[2, 1] = -3
 		
 		let start = Date()
-		
-		XCTAssert(g0.kruskal() == nil)
-		_ = g1.kruskal()!
+        let k0 = g0.kruskal() ?? []
+		XCTAssert("\(k0)" == "[(2, 1, -3), (0, 1, 1), (0, 2, 4)]", "\(k0)")
+		// XCTAssert(g0.kruskal() == nil)
+        let k1 = g1.kruskal() ?? []
+		XCTAssert("\(k1)" == "[(2, 1, -3), (0, 1, 1), (2, 0, 4)]" || "\(k1)" == "[(1, 2, -3), (0, 1, 1), (0, 2, 4)]", "\(k1)")
 		
 		print("Kruskal:\t\t\t", -start.timeIntervalSinceNow)
 	}

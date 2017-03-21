@@ -18,28 +18,28 @@ extension Graph {
 	*/
 	
 	public func hierholzer() -> [Int]? {
-        guard noEmtpyVertices else { return nil }
-        let unEvenVertices = self.unEvenVertices(directed: directed)
-		guard unEvenVertices == 0 || unEvenVertices == 2 else { return nil }
-        guard var startv = vertices.first else { return nil }
-        var end = startv
-		if unEvenVertices == 2 {
-			// print("semiEulerian")
+        
+        func findEndpoints() -> (start: Int, end: Int)? {
             var endpoints = [Int]()
-			for v in vertices {
-				if self[v].count % 2 == 1 {
-                    // print(v, "is start")
-					endpoints.append(v)
-                    if endpoints.count > 1 { break }
-                }
-			}
-            // print("endpoints", endpoints)
-            if endpoints.count > 1 {
-                startv = endpoints[0]
-                end = endpoints[1]
+            for v in vertices {
+                let sv = self[v]
+                if sv.count % 2 == 1 { endpoints.append(v) }
             }
-            
-		}
+            guard endpoints.count == 2 else {
+                guard endpoints.count == 1 else {
+                    guard let f = vertices.first else { return nil }
+                    return (f, f)
+                }
+                return (endpoints[0], endpoints[0])
+            }
+            return (endpoints[0], endpoints[1])
+        }
+        
+        guard var (startv, end) = findEndpoints() else { print("ENDPOINTS!"); return nil }
+        
+        // print(startv, end)
+        
+        var didSwap = false
         
         // print(start)
 		
@@ -47,9 +47,7 @@ extension Graph {
             var subtour = [Int]()
             var tours = [[Int]]()
             var remainingEdges : [Int: Set<Int>] = [:]
-            for v in vertices {
-                remainingEdges[v] = Set(self[v].map { $0.end })
-            }
+            for v in vertices { remainingEdges[v] = Set(self[v].map { $0.end }) }
             var visited : [Int: Set<Int>] = [:]
             var start = startv
 
@@ -59,11 +57,18 @@ extension Graph {
                 // print("new subtour starting at \(start) with remainingEdges:", remainingEdges)
                 repeat {
                     // print(current, subtour, remainingEdges)
-                    guard let next = remainingEdges[current]?.first(where: { self[$0, current] == nil }) ?? remainingEdges[current]?.first else {
+                    guard let next = remainingEdges[current]?.min(by: { a, b in self[a, current] == nil }) else {
+                        // print(tours, subtour, remainingEdges)
+                        // print(self)
+
                         if end != startv {
+                            // print("swaps")
+                            guard !didSwap else { return nil }
+                            didSwap = true
                             swap(&startv, &end)
                             return hierholzer_rec()
                         }
+                        // print("swapping?")
                         return nil
                     }
                     // print("\tvisiting \(end)")
@@ -94,7 +99,7 @@ extension Graph {
                     subtour.append(next)
                     current = next
                     
-                    // print("\tdid visit \(end)", remainingEdges, visited)
+                    // print("\tdid visit \(current) \(start)", subtour, remainingEdges, visited)
                     
                 } while !remainingEdges.isEmpty && (current != end || current != start)
                 tours.append(subtour)
@@ -104,56 +109,58 @@ extension Graph {
             return tours
         }
         
-        guard var tours = hierholzer_rec() else { return nil }
-        // print("tries to join \(tours)")
+        guard var tours = hierholzer_rec(), tours.count > 0 else { return nil }
         
-        var tour = tours.first(where: { $0[$0.startIndex] == $0[$0.endIndex - 1] }) ?? tours[0]
-        
-        var didNotWork = 0
-        tours.remove(at: 0)
-        
-        while !tours.isEmpty {
-            // print(tours)
-            guard didNotWork < tours.count else { /*print("failed to assemble");*/ return nil }
-            var t = tours.first!
-            if t[t.startIndex] == t[t.endIndex - 1] {
-                if var index = tour.indices.first(where: { t.contains(tour[$0]) }) {
-                    let i = t.indices.first(where: { tour[index] == t[$0] })!
-                    // print(tour, t, "contains", tour[index], "at", i)
-                    _ = t.popLast()
-                    for _ in 0..<i { t.append(t.remove(at: 0)) }
-                    for n in t {
-                        tour.insert(n, at: index)
-                        index += 1
+        func combining(tours: [[Int]]) -> [Int]? {
+            var tours = tours
+            var tour = tours.remove(at: 0)
+            
+            var didNotWork = 0
+            // print("tours", tours, "tour", tour)
+            while !tours.isEmpty {
+                guard didNotWork < tours.count else { print("failed to assemble"); return nil }
+                var t = tours.first!
+                // print(tours, tour, t)
+                if t[t.startIndex] == t[t.endIndex - 1] {
+                    if var index = tour.indices.first(where: { t.contains(tour[$0]) }) {
+                        let i = t.indices.first(where: { tour[index] == t[$0] })!
+                        // print(tour, t, "contains", tour[index], "at", i)
+                        _ = t.popLast()
+                        for _ in 0..<i { t.append(t.remove(at: 0)) }
+                        for n in t {
+                            tour.insert(n, at: index)
+                            index += 1
+                        }
+                        didNotWork = 0
+                        tours.remove(at: 0)
+                        // print(t, "join successful \(tours)")
+                    } else {
+                        didNotWork += 1
+                        tours.append(tours.remove(at: 0))
                     }
-                    didNotWork = 0
+                } else if tours.count == 1 {
+                    // print("did enter")
+                    tour.remove(at: 0)
+                    var i = 0
+                    while tour.last! != t.first! {
+                        guard i < tour.count else { print("failed to assemble"); return nil }
+                        i += 1
+                        tour.append(tour.remove(at: 0))
+                    }
                     tours.remove(at: 0)
-                    // print(t, "join successful \(tours)")
+                    tour.remove(at: tour.endIndex - 1)
+                    tour.insert(t.first!, at: 0)
+                    tour.append(contentsOf: t)
                 } else {
                     didNotWork += 1
                     tours.append(tours.remove(at: 0))
                 }
-            } else if tours.count == 1 {
-                // print("did enter")
-                tour.remove(at: 0)
-                var i = 0
-                while tour.last! != t.first! {
-                    guard i < tour.count else { return nil }
-                    i += 1
-                    tour.append(tour.remove(at: 0))
-                }
-                tours.remove(at: 0)
-                tour.remove(at: tour.endIndex - 1)
-                tour.insert(t.first!, at: 0)
-                tour.append(contentsOf: t)
-            } else {
-                didNotWork += 1
-                tours.append(tours.remove(at: 0))
+                
             }
-            
+            return tour
         }
         
-		return tour
+		return combining(tours: tours)
 	}
 	
 }
@@ -185,19 +192,19 @@ extension Graph {
 extension Graph {
 	
 	public func kruskal() -> [(start: Int, end: Int, weight: Int)]? {
-		guard !directed else { return nil }
+		// guard !directed else { return nil }
 		
 		func hasCircle(from: Int, visited: Set<Int> = [], edges: [Int: Set<Int>]) -> Bool {
 			var visited = visited
 			var edges = edges
 			for v in edges[from]! {
-				edges[v]!.remove(from)
+				// edges[v]!.remove(from)
 				// print("\tlooking at (\(from),\(v))", visited)
 				guard !visited.contains(v) else { return true }
 				visited.insert(v)
 				guard !hasCircle(from: v, visited: visited, edges: edges) else { return true }
 				visited.remove(v)
-				edges[v]!.insert(from)
+				// edges[v]!.insert(from)
 			}
 			return false
 		}
@@ -211,7 +218,7 @@ extension Graph {
 			// print("checking out \(e)")
 			spanningTree.append(e)
 			visited[e.start	]!.insert(e.end		)
-			visited[e.end	]!.insert(e.start	)
+			// visited[e.end	]!.insert(e.start	)
 			if hasCircle(from: e.start, edges: visited) || hasCircle(from: e.end, edges: visited) {
 				// print("removing \(e)")
 				spanningTree.removeLast()
