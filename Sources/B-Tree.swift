@@ -111,7 +111,7 @@ private final class BTreeNode < Element : Hashable > {
         return elements.indices.first(where: { elements[$0].hashValue >= hashValue })
     }
     
-    func insert(_ data: (hashValue: Int, element: Element), replace: Bool) -> ((hashValue: Int, element: Element), BTreeNode<Element>, BTreeNode<Element>)? {
+    func insert(_ data: KeyValue, replace: Bool) -> (KeyValue, BTreeNode<Element>, BTreeNode<Element>)? {
         let i = getIndex(hashValue: data.hashValue) ?? elements.count
         guard i == elements.count || elements[i].hashValue != data.hashValue else {
             if replace { elements[i] = data }
