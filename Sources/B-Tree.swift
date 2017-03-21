@@ -207,7 +207,7 @@ private final class BTreeNode < Element : Hashable > {
     }
     
     var validSize : Bool {
-        return elements.count > ((maxSize + 1) / 2) - 1 && elements.count < maxSize
+        return elements.count > (maxSize / 2) - 1 && elements.count < maxSize
     }
     
     func contains(_ hashValue: Int) -> Bool {
