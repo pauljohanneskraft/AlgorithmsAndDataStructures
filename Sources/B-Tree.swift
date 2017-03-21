@@ -21,7 +21,7 @@ public struct BTree<Element : Hashable> {
         self.maxNodeSize = maxNodeSize
     }
     
-    public mutating func insert(_ value: Element) {
+    public mutating func insert(_ value: Element) throws {
         defer { assert(valid, "\(self)") }
         let data = (hashValue: value.hashValue, element: value)
         guard root != nil else {
@@ -29,7 +29,7 @@ public struct BTree<Element : Hashable> {
             root!.elements = [data]
             return
         }
-        guard let res = root?.insert(data, replace: false) else { return }
+        guard let res = try root?.insert(data, replace: false) else { return }
         root = BTreeNode<Element>(maxSize: maxNodeSize)
         root!.children = [res.1, res.2]
         root!.elements = [res.0]
@@ -43,7 +43,7 @@ public struct BTree<Element : Hashable> {
             root!.elements = [data]
             return
         }
-        guard let res = root?.insert(data, replace: true) else { return }
+        guard let res = try! root?.insert(data, replace: true) else { return }
         root = BTreeNode<Element>(maxSize: maxNodeSize)
         root!.children = [res.1, res.2]
         root!.elements = [res.0]
@@ -111,21 +111,26 @@ private final class BTreeNode < Element : Hashable > {
         return elements.indices.first(where: { elements[$0].hashValue >= hashValue })
     }
     
-    func insert(_ data: KeyValue, replace: Bool) -> (KeyValue, BTreeNode<Element>, BTreeNode<Element>)? {
+    func insert(_ data: KeyValue, replace: Bool) throws -> (KeyValue, BTreeNode<Element>, BTreeNode<Element>)? {
         let i = getIndex(hashValue: data.hashValue) ?? elements.count
         guard i == elements.count || elements[i].hashValue != data.hashValue else {
             if replace { elements[i] = data }
+            else { throw DataStructureError.alreadyIn }
             return nil
         }
         if children.isEmpty {
             elements.insert(data, at: i)
         } else {
-            guard let res = children[i].insert(data, replace: replace) else { return nil }
+            guard let res = try children[i].insert(data, replace: replace) else { return nil }
             elements.insert(res.0, at: i)
             children[i] = res.1
             children.insert(res.2, at: i + 1)
         }
         guard elements.count > maxElementsCount else { return nil }
+        return split()
+    }
+    
+    func split() -> (KeyValue, BTreeNode<Element>, BTreeNode<Element>) {
         let middle = elements.count >> 1
         let nodeLeft = BTreeNode<Element>(maxSize: maxChildrenCount)
         let nodeRight = BTreeNode<Element>(maxSize: maxChildrenCount)
