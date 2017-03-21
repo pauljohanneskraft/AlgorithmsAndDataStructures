@@ -27,7 +27,7 @@ class TreeTests: XCTestCase {
     
     func testBTree() {
         var btree = BTree<Int>(maxNodeSize: 5)!
-        for i in [6,7] {
+        for i in [3, 6, 7] {
             btree = BTree<Int>(maxNodeSize: i)!
             btree.replace(2)
             print(btree)

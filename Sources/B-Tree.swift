@@ -83,12 +83,15 @@ extension BTree : CustomStringConvertible {
 
 private final class BTreeNode < Element : Hashable > {
     typealias KeyValue = (hashValue: Int, element: Element)
-    let maxSize : Int
+    let maxChildrenCount : Int
     var elements    : [KeyValue]
     var children    : [BTreeNode<Element>]
+    var maxElementsCount : Int { return maxChildrenCount - 1 }
+    var minChildrenCount : Int { return (maxChildrenCount + 1) / 2 }
+    var minElementsCount : Int { return minChildrenCount - 1 }
     
     required init(maxSize: Int) {
-        self.maxSize = maxSize
+        self.maxChildrenCount = maxSize
         self.elements = []
         self.children = []
     }
@@ -122,10 +125,10 @@ private final class BTreeNode < Element : Hashable > {
             children[i] = res.1
             children.insert(res.2, at: i + 1)
         }
-        guard elements.count >= maxSize else { return nil }
+        guard elements.count > maxElementsCount else { return nil }
         let middle = elements.count >> 1
-        let nodeLeft = BTreeNode<Element>(maxSize: maxSize)
-        let nodeRight = BTreeNode<Element>(maxSize: maxSize)
+        let nodeLeft = BTreeNode<Element>(maxSize: maxChildrenCount)
+        let nodeRight = BTreeNode<Element>(maxSize: maxChildrenCount)
         nodeLeft.elements = Array(elements[0..<middle])
         nodeRight.elements = Array(elements[(middle + 1)..<elements.count])
         guard !children.isEmpty else { return (elements[middle], nodeLeft, nodeRight) }
@@ -135,13 +138,13 @@ private final class BTreeNode < Element : Hashable > {
     }
     
     func stealLeft() -> (KeyValue, BTreeNode<Element>?)? {
-        guard elements.count > ((maxSize + 1) >> 1) - 1 else { return nil }
+        guard elements.count > minElementsCount else { return nil }
         guard !children.isEmpty else { return (elements.remove(at: 0), nil) }
         return (elements.remove(at: 0), children.remove(at: 0))
     }
     
     func stealRight() -> (KeyValue, BTreeNode<Element>?)? {
-        guard elements.count > ((maxSize + 1) >> 1) - 1 else { return nil }
+        guard elements.count > minElementsCount else { return nil }
         guard !children.isEmpty else { return (elements.popLast()!, nil) }
         return (elements.popLast()!, children.popLast())
     }
@@ -200,14 +203,14 @@ private final class BTreeNode < Element : Hashable > {
     
     static func merge(separator: KeyValue, left: BTreeNode<Element>, right: BTreeNode<Element>) -> BTreeNode<Element> {
         left.elements.append(separator)
-        let new = BTreeNode<Element>(maxSize: left.maxSize)
+        let new = BTreeNode<Element>(maxSize: left.maxChildrenCount)
         new.children = left.children + right.children
         new.elements = left.elements + right.elements
         return new
     }
     
     var validSize : Bool {
-        return elements.count > (maxSize / 2) - 1 && elements.count < maxSize
+        return elements.count >= minElementsCount && elements.count <= maxElementsCount
     }
     
     func contains(_ hashValue: Int) -> Bool {
@@ -222,8 +225,8 @@ private final class BTreeNode < Element : Hashable > {
     var height : Int { return 1 + (children.first?.height ?? 0) }
 
     func valid(root: Bool, min: Int, max: Int) -> Bool {
-        guard (root || children.count == 0 || children.count >= (maxSize + 1) / 2) else { print("minSize"); return false }
-        guard children.count <= maxSize else { print("maxSize"); return false }
+        guard (root || children.count == 0 || children.count >= minChildrenCount) else { print("minSize"); return false }
+        guard children.count <= maxChildrenCount else { print("maxSize"); return false }
 
         let h = height
         for c in children.indices {
