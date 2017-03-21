@@ -121,7 +121,6 @@ private final class BTreeNode < Element : Hashable > {
             elements.insert(res.0, at: i)
             children[i] = res.1
             children.insert(res.2, at: i + 1)
-            // //print("did merge", elements)
         }
         guard elements.count >= maxSize else { return nil }
         let middle = elements.count >> 1
@@ -132,7 +131,6 @@ private final class BTreeNode < Element : Hashable > {
         guard !children.isEmpty else { return (elements[middle], nodeLeft, nodeRight) }
         nodeLeft.children = Array(children[0...middle])
         nodeRight.children = Array(children[(middle + 1)...elements.count])
-        // //print("split:", elements, elements[middle], nodeLeft.description(depth: 0), nodeRight.description(depth: 0))
         return (elements[middle], nodeLeft, nodeRight)
     }
     
@@ -161,7 +159,6 @@ private final class BTreeNode < Element : Hashable > {
             guard !children.isEmpty else { return nil }
             elem = children[i].remove(hashValue: hashValue)
         }
-        // defer { for c in children { assert(c.valid(root: false, min: Int.min, max: Int.max)) } }
         guard !children[i].validSize else { return elem }
         shrink(at: i)
         return elem
@@ -201,23 +198,11 @@ private final class BTreeNode < Element : Hashable > {
         return max
     }
     
-    /*
-    func removeMin() -> KeyValue {
-        guard !children.isEmpty else { return elements.remove(at: 0) }
-        let min = children[0].removeMin()
-        guard !children[0].validSize else { return min }
-        merge(at: 0)
-        return min
-    }
-    */
-    
     static func merge(separator: KeyValue, left: BTreeNode<Element>, right: BTreeNode<Element>) -> BTreeNode<Element> {
-        //print("static merging", left.elements, right.elements)
         left.elements.append(separator)
         let new = BTreeNode<Element>(maxSize: left.maxSize)
         new.children = left.children + right.children
         new.elements = left.elements + right.elements
-        //print("merged to", new.children.count, "children and", new.elements.count, "elements")
         return new
     }
     
@@ -239,7 +224,7 @@ private final class BTreeNode < Element : Hashable > {
     func valid(root: Bool, min: Int, max: Int) -> Bool {
         guard (root || children.count == 0 || children.count >= (maxSize + 1) / 2) else { print("minSize"); return false }
         guard children.count <= maxSize else { print("maxSize"); return false }
-        // guard elements == elements.sorted(by: { $0.hashValue < $1.hashValue }) else { return false }
+
         let h = height
         for c in children.indices {
             guard children[c].height + 1 == h else { print("height"); return false }
