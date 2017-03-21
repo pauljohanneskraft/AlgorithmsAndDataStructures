@@ -27,6 +27,7 @@ class TreeTests: XCTestCase {
     
     func testBTree() {
         var btree = BTree<Int>(maxNodeSize: 5)!
+        XCTAssert(BTree<Int>(maxNodeSize: 2) == nil)
         for i in [3, 6, 7] {
             btree = BTree<Int>(maxNodeSize: i)!
             btree.replace(2)
@@ -35,9 +36,7 @@ class TreeTests: XCTestCase {
             print(btree)
             btree.insert(2)
             let interval = 0..<50
-            for i in interval {
-                btree.insert(i)
-            }
+            for i in interval { btree.insert(i) }
             XCTAssert(btree.count == 50)
             let minSize = (i + 1) / 2
             let minHeight = Int(round(log(51.0) / log(Double(i))) + 1) - 1
@@ -45,6 +44,18 @@ class TreeTests: XCTestCase {
             let bheight = btree.height
             XCTAssert(bheight >= minHeight || bheight <= maxHeight, "\(bheight) \(minHeight) \(maxHeight) \(i)")
             print(btree)
+            for i in interval.reversed() {
+                // print(i, btree)
+                XCTAssert(i == btree.remove(hashValue: i)!)
+            }
+            XCTAssert(btree.count == 0)
+            XCTAssert(btree.height == 0)
+            
+            for i in interval { btree.replace(i) }
+            
+            let bheight2 = btree.height
+            XCTAssert(bheight2 >= minHeight || bheight2 <= maxHeight, "\(bheight2) \(minHeight) \(maxHeight) \(i)")
+            
             for i in interval.reversed() {
                 // print(i, btree)
                 XCTAssert(i == btree.remove(hashValue: i)!)
