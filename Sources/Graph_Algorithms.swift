@@ -18,7 +18,6 @@ extension Graph {
 	*/
 	
 	public func hierholzer() -> [Int]? {
-        guard noEmtpyVertices else { return nil }
         let unEvenVertices = self.unEvenVertices(directed: directed)
 		guard unEvenVertices == 0 || unEvenVertices == 2 else { return nil }
         guard var startv = vertices.first else { return nil }
@@ -41,15 +40,15 @@ extension Graph {
             
 		}
         
+        var didSwap = false
+        
         // print(start)
 		
         func hierholzer_rec() -> [[Int]]? {
             var subtour = [Int]()
             var tours = [[Int]]()
             var remainingEdges : [Int: Set<Int>] = [:]
-            for v in vertices {
-                remainingEdges[v] = Set(self[v].map { $0.end })
-            }
+            for v in vertices { remainingEdges[v] = Set(self[v].map { $0.end }) }
             var visited : [Int: Set<Int>] = [:]
             var start = startv
 
@@ -61,6 +60,8 @@ extension Graph {
                     // print(current, subtour, remainingEdges)
                     guard let next = remainingEdges[current]?.first(where: { self[$0, current] == nil }) ?? remainingEdges[current]?.first else {
                         if end != startv {
+                            guard !didSwap else { return nil }
+                            didSwap = true
                             swap(&startv, &end)
                             return hierholzer_rec()
                         }
@@ -94,7 +95,7 @@ extension Graph {
                     subtour.append(next)
                     current = next
                     
-                    // print("\tdid visit \(end)", remainingEdges, visited)
+                    // print("\tdid visit \(current) \(start)", subtour, remainingEdges, visited)
                     
                 } while !remainingEdges.isEmpty && (current != end || current != start)
                 tours.append(subtour)
@@ -104,18 +105,16 @@ extension Graph {
             return tours
         }
         
-        guard var tours = hierholzer_rec() else { return nil }
+        guard var tours = hierholzer_rec(), tours.count > 0 else { return nil }
         // print("tries to join \(tours)")
-        
-        var tour = tours.first(where: { $0[$0.startIndex] == $0[$0.endIndex - 1] }) ?? tours[0]
+        var tour = tours.remove(at: 0)
         
         var didNotWork = 0
-        tours.remove(at: 0)
-        
+        // print("tours", tours, "tour", tour)
         while !tours.isEmpty {
-            // print(tours)
             guard didNotWork < tours.count else { /*print("failed to assemble");*/ return nil }
             var t = tours.first!
+            // print(tours, tour, t)
             if t[t.startIndex] == t[t.endIndex - 1] {
                 if var index = tour.indices.first(where: { t.contains(tour[$0]) }) {
                     let i = t.indices.first(where: { tour[index] == t[$0] })!
