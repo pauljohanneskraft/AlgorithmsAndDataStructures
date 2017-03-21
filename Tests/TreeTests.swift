@@ -76,6 +76,10 @@ class TreeTests: XCTestCase {
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 XCTAssert(btree.contains(r))
             }
+            let barray = btree.array
+            let sarray = insertArray.sorted()
+            XCTAssert(barray == sarray, "\(barray) != \(sarray)")
+            btree.array = sarray
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 let countBefore = btree.count
                 XCTAssert(btree[r] == r)

@@ -21,6 +21,14 @@ public struct BTree<Element : Hashable> {
         self.maxNodeSize = maxNodeSize
     }
     
+    public var array : [Element] {
+        get { return root?.array ?? [] }
+        set {
+            root = nil
+            for i in newValue { try? insert(i) }
+        }
+    }
+    
     public mutating func insert(_ value: Element) throws {
         defer { assert(valid, "\(self)") }
         let data = (hashValue: value.hashValue, element: value)
@@ -94,6 +102,11 @@ private final class BTreeNode < Element : Hashable > {
         self.maxChildrenCount = maxSize
         self.elements = []
         self.children = []
+    }
+    
+    public var array : [Element] {
+        guard !children.isEmpty else { return elements.map { $0.element } }
+        return elements.indices.reduce([Element]()) { a, b in a + children[b].array + [elements[b].element] } + children.last!.array
     }
     
     func get(hashValue: Int) -> Element? {
