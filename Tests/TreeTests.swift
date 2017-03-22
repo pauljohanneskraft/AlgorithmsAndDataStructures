@@ -70,8 +70,11 @@ class TreeTests: XCTestCase {
             for arr in arrs.dropLast(20) {
                 for r in arr { insertArray.insert(r) }
             }
+            var count = 0
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+                count += 1
                 try! btree.insert(r)
+                XCTAssert(btree.count == count)
             }
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 XCTAssert(btree.contains(r))
@@ -99,7 +102,9 @@ class TreeTests: XCTestCase {
             }
             print(btree)
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
+                count -= 1
                 let res = btree.remove(hashValue: r)
+                XCTAssert(count == btree.count)
                 XCTAssert(res != nil && r == res!)
             }
             
