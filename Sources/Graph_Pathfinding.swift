@@ -103,29 +103,31 @@ extension Graph {
 public extension Graph {
     public func bestFirst(start: Int, end: Int, heuristic: @escaping (Int) -> Int) -> [Int]? {
         
-        var edgeStart = start
-        var candidates = Set([start])
-        var visited = Set<Int>()
-        var predecessor = [edgeStart : edgeStart]
+        var edgeStart : Int? = start
+        var candidates = BinaryMaxHeap<(key: Int, value: Int)>(array: [(key: heuristic(start), value: start)], order: { a, b in a.key > b.key })
+        var candidateSet = Set<Int>()
+        var predecessor = [edgeStart! : edgeStart!]
         while true {
-            guard let edgeS = candidates.min(by: { heuristic($0) < heuristic($1) }) else { return nil }
-            // print("visiting", edgeS)
-            edgeStart = edgeS
-            candidates.remove(edgeS)
-            visited.insert(edgeS)
-            if edgeStart == end { break }
-            for c in self[edgeStart].filter( { !(visited.contains($0.end)) && !(candidates.contains($0.end)) } ) {
-                candidates.insert(c.end)
+            edgeStart = candidates.pop()?.value
+            guard edgeStart != end && edgeStart != nil else {
+                guard edgeStart == end else { return nil }
+                break
+            }
+            for c in self[edgeStart!] {
+                guard !(candidateSet.contains(c.end)) else { continue }
+                candidateSet.insert(c.end)
+                candidates.push((key: heuristic(c.end), value: c.end))
                 predecessor[c.end] = edgeStart
             }
         }
+        edgeStart = end
         
-        var path = [edgeStart]
+        var path = [end]
         
         while edgeStart != start {
-            guard let pred = predecessor[edgeStart] else { return nil }
+            guard let pred = predecessor[edgeStart!] else { return nil }
             edgeStart = pred
-            path.append(edgeStart)
+            path.append(edgeStart!)
         }
         
         return path.reversed()

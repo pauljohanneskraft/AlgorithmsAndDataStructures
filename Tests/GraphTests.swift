@@ -131,14 +131,14 @@ class GraphTests: XCTestCase {
         
         let matrix = [[false, false, false, false, false, false, false, false, false, false],
                       [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true, false,  true,  true, false],
+                      [false,  true, false,  true,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true, false,  true,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true, false,  true,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true, false,  true,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true, false,  true,  true, false],
+                      [false,  true,  true,  true,  true,  true,  true, false,  true, false],
                       [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
-                      [false,  true,  true, false, false, false, false, false, false, false],
                       [false,  true,  true,  true,  true,  true,  true,  true,  true, false],
                       [false, false, false, false, false, false, false, false, false, false]
                       ]
@@ -157,7 +157,8 @@ class GraphTests: XCTestCase {
         
         g.edges = edgeList(ofMap: matrix)
         
-        let end : Int = id(x: 5, y: 10) // (matrix[0].count * (matrix.count - 1)) - 2
+        let start = id(x: 3, y: 2)
+        let end : Int = id(x: 4, y: 10) // (matrix[0].count * (matrix.count - 1)) - 2
         let endreverse = reverse(id: end)
         
         var path0 = [Int]()
@@ -170,7 +171,6 @@ class GraphTests: XCTestCase {
             let dy = abs(ra.y - endreverse.y)
             return dx + dy
         }
-        let start = id(x: 1, y: 1)
         let time0 = measureTime {
             path0 = g.aStar(start: start, end: end, heuristic: heuristic)!
         }
@@ -186,7 +186,8 @@ class GraphTests: XCTestCase {
             var dist = 0
             var prev = path.first!
             for i in path.dropFirst() {
-                dist += graph[prev, i]!
+                guard let incDist = graph[prev, i] else { return Int.max }
+                dist += incDist
                 prev = i
             }
             return dist
@@ -195,9 +196,10 @@ class GraphTests: XCTestCase {
         XCTAssert(distance(of: path0, in: g) == path0.count - 1)
         XCTAssert(distance(of: path1, in: g) == path1.count - 1)
         XCTAssert(distance(of: path2, in: g) == path2.count - 1)
-        XCTAssert(path0 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105] || path0 == [11, 21, 31, 41, 51, 61, 71, 72, 82, 92, 102, 103, 104, 105], "\(path0)")
-        XCTAssert(path2 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105], "\(path2)")
-        XCTAssert(path1 == [11, 12, 22, 32, 42, 52, 53, 54, 55, 65, 75, 85, 84, 83, 82, 92, 102, 103, 104, 105], "\(path1)")
+        XCTAssert(path0 == [23, 22, 21, 31, 41, 42, 52, 62, 72, 82, 92, 93, 94, 104] || path0 == [23, 22, 21, 31, 41, 42, 52, 62, 72, 82, 83, 93, 103, 104], "\(path0)")
+        XCTAssert(path2 == [23, 22, 21, 31, 41, 42, 52, 53, 63, 64, 74, 84, 94, 104] || path2 == [23, 22, 21, 31, 41, 42, 52, 53, 63, 73, 83, 93, 103, 104], "\(path2)")
+        XCTAssert(path1 == [23, 24, 34, 44, 45, 55, 56, 66, 67, 77, 78, 88, 98, 97, 96, 95, 94, 104] || path1 == [23, 24, 34, 44, 45, 55, 56, 66, 67, 77, 78, 88, 98, 97, 96, 95, 105, 104], "\(path1)")
+        
         /*
         for p in [path0, path1, path2] {
             let pathCoordinates = p.map { reverse(id: $0) }
@@ -205,7 +207,7 @@ class GraphTests: XCTestCase {
             for c in pathCoordinates { map[c.1][c.0] = "X" }
             for m in map { print(m.reduce("", { $0 + $1 })) }
         }
-         */
+        */
         
         let total = -starttime.timeIntervalSinceNow
         print("Pathfinding:\t\t", total, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2))")
