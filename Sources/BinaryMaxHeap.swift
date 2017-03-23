@@ -36,6 +36,8 @@ public struct BinaryMaxHeap < Element > : PriorityQueue {
 		siftUp(at: _array.indices.last!)
 		assert(_array.first.debugDescription == _array.max(by: order).debugDescription, "\(_array), first: \(_array.first), max: \(_array.max(by: order))")
 	}
+    
+    public var isEmpty : Bool { return _array.isEmpty }
 	
 	public mutating func pop() -> Element? {
 		guard _array.count > 1 else { return _array.popLast() }

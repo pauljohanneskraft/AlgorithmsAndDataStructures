@@ -136,19 +136,19 @@ public extension Graph {
     public func aStar(start: Int, end: Int, heuristic: @escaping (Int) -> Int) -> [Int]? {
         
         var edgeStart = start
-        var candidates = Set([start])
+        var candidates = BinaryMaxHeap<(key: Int, value: Int)>(array: [(key: heuristic(start), value: start)], order: { a, b in a.key > b.key })
         var nodeInfo = [Int : (predecessor: Int, cost: Int)]()
         nodeInfo[edgeStart] = (predecessor: edgeStart, cost: 0)
+        var edgeStartInfo = nodeInfo[edgeStart]!
         while !candidates.isEmpty {
-            guard let edgeS = candidates.min(by: { nodeInfo[$0]!.cost + heuristic($0) < heuristic($1) + nodeInfo[$1]!.cost }) else { return nil }
+            guard let edgeS = candidates.pop()?.value else { return nil }
+            guard edgeS != end else { break }
             edgeStart = edgeS
-            candidates.remove(edgeS)
-            let edgeStartInfo = nodeInfo[edgeStart]!
-            let edgeStartHeur = heuristic(edgeStart)
-            for c in self[edgeStart].filter( { !(candidates.contains($0.end)) && heuristic($0.end) <= edgeStartHeur } ) {
+            edgeStartInfo = nodeInfo[edgeStart]!
+            for c in self[edgeStart] {
                 let cost = edgeStartInfo.cost + self[edgeStart, c.end]!
                 if let ni = nodeInfo[c.end], ni.cost <= cost {} else {
-                    candidates.insert(c.end)
+                    candidates.push((key: cost + heuristic(c.end), value: c.end))
                     nodeInfo[c.end] = (predecessor: edgeStart, cost: cost)
                 }
             }

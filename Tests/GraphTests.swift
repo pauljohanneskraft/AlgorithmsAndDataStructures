@@ -195,7 +195,7 @@ class GraphTests: XCTestCase {
         XCTAssert(distance(of: path0, in: g) == path0.count - 1)
         XCTAssert(distance(of: path1, in: g) == path1.count - 1)
         XCTAssert(distance(of: path2, in: g) == path2.count - 1)
-        XCTAssert(path0 == [11, 21, 31, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105], "\(path0)")
+        XCTAssert(path0 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105] || path0 == [11, 21, 31, 41, 51, 61, 71, 72, 82, 92, 102, 103, 104, 105], "\(path0)")
         XCTAssert(path2 == [11, 12, 22, 32, 42, 52, 62, 72, 82, 92, 102, 103, 104, 105], "\(path2)")
         XCTAssert(path1 == [11, 12, 22, 32, 42, 52, 53, 54, 55, 65, 75, 85, 84, 83, 82, 92, 102, 103, 104, 105], "\(path1)")
         /*
@@ -204,7 +204,8 @@ class GraphTests: XCTestCase {
             var map = matrix.map { a in a.map { $0 ? " " : "█" } }
             for c in pathCoordinates { map[c.1][c.0] = "X" }
             for m in map { print(m.reduce("", { $0 + $1 })) }
-        }*/
+        }
+         */
         
         let total = -starttime.timeIntervalSinceNow
         print("Pathfinding:\t\t", total, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2))")
