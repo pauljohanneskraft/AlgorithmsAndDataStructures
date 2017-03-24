@@ -50,7 +50,6 @@ class GraphTests: XCTestCase {
         
 		time += bfs(graph: graph)
 		time += dfs(graph: graph)
-		time += bellmanFord(graph: G.self)
         #if !os(Linux)
         time += heldKarp(graph: G.self)
         #endif
@@ -164,6 +163,7 @@ class GraphTests: XCTestCase {
         var path0 = [Int]()
         var path1 = [Int]()
         var path2 = [Int]()
+        var path3 = [Int]()
 
         let heuristic : (Int) -> Int = { (a: Int) -> Int in
             let ra = reverse(id: a)
@@ -178,7 +178,10 @@ class GraphTests: XCTestCase {
             path1 = g.bestFirst(start: start, end: end, heuristic: heuristic)!
         }
         let time2 = measureTime {
-            path2 = g.djikstra(start: start, end: end)
+            path2 = g.djikstra(start: start, end: end)!
+        }
+        let time3 = measureTime {
+            path3 = g.bellmannFord(start: start, end: end)!
         }
         
         func distance(of path: [Int], in graph: G) -> Int {
@@ -192,6 +195,7 @@ class GraphTests: XCTestCase {
             }
             return dist
         }
+        XCTAssert(distance(of: path3, in: g) == distance(of: path2, in: g))
         XCTAssert(distance(of: path0, in: g) == distance(of: path2, in: g))
         XCTAssert(distance(of: path0, in: g) == path0.count - 1)
         XCTAssert(distance(of: path1, in: g) == path1.count - 1)
@@ -199,18 +203,21 @@ class GraphTests: XCTestCase {
         XCTAssert(path0 == [23, 22, 21, 31, 41, 42, 52, 62, 72, 82, 92, 93, 94, 104] || path0 == [23, 22, 21, 31, 41, 42, 52, 62, 72, 82, 83, 93, 103, 104], "\(path0)")
         XCTAssert(path2 == [23, 22, 21, 31, 41, 42, 52, 53, 63, 64, 74, 84, 94, 104] || path2 == [23, 22, 21, 31, 41, 42, 52, 53, 63, 73, 83, 93, 103, 104], "\(path2)")
         XCTAssert(path1 == [23, 24, 34, 44, 45, 55, 56, 66, 67, 77, 78, 88, 98, 97, 96, 95, 94, 104] || path1 == [23, 24, 34, 44, 45, 55, 56, 66, 67, 77, 78, 88, 98, 97, 96, 95, 105, 104], "\(path1)")
+        XCTAssert(path3 == [23, 22, 21, 31, 41, 51, 61, 71, 81, 82, 92, 93, 94, 104] || path3 == [23, 22, 21, 31, 41, 42, 52, 53, 63, 64, 74, 84, 94, 104], "\(path3)")
         
         /*
-        for p in [path0, path1, path2] {
-            let pathCoordinates = p.map { reverse(id: $0) }
+        for p in [("A*", path0), ("BestFirst", path1), ("Djikstra", path2), ("BellmannFord", path3)] {
+            print("\(p.0):")
+            let pathCoordinates = p.1.map { reverse(id: $0) }
             var map = matrix.map { a in a.map { $0 ? " " : "█" } }
             for c in pathCoordinates { map[c.1][c.0] = "X" }
             for m in map { print(m.reduce("", { $0 + $1 })) }
         }
         */
         
+        
         let total = -starttime.timeIntervalSinceNow
-        print("Pathfinding:\t\t", total, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2))")
+        print("Pathfinding:\t\t", total, "(A*: \(time0), BestFirst: \(time1), Djikstra: \(time2), BellmannFord: \(time3))")
         return total
     }
 	
@@ -548,27 +555,6 @@ class GraphTests: XCTestCase {
         let total = -start.timeIntervalSinceNow
 		print("NearestNeighbor:\t", total)
         return total
-	}
-	
-	func bellmanFord< G : Graph >(graph: G.Type) -> Double {
-		var g = G()
-		for i in 0..<10 {
-			g[i, i + 1] = 1
-		}
-		g[7, 5] = -20
-		let start = Date()
-		let visited = g.bellmanFord(start: 0)
-		let time = -start.timeIntervalSinceNow
-		// print(visited.map { "\($0.key) - \($0.value.last): \($0.value.weight)" })
-		for v in visited {
-			if v.key >= 5 {
-				XCTAssert(v.value.weight == Int.min)
-			} else {
-				XCTAssert(v.value.weight == v.key)
-			}
-		}
-		print("BellmanFord:\t\t", time)
-        return time
 	}
     
     func eulerian< G : Graph >(graph: G.Type) -> Double {

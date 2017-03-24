@@ -33,7 +33,7 @@ extension Graph {
         return visited
     }
     
-    public func djikstra(start: Int, end: Int) -> [Int] {
+    public func djikstra(start: Int, end: Int) -> [Int]? {
         let visited = djikstra(start: start)
         
         var result = [Int]()
@@ -43,7 +43,7 @@ extension Graph {
             current = next!
             next = visited[current]?.predecessor
             result.append(current)
-            if next == nil && current != start { return [] }
+            if next == nil && current != start { return nil }
         } while current != start
         return result.reversed()
     }
@@ -53,21 +53,21 @@ extension Graph {
 
 extension Graph {
     
-    public func bellmanFord(start: Int) -> [Int:(weight: Int, last: Int)] {
-        var visited = [Int:(weight: Int, last: Int)]()
+    public func bellmanFord(start: Int) -> [Int:(weight: Int, predecessor: Int)] {
+        var visited = [Int:(weight: Int, predecessor: Int)]()
         
         let edges = self.edges
         guard edges.count > 0 else { return [:] }
-        visited[start] = (weight: 0, last: start)
+        visited[start] = (weight: 0, predecessor: start)
         for _ in vertices {
             for e in edges {
                 if var newWeight = visited[e.start]?.weight {
                     newWeight += e.weight
                     if let oldWeight = visited[e.end]?.weight {
                         if newWeight < oldWeight {
-                            visited[e.end] = (weight: newWeight, last: e.start)
+                            visited[e.end] = (weight: newWeight, predecessor: e.start)
                         }
-                    } else { visited[e.end] = (weight: newWeight, last: e.start) }
+                    } else { visited[e.end] = (weight: newWeight, predecessor: e.start) }
                 }
             }
         }
@@ -87,15 +87,30 @@ extension Graph {
         return visited
     }
     
-    private func infect(_ start: Int,  visited: inout [Int:(weight: Int, last: Int)]) {
+    private func infect(_ start: Int,  visited: inout [Int:(weight: Int, predecessor: Int)]) {
         // print("infected \(start)")
-        visited[start] = (weight: Int.min, last: visited[start]!.last)
+        visited[start] = (weight: Int.min, predecessor: visited[start]!.predecessor)
         for v in self[start] {
             if visited[v.end]?.weight != Int.min {
-                visited[v.end] = (weight: Int.min, last: start)
+                visited[v.end] = (weight: Int.min, predecessor: start)
                 infect(v.end, visited: &visited)
             }
         }
+    }
+    
+    public func bellmannFord(start: Int, end: Int) -> [Int]? {
+        let visited = bellmanFord(start: start)
+        
+        var result = [Int]()
+        var current = end
+        var next = Optional(end)
+        repeat {
+            current = next!
+            next = visited[current]?.predecessor
+            result.append(current)
+            if next == nil && current != start { return nil }
+        } while current != start
+        return result.reversed()
     }
 }
 
