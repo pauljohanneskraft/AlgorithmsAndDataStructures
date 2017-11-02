@@ -199,7 +199,8 @@ class HeapTests: XCTestCase {
         print(t2.description)
         let t2array = t2.array(sortedBy: <).map { String($0) }
         var t3 = Trie<Character>()
-        t3.array = t2.array
+        t3.insert(a)
+        t3.array = t2.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
         XCTAssertEqual(t2array, ["Bonjour", "Hello", "Peter"])
         XCTAssertEqual(t3, t2)
         try? t3.remove(Array("Bonjour".characters))

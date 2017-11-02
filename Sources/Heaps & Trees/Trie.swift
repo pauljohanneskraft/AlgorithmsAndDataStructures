@@ -84,7 +84,7 @@ public struct Trie<Element: Hashable> {
         }
         set {
             children = [:]
-            for i in array { self.insert(i) }
+            for i in newValue { insert(i) }
         }
     }
     
@@ -105,9 +105,49 @@ public struct Trie<Element: Hashable> {
 }
 
 extension Trie: Equatable {
-    public static func == (lhs: Trie, rhs: Trie) -> Bool {
-        let larray = lhs.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
-        let rarray = rhs.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
+    public static func == <E>(lhs: Trie<E>, rhs: Trie<E>) -> Bool {
+        func isSmaller(_ one: [E], _ two: [E]) -> Bool {
+            guard one.count == two.count else {
+                return one.count < two.count
+            }
+            for i in one.indices {
+                guard one[i] == two[i] else {
+                    return one[i].hashValue < two[i].hashValue
+                }
+            }
+            return true
+        }
+        
+        let larray = lhs.array.sorted(by: isSmaller)
+        let rarray = rhs.array.sorted(by: isSmaller)
+        guard larray.count == rarray.count else {
+            return false
+        }
+        for index in larray.indices {
+            guard larray[index] == rarray[index] else {
+                return false
+            }
+        }
+        return true
+    }
+}
+
+public extension Trie where Element: Comparable {
+    public static func == <E: Comparable>(lhs: Trie<E>, rhs: Trie<E>) -> Bool {
+        func isSmaller(_ one: [E], _ two: [E]) -> Bool {
+            guard one.count == two.count else {
+                return one.count < two.count
+            }
+            for i in one.indices {
+                guard one[i] == two[i] else {
+                    return one[i] < two[i]
+                }
+            }
+            return true
+        }
+        
+        let larray = lhs.array.sorted(by: isSmaller)
+        let rarray = rhs.array.sorted(by: isSmaller)
         guard larray.count == rarray.count else {
             return false
         }
@@ -127,15 +167,8 @@ public extension Trie where Element: Comparable {
 	}
     
     public var array: [[Element]] {
-        get {
-            return getArray(appending: [], sortedBy: <)
-        }
-        set {
-            children = [:]
-            for i in newValue { insert(i) }
-        }
+        return getArray(appending: [], sortedBy: <)
     }
-    
 }
 
 public extension Trie where Element: Comparable {
