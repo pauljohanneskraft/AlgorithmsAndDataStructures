@@ -203,7 +203,19 @@ class HeapTests: XCTestCase {
         t3.array = t2.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
         XCTAssertEqual(t2array, ["Bonjour", "Hello", "Peter"])
         XCTAssertEqual(t3, t2)
-        try? t3.remove(Array("Bonjour".characters))
+        try? t3.remove(c)
+        XCTAssertNotEqual(t3, t2)
+        t3.insert(c)
+        XCTAssertEqual(t3, t2)
+        try? t3.remove(c)
+        XCTAssertWillThrow(errors: [DataStructureError.notIn]) {
+            try t3.remove(c)
+        }
+        print(t3.array)
+        XCTAssertWillThrow(errors: [DataStructureError.notIn]) {
+            try t3.remove(["H"])
+        }
+        t3.insert(Array("Guten Abend"))
         XCTAssertNotEqual(t3, t2)
         try? t.remove(b)
         print(t.description)

@@ -46,7 +46,7 @@ public struct Trie<Element: Hashable> {
             throw DataStructureError.notIn
         }
         
-        if !rem { children.removeValue(forKey: word.first!) }
+        if !rem { children.removeValue(forKey: first) }
         return children.count != 0 || wordsAtCurrentLength != 0
     }
     
@@ -107,43 +107,10 @@ public struct Trie<Element: Hashable> {
 extension Trie: Equatable {
     public static func == <E>(lhs: Trie<E>, rhs: Trie<E>) -> Bool {
         func isSmaller(_ one: [E], _ two: [E]) -> Bool {
-            guard one.count == two.count else {
+            guard one.count == two.count, let index = one.indices.first(where: { one[$0] != two[$0] }) else {
                 return one.count < two.count
             }
-            for i in one.indices {
-                guard one[i] == two[i] else {
-                    return one[i].hashValue < two[i].hashValue
-                }
-            }
-            return true
-        }
-        
-        let larray = lhs.array.sorted(by: isSmaller)
-        let rarray = rhs.array.sorted(by: isSmaller)
-        guard larray.count == rarray.count else {
-            return false
-        }
-        for index in larray.indices {
-            guard larray[index] == rarray[index] else {
-                return false
-            }
-        }
-        return true
-    }
-}
-
-public extension Trie where Element: Comparable {
-    public static func == <E: Comparable>(lhs: Trie<E>, rhs: Trie<E>) -> Bool {
-        func isSmaller(_ one: [E], _ two: [E]) -> Bool {
-            guard one.count == two.count else {
-                return one.count < two.count
-            }
-            for i in one.indices {
-                guard one[i] == two[i] else {
-                    return one[i] < two[i]
-                }
-            }
-            return true
+            return one[index].hashValue < two[index].hashValue
         }
         
         let larray = lhs.array.sorted(by: isSmaller)
