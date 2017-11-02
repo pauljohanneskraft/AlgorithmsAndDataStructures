@@ -627,7 +627,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = OBJ_65 /* Build configuration list for PBXNativeTarget "Algorithms&DataStructures" */;
 			buildPhases = (
-				9BC32FDA1FAB56D000C64BDD /* ShellScript */,
 				OBJ_68 /* Sources */,
 				OBJ_108 /* Frameworks */,
 				9B3CC82D1FAA99EF00562A6D /* ShellScript */,
@@ -793,20 +792,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which /usr/local/bin/swiftlint >/dev/null; then\n    /usr/local/bin/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		9BC32FDA1FAB56D000C64BDD /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if ! which /usr/local/bin/swiftlint >/dev/null; then\n    brew install swiftlint\nfi";
+			shellScript = "export PATH=/usr/local/bin:$PATH\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    brew install swiftlint\n    if which swiftlint >/dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    fi\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
