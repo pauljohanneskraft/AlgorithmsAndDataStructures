@@ -27,6 +27,6 @@ install:
 script:
 - if [[ $TRAVIS_OS_NAME == linux ]]; then swift package --version; fi
 - if [[ $TRAVIS_OS_NAME == linux ]]; then swift build; fi
-- if [[ $TRAVIS_OS_NAME == osx   ]]; then xcodebuild test -scheme Tests | xcpretty -f `xcpretty-travis-formatter` && export status=${PIPESTATUS[0]}; fi
+- if [[ $TRAVIS_OS_NAME == osx   ]]; then xcodebuild test -scheme Tests CODE_SIGN_STYLE=Manual | xcpretty -f `xcpretty-travis-formatter` && export status=${PIPESTATUS[0]}; fi
 - if [[ $TRAVIS_OS_NAME == osx   ]]; then bash <(curl -s https://codecov.io/bash); fi
 - if [[ $TRAVIS_OS_NAME == osx   ]]; then exit ${status}; fi
