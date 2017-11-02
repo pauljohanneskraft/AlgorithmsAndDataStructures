@@ -9,7 +9,7 @@ import XCTest
 @testable import Algorithms_DataStructures
 
 // swiftlint:disable identifier_name force_try line_length
-// swiftlint:disable trailing_whitespace comma cyclomatic_complexity
+// swiftlint:disable trailing_whitespace cyclomatic_complexity
 // swiftlint:disable colon function_body_length unused_closure_parameter
 
 class HeapTests: XCTestCase {
@@ -23,7 +23,7 @@ class HeapTests: XCTestCase {
             }
             arrs.append(arr)
         }
-        arrs.append([1,2,3])
+        arrs.append([1, 2, 3])
     }
     
     var arrs : [[Int]] = []
@@ -139,6 +139,7 @@ class HeapTests: XCTestCase {
                 // print("\(i):", min)
                 // print(binHeap)
             }
+            XCTAssertNil(binHeap.pop())
             print(binHeapArray)
             XCTAssertEqual(binHeapArray, arr.sorted())
         }
@@ -225,7 +226,7 @@ class HeapTests: XCTestCase {
             
             var a = bin.array
             
-            var sorted = arr.sorted()
+            var sorted = arr.sorted(by: bin.order)
             
             XCTAssertEqual(a, sorted)
             
@@ -256,7 +257,6 @@ class HeapTests: XCTestCase {
 }
 
 struct TestTrieComparable : Comparable, Hashable, CustomStringConvertible {
-    init() { self.init(hashValue: Int(arc4random())) }
     init(hashValue: Int) { self.hashValue = hashValue }
     var hashValue: Int = Int(arc4random())
     var description: String { return hashValue.description }

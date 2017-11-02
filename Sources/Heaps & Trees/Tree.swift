@@ -24,12 +24,9 @@ protocol BinaryTreeProtocol: Tree {
 protocol BinaryTreeNodeProtocol {
 	associatedtype Element
 	var data: Element { get }
-	var right: Self? { get set }
-	var left: Self? { get set }
+    var order: (Element, Element) -> Bool { get }
 	
 	init(data: Element, order: @escaping (Element, Element) -> Bool)
-	
-	mutating func push(_: Element) throws
-	
+		
 	var array: [Element] { get }
 }

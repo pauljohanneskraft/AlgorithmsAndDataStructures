@@ -39,7 +39,6 @@ class HuffmanTests: XCTestCase {
         Nunc et porta libero. Aenean sollicitudin est id iaculis fringilla.
         """
     
-    /*
     func testStrings() {
         test(string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBCCCCCCDDDDDDEEEEEEFGHI")
         test(string: "baaaaaaaaaaaaaaaaaab")
@@ -60,23 +59,23 @@ class HuffmanTests: XCTestCase {
         
         print("init done after", -start.timeIntervalSinceNow)
         
-        let encodedProb = try! huffmanProb.encode(bytes)
-        let encodedCode = try! huffmanCode.encode(bytes)
+        let encodedProb = (try? huffmanProb.encode(bytes))!
+        let encodedCode = (try? huffmanCode.encode(bytes))!
         
         print("encoded after", -start.timeIntervalSinceNow)
         
         XCTAssertEqual(encodedCode.data, encodedProb.data)
         
-        let decodedProbCode = try! huffmanCode.decode(encodedProb)
+        let decodedProbCode = (try? huffmanCode.decode(encodedProb))!
         XCTAssertEqual(String(unterminated: bytes), String(unterminated: decodedProbCode))
         
-        let decodedProbProb = try! huffmanProb.decode(encodedProb)
+        let decodedProbProb = (try? huffmanProb.decode(encodedProb))!
         XCTAssertEqual(String(unterminated: bytes), String(unterminated: decodedProbProb))
         
-        let decodedCodeProb = try! huffmanCode.decode(encodedCode)
+        let decodedCodeProb = (try? huffmanCode.decode(encodedCode))!
         XCTAssertEqual(String(unterminated: bytes), String(unterminated: decodedCodeProb))
         
-        let decodedCodeCode = try! huffmanProb.decode(encodedCode)
+        let decodedCodeCode = (try? huffmanProb.decode(encodedCode))!
         XCTAssertEqual(String(unterminated: bytes), String(unterminated: decodedCodeCode))
         
         print("decoded after", -start.timeIntervalSinceNow)
@@ -98,5 +97,4 @@ class HuffmanTests: XCTestCase {
         print("Encoding resulted in", encSize, "bytes which is", percentageWithoutCodes, "% without the codes",
              "and", percentageWithCodes, "% with the codes of the original size.")
     }
-     */
 }

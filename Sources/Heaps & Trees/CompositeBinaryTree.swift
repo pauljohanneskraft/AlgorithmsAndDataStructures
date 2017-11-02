@@ -51,7 +51,7 @@ struct CompositeBinaryTree<Element>: Tree {
         }
     }
     
-    final class InnerNode: Node {
+    final class InnerNode: Node, BinaryTreeNodeProtocol {
         var left: Node
         var right: Node
         var data: Element
@@ -78,12 +78,11 @@ struct CompositeBinaryTree<Element>: Tree {
         
         override func pop() -> (Node, Element?) {
             if left is Leaf {
-                return (right, data)
-            } else {
-                let (newLeft, data) = left.pop()
-                left = newLeft
-                return (self, data)
+                return (right, self.data)
             }
+            let (newLeft, data) = left.pop()
+            left = newLeft
+            return (self, data)
         }
     }
     

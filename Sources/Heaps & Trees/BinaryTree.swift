@@ -33,7 +33,7 @@ extension BinaryTree {
 
 extension BinaryTree: BinaryTreeProtocol {
     public var array: [Element] {
-        return root != nil ? root!.array: []
+        return root?.array ?? []
     }
     
     public mutating func push(_ data: Element) {

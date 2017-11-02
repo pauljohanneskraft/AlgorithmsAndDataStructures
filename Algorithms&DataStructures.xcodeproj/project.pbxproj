@@ -44,13 +44,13 @@
 		OBJ_79 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* General.swift */; };
 		OBJ_80 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Graph.swift */; };
 		OBJ_81 /* GraphAdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* GraphAdjacencyList.swift */; };
-		OBJ_82 /* Graph_Algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* Graph_Algorithms.swift */; };
-		OBJ_83 /* Graph_Coloring.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* Graph_Coloring.swift */; };
+		OBJ_82 /* GraphAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* GraphAlgorithms.swift */; };
+		OBJ_83 /* GraphColoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* GraphColoring.swift */; };
 		OBJ_84 /* GraphHashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* GraphHashing.swift */; };
 		OBJ_85 /* GraphList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* GraphList.swift */; };
 		OBJ_86 /* GraphMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* GraphMatrix.swift */; };
-		OBJ_87 /* Graph_Pathfinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* Graph_Pathfinding.swift */; };
-		OBJ_88 /* Graph_Traversal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* Graph_Traversal.swift */; };
+		OBJ_87 /* GraphPathfinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* GraphPathfinding.swift */; };
+		OBJ_88 /* GraphTraversal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* GraphTraversal.swift */; };
 		OBJ_89 /* AVLBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* AVLBinaryTree.swift */; };
 		OBJ_90 /* AVLCompositeBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* AVLCompositeBinaryTree.swift */; };
 		OBJ_91 /* B+-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* B+-Tree.swift */; };
@@ -100,6 +100,27 @@
 			remoteGlobalIDString = "Algorithms&DataStructures::Algorithms&DataStructures";
 			remoteInfo = "Algorithms&DataStructures";
 		};
+		9BC32FDB1FABA2F600C64BDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Algorithms&DataStructures::Algorithms&DataStructures";
+			remoteInfo = "Algorithms&DataStructures";
+		};
+		9BC32FDD1FABA2FD00C64BDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Algorithms&DataStructures::Algorithms&DataStructures";
+			remoteInfo = "Algorithms&DataStructures";
+		};
+		9BC32FDF1FABA30900C64BDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "Algorithms&DataStructures::Algorithms&DataStructures";
+			remoteInfo = "Algorithms&DataStructures";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -143,13 +164,13 @@
 		OBJ_21 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		OBJ_23 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
 		OBJ_24 /* GraphAdjacencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAdjacencyList.swift; sourceTree = "<group>"; };
-		OBJ_25 /* Graph_Algorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph_Algorithms.swift; sourceTree = "<group>"; };
-		OBJ_26 /* Graph_Coloring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph_Coloring.swift; sourceTree = "<group>"; };
+		OBJ_25 /* GraphAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAlgorithms.swift; sourceTree = "<group>"; };
+		OBJ_26 /* GraphColoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphColoring.swift; sourceTree = "<group>"; };
 		OBJ_27 /* GraphHashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphHashing.swift; sourceTree = "<group>"; };
 		OBJ_28 /* GraphList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphList.swift; sourceTree = "<group>"; };
 		OBJ_29 /* GraphMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphMatrix.swift; sourceTree = "<group>"; };
-		OBJ_30 /* Graph_Pathfinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph_Pathfinding.swift; sourceTree = "<group>"; };
-		OBJ_31 /* Graph_Traversal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph_Traversal.swift; sourceTree = "<group>"; };
+		OBJ_30 /* GraphPathfinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPathfinding.swift; sourceTree = "<group>"; };
+		OBJ_31 /* GraphTraversal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTraversal.swift; sourceTree = "<group>"; };
 		OBJ_33 /* AVLBinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVLBinaryTree.swift; sourceTree = "<group>"; };
 		OBJ_34 /* AVLCompositeBinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVLCompositeBinaryTree.swift; sourceTree = "<group>"; };
 		OBJ_35 /* B+-Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "B+-Tree.swift"; sourceTree = "<group>"; };
@@ -355,10 +376,10 @@
 			children = (
 				OBJ_23 /* Graph.swift */,
 				9B427C9B1FAAB98E00AB179F /* Types */,
-				OBJ_25 /* Graph_Algorithms.swift */,
-				OBJ_26 /* Graph_Coloring.swift */,
-				OBJ_30 /* Graph_Pathfinding.swift */,
-				OBJ_31 /* Graph_Traversal.swift */,
+				OBJ_25 /* GraphAlgorithms.swift */,
+				OBJ_26 /* GraphColoring.swift */,
+				OBJ_30 /* GraphPathfinding.swift */,
+				OBJ_31 /* GraphTraversal.swift */,
 			);
 			path = Graphs;
 			sourceTree = "<group>";
@@ -493,6 +514,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BC32FDC1FABA2F600C64BDD /* PBXTargetDependency */,
 			);
 			name = GraphTests;
 			productName = GraphTests;
@@ -600,6 +622,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BC32FDE1FABA2FD00C64BDD /* PBXTargetDependency */,
 			);
 			name = CodesTests;
 			productName = CodesTests;
@@ -617,6 +640,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9BC32FE01FABA30900C64BDD /* PBXTargetDependency */,
 			);
 			name = ListTests;
 			productName = ListTests;
@@ -881,13 +905,13 @@
 				OBJ_79 /* General.swift in Sources */,
 				OBJ_80 /* Graph.swift in Sources */,
 				OBJ_81 /* GraphAdjacencyList.swift in Sources */,
-				OBJ_82 /* Graph_Algorithms.swift in Sources */,
-				OBJ_83 /* Graph_Coloring.swift in Sources */,
+				OBJ_82 /* GraphAlgorithms.swift in Sources */,
+				OBJ_83 /* GraphColoring.swift in Sources */,
 				OBJ_84 /* GraphHashing.swift in Sources */,
 				OBJ_85 /* GraphList.swift in Sources */,
 				OBJ_86 /* GraphMatrix.swift in Sources */,
-				OBJ_87 /* Graph_Pathfinding.swift in Sources */,
-				OBJ_88 /* Graph_Traversal.swift in Sources */,
+				OBJ_87 /* GraphPathfinding.swift in Sources */,
+				OBJ_88 /* GraphTraversal.swift in Sources */,
 				OBJ_89 /* AVLBinaryTree.swift in Sources */,
 				OBJ_90 /* AVLCompositeBinaryTree.swift in Sources */,
 				OBJ_91 /* B+-Tree.swift in Sources */,
@@ -937,6 +961,21 @@
 			isa = PBXTargetDependency;
 			target = "Algorithms&DataStructures::Algorithms&DataStructures" /* Algorithms&DataStructures */;
 			targetProxy = 9B427CD31FAAC33600AB179F /* PBXContainerItemProxy */;
+		};
+		9BC32FDC1FABA2F600C64BDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Algorithms&DataStructures::Algorithms&DataStructures" /* Algorithms&DataStructures */;
+			targetProxy = 9BC32FDB1FABA2F600C64BDD /* PBXContainerItemProxy */;
+		};
+		9BC32FDE1FABA2FD00C64BDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Algorithms&DataStructures::Algorithms&DataStructures" /* Algorithms&DataStructures */;
+			targetProxy = 9BC32FDD1FABA2FD00C64BDD /* PBXContainerItemProxy */;
+		};
+		9BC32FE01FABA30900C64BDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "Algorithms&DataStructures::Algorithms&DataStructures" /* Algorithms&DataStructures */;
+			targetProxy = 9BC32FDF1FABA30900C64BDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

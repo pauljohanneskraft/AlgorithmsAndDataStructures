@@ -56,14 +56,14 @@ public struct BinomialHeap<Element>: PriorityQueue {
 					headsIndex += 1
 				}
 			}
-			if a == nil && b == nil && carry == nil {
-				if treeIndex >= children.count && headsIndex >= heads.count {
+			guard a != nil || b != nil || carry != nil else {
+				guard treeIndex < children.count || headsIndex < heads.count else {
                     break
-                } else {
-                    rank = minRank
-                    continue
                 }
-			} else { rank += 1 }
+                rank = minRank
+                continue
+			}
+            rank += 1
 			
 			let result = add(a, b, carry: carry)
 			let x = result.0
@@ -110,7 +110,7 @@ public struct BinomialHeap<Element>: PriorityQueue {
 	}
 	
 	func merge(_ treeA: BinomialTreeNode<Element>, _ treeB: BinomialTreeNode<Element>) -> BinomialTreeNode<Element> {
-		precondition(treeA.depth == treeB.depth, "Depths are not equal. \(treeA.depth) != \(treeB.depth)")
+        assertEqual(treeA.depth, treeB.depth)
 		var c: BinomialTreeNode<Element>
 		if self.order(treeA.element, treeB.element) {
 			c = treeA

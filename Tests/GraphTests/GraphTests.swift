@@ -15,10 +15,10 @@ class GraphTests: XCTestCase {
     func testGraph_Types() {
         print()
         var results = [(type: String, result: Double)]()
-        results.append(result(GraphHashing         .self))
-        results.append(result(GraphMatrix          .self))
-        results.append(result(GraphList            .self))
-        results.append(result(GraphAdjacencyList   .self))
+        results.append(result(GraphHashing      .self))
+        results.append(result(GraphMatrix       .self))
+        results.append(result(GraphList         .self))
+        results.append(result(GraphAdjacencyList.self))
         
         print(results.min { $0.result < $1.result }!)
     }

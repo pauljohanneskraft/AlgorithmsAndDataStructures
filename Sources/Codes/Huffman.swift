@@ -6,9 +6,10 @@
 //  Copyright © 2017 pauljohanneskraft. All rights reserved.
 //
 
-/*
+// swiftlint:disable trailing_whitespace
+
 protocol HuffmanNode {
-    var codes: [Character: String] { get set }
+    var codes: [Character: String] { get }
 }
 
 extension Huffman {
@@ -26,29 +27,36 @@ extension Huffman {
             return HuffmanInnerNode(left: leftLeaf, right: rightLeaf)
         }
         
-        let leftArray  = zeroStart.map { (key: $0.key, value: String($0.value[1...])) }
-        let rightArray =  oneStart.map { (key: $0.key, value: String($0.value[1...])) }
+        let leftArray  = zeroStart.map { (key: $0.key, value: String($0.value.dropFirst())) }
+        let rightArray =  oneStart.map { (key: $0.key, value: String($0.value.dropFirst())) }
         
-        guard let leftNode  = HuffmanNode.generateRoot(codes: leftArray ),
-              let rightNode = HuffmanNode.generateRoot(codes: rightArray) else {
+        guard let leftNode  = Huffman.generateRoot(codes: leftArray ),
+              let rightNode = Huffman.generateRoot(codes: rightArray) else {
             return nil
         }
 
         return HuffmanInnerNode(left: leftNode, right: rightNode)
     }
+    
+    class HuffmanNode {
+        var codes: [Character: String] { return [:] }
+        func encoded() -> String {
+            return ""
+        }
+    }
 
     private class HuffmanInnerNode: HuffmanNode, CustomStringConvertible {
         var left: HuffmanNode
         var right: HuffmanNode
-        var codes: [Character: String] {
-            var codes = [Character: String]()
+        override var codes: [Character: String] {
+            var internalCodes = [Character: String]()
             for code in right.codes {
-                codes[code.key] = "1" + code.value
+                internalCodes[code.key] = "1" + code.value
             }
             for code in left.codes {
-                codes[code.key] = "0" + code.value
+                internalCodes[code.key] = "0" + code.value
             }
-            return codes
+            return internalCodes
         }
         
         override func encoded() -> String {
@@ -85,14 +93,14 @@ extension Huffman {
 
 }
 
-struct Huffman<Character: Hashable> {
+public struct Huffman<Character: Hashable> {
     private var root: HuffmanNode
     private(set) var codes: [Character: String]
     
     init?(codes: [Character: String]) {
         self.codes = codes
         
-        guard let root = HuffmanNode.generateRoot(codes: codes.map { $0 }) else {
+        guard let root = Huffman.generateRoot(codes: codes.map { $0 }) else {
             return nil
         }
         
@@ -101,16 +109,16 @@ struct Huffman<Character: Hashable> {
     
     init?<S: Sequence>(optimizedFor sequence: S) where S.Iterator.Element == Character {
         var occurences = [Character: Double]()
-        sequence.forEach {
-            char in occurences[char] = (occurences[char] ?? 0) + 1
+        sequence.forEach { char in
+            occurences[char] = (occurences[char] ?? 0) + 1
         }
         self.init(occurrenceProbabilities: occurences)
     }
     
     init?(occurrenceProbabilities occ: [Character: Double]) {
         
-        func priority(of: HuffmanNode) -> Double {
-            switch of {
+        func priority(of node: HuffmanNode) -> Double {
+            switch node {
             case let inner as HuffmanInnerNode:
                 return priority(of: inner.left) + priority(of: inner.right)
             case let leaf as HuffmanLeaf:
@@ -197,9 +205,7 @@ struct Huffman<Character: Hashable> {
     
 }
 
-
 enum HuffmanError: Error {
     case unknownCharacter(Any)
     case emptyHeap
 }
-*/

@@ -54,25 +54,12 @@ public extension String {
                 return (top, [.top])
             }
             
-            if diagonal < left {                        // d < l, t
-                if top < left {                    // d < l > t
-                    return (left, [.left])
-                } else {                                // d < l = t
-                    return (top, [.top, .left])
-                }
-            } else if left < diagonal {                    // l < d, t
-                if top < diagonal {                // l < d > t
-                    return (diagonal, [.diagonal])
-                } else {                                // l < d = t
-                    return (diagonal, [.top, .diagonal])
-                }
-            } else {                                    // d = l
-                if top < diagonal {                // d = l > t
-                    return (diagonal, [.left, .diagonal])
-                } else {                                // d = l = t
-                    return (diagonal, [.left, .diagonal, .top])
-                }
+            if diagonal < left {
+                return top < left ? (left, [.left]) : (top, [.top, .left])
+            } else if left < diagonal {
+                return (diagonal, (top >= diagonal ? [.top] : []) + [.diagonal])
             }
+            return (diagonal, [.left, .diagonal] + (top == diagonal ? [.top] : []))
     }
     
 	private static func getAllWords(
