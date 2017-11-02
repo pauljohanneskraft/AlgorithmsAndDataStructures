@@ -240,6 +240,12 @@ class HeapTests: XCTestCase {
             
             XCTAssertEqual(a, sorted)
             print("after pop()", bin)
+            
+            for _ in sorted {
+                _ = bin.pop()
+            }
+            
+            XCTAssertNil(bin.pop())
         }
     }
     
