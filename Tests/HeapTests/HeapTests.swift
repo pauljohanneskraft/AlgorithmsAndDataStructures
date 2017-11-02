@@ -214,11 +214,14 @@ class HeapTests: XCTestCase {
         XCTAssertEqual("\(ab)", "[[7, 21, 6], [7, 22, 5]]")
     }
     
-    func testBinaryTree() {
+    func testBinaryTree<T: Tree>(type: T.Type) where T.Element == Int {
         for arr in arrs {
-            var bin = BinaryTree<Int>()
+            var bin = T.init()
             
-            for e in arr { bin.push(e) }
+            for e in arr {
+                XCTAssertNotNil(try? bin.push(e))
+                print(bin.array)
+            }
             
             var a = bin.array
             
@@ -238,6 +241,11 @@ class HeapTests: XCTestCase {
             XCTAssertEqual(a, sorted)
             print("after pop()", bin)
         }
+    }
+    
+    func testBinaryTrees() {
+        testBinaryTree(type: BinaryTree<Int>.self)
+        testBinaryTree(type: CompositeBinaryTree<Int>.self)
     }
 }
 

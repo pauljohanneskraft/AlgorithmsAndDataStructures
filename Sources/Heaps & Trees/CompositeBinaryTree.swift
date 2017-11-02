@@ -77,11 +77,11 @@ struct CompositeBinaryTree<Element>: Tree {
         }
         
         override func pop() -> (Node, Element?) {
-            if right is Leaf {
-                return (left, data)
+            if left is Leaf {
+                return (right, data)
             } else {
-                let (newRight, data) = right.pop()
-                right = newRight
+                let (newLeft, data) = left.pop()
+                left = newLeft
                 return (self, data)
             }
         }
