@@ -37,10 +37,10 @@ public protocol DataStructure {
 extension Int {
     func description(radix: Int) -> String {
         guard radix > 0 && radix < 65 else {
-            return "NaN"
+            return "Cannot create description with radix: \(radix)"
         }
         let nums = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"
-            .unicodeScalars.map { return String($0) }
+            .unicodeScalars.map { String($0) }
         var str = nums[self % radix]
         var num = self / radix
         while num != 0 {
