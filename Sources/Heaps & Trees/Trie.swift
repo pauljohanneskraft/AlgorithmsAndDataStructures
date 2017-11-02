@@ -104,6 +104,22 @@ public struct Trie<Element: Hashable> {
 	}
 }
 
+extension Trie: Equatable {
+    public static func == (lhs: Trie, rhs: Trie) -> Bool {
+        let larray = lhs.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
+        let rarray = rhs.array.sorted(by: { $0.first?.hashValue ?? 0 < $1.first?.hashValue ?? 0 })
+        guard larray.count == rarray.count else {
+            return false
+        }
+        for index in larray.indices {
+            guard larray[index] == rarray[index] else {
+                return false
+            }
+        }
+        return true
+    }
+}
+
 public extension Trie where Element: Comparable {
 	
 	public static func sort(_ list: inout [[Element]]) {
@@ -111,8 +127,13 @@ public extension Trie where Element: Comparable {
 	}
     
     public var array: [[Element]] {
-        get { return getArray(appending: [], sortedBy: <) }
-        set { children = [:]; for i in newValue { self.insert(i) } }
+        get {
+            return getArray(appending: [], sortedBy: <)
+        }
+        set {
+            children = [:]
+            for i in newValue { insert(i) }
+        }
     }
     
 }

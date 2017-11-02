@@ -198,7 +198,12 @@ class HeapTests: XCTestCase {
         t2.merge(with: t)
         print(t2.description)
         let t2array = t2.array(sortedBy: <).map { String($0) }
+        var t3 = Trie<Character>()
+        t3.array = t2.array
         XCTAssertEqual(t2array, ["Bonjour", "Hello", "Peter"])
+        XCTAssertEqual(t3, t2)
+        try? t3.remove(Array("Bonjour".characters))
+        XCTAssertNotEqual(t3, t2)
         try? t.remove(b)
         print(t.description)
         try? t.remove(c)
@@ -258,7 +263,7 @@ class HeapTests: XCTestCase {
 
 struct TestTrieComparable : Comparable, Hashable, CustomStringConvertible {
     init(hashValue: Int) { self.hashValue = hashValue }
-    var hashValue: Int = Int(arc4random())
+    var hashValue: Int
     var description: String { return hashValue.description }
 }
 
