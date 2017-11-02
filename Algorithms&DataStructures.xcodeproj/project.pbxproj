@@ -806,7 +806,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if ! which swiftlint >/dev/null; then\n    brew install swiftlint\nfi";
+			shellScript = "if ! which swiftlint >/dev/null; then\n    ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"\n    brew update\n    brew install swiftlint\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
