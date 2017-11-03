@@ -9,7 +9,7 @@
 // swiftlint:disable trailing_whitespace
 
 public struct BinomialHeap<Element>: PriorityQueue {
-	public private(set) var children: [BinomialTreeNode<Element>]
+	public private(set) var children: [Tree]
 	public private(set) var minIndex: Int?
 	public let order: (Element, Element) -> Bool
 	
@@ -23,16 +23,16 @@ public struct BinomialHeap<Element>: PriorityQueue {
         return children.count <= 0
     }
 	
-	mutating func merge(with heads: [BinomialTreeNode<Element>]) {
+	mutating func merge(with heads: [Tree]) {
 		guard children.count > 0 else { children = heads; resetMinIndex(); return }
 		
-		var treesNew = [BinomialTreeNode<Element>]()
-		var carry: BinomialTreeNode<Element>?
+		var treesNew = [Tree]()
+		var carry: Tree?
 		var rank = 0
 		var treeIndex = 0
 		var headsIndex = 0
 		while true {
-			var a: BinomialTreeNode<Element>?
+			var a: Tree?
 			var minRank = 0
 			
             while treeIndex < children.count {
@@ -45,7 +45,7 @@ public struct BinomialHeap<Element>: PriorityQueue {
                 break
             }
 			
-			var b: BinomialTreeNode<Element>?
+			var b: Tree?
 			
 			if headsIndex < heads.count {
 				let tree = heads[headsIndex]
@@ -76,8 +76,8 @@ public struct BinomialHeap<Element>: PriorityQueue {
 		resetMinIndex()
 	}
 	
-	func add(_ treeA: BinomialTreeNode<Element>?, _ treeB: BinomialTreeNode<Element>?, carry: BinomialTreeNode<Element>?)
-		-> (result: BinomialTreeNode<Element>?, carry: BinomialTreeNode<Element>?) {
+	func add(_ treeA: Tree?, _ treeB: Tree?, carry: Tree?)
+		-> (result: Tree?, carry: Tree?) {
             let nodes = [treeA, treeB, carry].flatMap { $0 }
             
 			guard nodes.count > 1 else {
@@ -91,13 +91,13 @@ public struct BinomialHeap<Element>: PriorityQueue {
 	}
 	
 	public mutating func push(_ element: Element) {
-		merge(with: [BinomialTreeNode(element)])
+		merge(with: [Tree(element)])
 	}
 	
 	public mutating func pop() -> Element? {
 		guard children.count > 0 else { return nil }
+        assertNotNil(self.minIndex)
         guard let minIndex = minIndex else {
-            assert(false, "minIndex == 0")
             resetMinIndex()
             return pop()
         }
@@ -109,9 +109,9 @@ public struct BinomialHeap<Element>: PriorityQueue {
 		return result
 	}
 	
-	func merge(_ treeA: BinomialTreeNode<Element>, _ treeB: BinomialTreeNode<Element>) -> BinomialTreeNode<Element> {
+	func merge(_ treeA: Tree, _ treeB: Tree) -> Tree {
         assertEqual(treeA.depth, treeB.depth)
-		var c: BinomialTreeNode<Element>
+		var c: Tree
 		if self.order(treeA.element, treeB.element) {
 			c = treeA
 			c.children.append(treeB)
@@ -153,27 +153,29 @@ extension BinomialHeap: CustomStringConvertible {
 	}
 }
 
-public struct BinomialTreeNode<Element> {
-	var children = [BinomialTreeNode<Element>]()
-	var element: Element
-	
-	init(_ element: Element) {
-		self.element = element
-	}
-	
-	internal func description(depth: Int) -> String {
-		var result = ""
-		for _ in 0..<depth { result += "\t" }
-		result += "∟\(element)\n"
-		for c in children { result += c.description(depth: depth + 1) }
-		return result
-	}
-	
-	var rank: Int { return children.count }
-	
-	var depth: Int {
-		if children.count == 0 { return 1 }
-		return children.max(by: { $0.children.count > $1.children.count })!.children.count
-	}
-	
+extension BinomialHeap {
+    public struct Tree {
+        var children = [Tree]()
+        var element: Element
+        
+        init(_ element: Element) {
+            self.element = element
+        }
+        
+        internal func description(depth: Int) -> String {
+            var result = ""
+            for _ in 0..<depth { result += "\t" }
+            result += "∟\(element)\n"
+            for c in children { result += c.description(depth: depth + 1) }
+            return result
+        }
+        
+        var rank: Int { return children.count }
+        
+        var depth: Int {
+            if children.count == 0 { return 1 }
+            return children.max(by: { $0.children.count > $1.children.count })!.children.count
+        }
+        
+    }
 }
