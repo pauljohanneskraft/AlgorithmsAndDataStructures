@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B14E7091FAFA79300F168AB /* BxTreeLinked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */; };
+		9B14E70C1FAFAA3B00F168AB /* BxTreeLinkedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */; };
 		9B3CC82B1FAA08D400562A6D /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC8291FAA08D400562A6D /* LinkedListTests.swift */; };
 		9B3CC8301FAA9D0F00562A6D /* LazyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC82E1FAA9D0F00562A6D /* LazyListTests.swift */; };
 		9B3CC8381FAA9DC700562A6D /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC8371FAA9DC700562A6D /* GraphTests.swift */; };
@@ -133,6 +135,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTreeLinked.swift; sourceTree = "<group>"; };
+		9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTreeLinkedTests.swift; sourceTree = "<group>"; };
 		9B3CC8291FAA08D400562A6D /* LinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
 		9B3CC82E1FAA9D0F00562A6D /* LazyListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyListTests.swift; sourceTree = "<group>"; };
 		9B3CC8351FAA9DC700562A6D /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +293,7 @@
 		9B427C911FAAB3A700AB179F /* HeapTests */ = {
 			isa = PBXGroup;
 			children = (
+				9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */,
 				9B7F98471FAC1857009FD18C /* BxTreeTests.swift */,
 				9B427C921FAAB3A700AB179F /* HeapTests.swift */,
 				9B427C941FAAB3A700AB179F /* Info.plist */,
@@ -402,6 +407,7 @@
 				OBJ_33 /* AVLBinaryTree.swift */,
 				OBJ_34 /* AVLCompositeBinaryTree.swift */,
 				OBJ_35 /* B+-Tree.swift */,
+				9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */,
 				OBJ_36 /* B-Tree.swift */,
 				OBJ_37 /* BinaryMaxHeap.swift */,
 				OBJ_38 /* BinaryTree.swift */,
@@ -849,6 +855,7 @@
 			files = (
 				9BDC8D511FABB6EA0094A06A /* General.swift in Sources */,
 				9B427C931FAAB3A700AB179F /* HeapTests.swift in Sources */,
+				9B14E70C1FAFAA3B00F168AB /* BxTreeLinkedTests.swift in Sources */,
 				9B7F98491FAC1857009FD18C /* BxTreeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -920,6 +927,7 @@
 				OBJ_72 /* NFA.swift in Sources */,
 				OBJ_73 /* TuringMachine.swift in Sources */,
 				OBJ_74 /* epsilon-NFA.swift in Sources */,
+				9B14E7091FAFA79300F168AB /* BxTreeLinked.swift in Sources */,
 				OBJ_75 /* Gray.swift in Sources */,
 				OBJ_76 /* Huffman.swift in Sources */,
 				OBJ_77 /* Assertions.swift in Sources */,
