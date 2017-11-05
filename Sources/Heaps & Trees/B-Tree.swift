@@ -165,11 +165,11 @@ extension BTree.Node {
         let middle = elements.count >> 1
         let nodeLeft = BTree.Node(maxSize: maxChildrenCount)
         let nodeRight = BTree.Node(maxSize: maxChildrenCount)
-        nodeLeft.elements = Array(elements[0..<middle])
-        nodeRight.elements = Array(elements[(middle + 1)..<elements.count])
+        nodeLeft.elements = Array(elements[..<middle])
+        nodeRight.elements = Array(elements[(middle + 1)...])
         guard !children.isEmpty else { return (elements[middle], nodeLeft, nodeRight) }
-        nodeLeft.children = Array(children[0...middle])
-        nodeRight.children = Array(children[(middle + 1)...elements.count])
+        nodeLeft.children = Array(children[...middle])
+        nodeRight.children = Array(children[(middle + 1)...])
         return (elements[middle], nodeLeft, nodeRight)
     }
     
@@ -181,7 +181,7 @@ extension BTree.Node {
     
     func stealRight() -> Steal? {
         guard elements.count > minElementsCount else { return nil }
-        return (elements.popLast()!, children.popLast())
+        return (elements.removeLast(), children.popLast())
     }
     
     func remove(hashValue: Int) -> Element? {
@@ -203,43 +203,37 @@ extension BTree.Node {
     }
     
     func shrink(at index: Int) {
-        var i = index
-        if i > 0 {
-            if let r = children[i - 1].stealRight() {
-                let tmp = elements[i - 1]
-                elements[i - 1] = r.keyValue
-                if let node = r.node {
-                    children[i].children.insert(node, at: 0)
-                }
-                children[i].elements.insert(tmp, at: 0)
-                return
+        if index > 0, let r = children[index - 1].stealRight() {
+            let tmp = elements[index - 1]
+            elements[index - 1] = r.keyValue
+            if let node = r.node {
+                children[index].children.insert(node, at: 0)
             }
+            children[index].elements.insert(tmp, at: 0)
+            return
         }
-        if i + 1 < children.count {
-            if let l = children[i + 1].stealLeft() {
-                let tmp = elements[i]
-                elements[i] = l.keyValue
-                if let node = l.node {
-                    children[i].children.append(node)
-                }
-                children[i].elements.append(tmp)
-                return
+        if index + 1 < children.count, let l = children[index + 1].stealLeft() {
+            let tmp = elements[index]
+            elements[index] = l.keyValue
+            if let node = l.node {
+                children[index].children.append(node)
             }
+            children[index].elements.append(tmp)
+            return
         }
-        if i >= elements.count { i = elements.count - 1 }
+        let i = min(index, elements.count - 1)
         children[i] = BTree.Node.merge(
             separator: elements.remove(at: i),
             left: children.remove(at: i),
             right: children[i]
         )
         return
-
     }
     
     func removeMax() -> KeyValue {
-        guard !children.isEmpty else { return elements.popLast()! }
-        let max = children.last!.removeMax()
-        guard !children.last!.validSize else { return max }
+        guard let last = children.last else { return elements.popLast()! }
+        let max = last.removeMax()
+        guard !last.validSize else { return max }
         shrink(at: elements.count)
         return max
     }

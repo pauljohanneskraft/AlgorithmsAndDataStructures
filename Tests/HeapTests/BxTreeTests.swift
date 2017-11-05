@@ -11,6 +11,64 @@ import XCTest
 // swiftlint:disable trailing_whitespace
 
 class BxTreeTests: XCTestCase {
+    
+    var cacheLineSize: Int {
+        var a: size_t = 0
+        var b: size_t = MemoryLayout<Int>.size
+        var c: size_t = 0
+        sysctlbyname("hw.cachelinesize", &a, &b, &c, 0)
+        return a
+    }
+    
+    func testRemove() {
+        testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 5, maxLeafNodeSize: 3))
+        testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 20, maxLeafNodeSize: 3))
+        testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 3, maxLeafNodeSize: 20))
+        testRemoval(tree: BxTree<Int>(
+            maxInnerNodeSize: cacheLineSize / 8,
+            maxLeafNodeSize: cacheLineSize / 8))
+    }
+    
+    func testRemoval(tree: BxTree<Int>) {
+        var tree = tree
+        tree.removeAll()
+        
+        let count = 500
+        
+        (0..<count).shuffled().forEach {
+            XCTAssert(tree.isValid)
+            XCTAssertNotNil(try? tree.insert($0))
+        }
+        
+        print("inserting done")
+        
+        (0..<(count >> 1)).map({ $0 * 2 }).shuffled().forEach {
+            XCTAssertEqual(tree.remove($0), $0)
+            XCTAssert(tree.isValid)
+        }
+        
+        print("removing 1 done")
+        
+        (1..<(count >> 1)).map({ ($0 * 2) - 1 }).shuffled().forEach {
+            XCTAssertNil(try? tree.insert($0))
+        }
+        
+        print("reinserting 1 done")
+        
+        (0..<(count >> 1)).map({ $0 * 2 }).shuffled().forEach {
+            XCTAssertNotNil(try? tree.insert($0))
+        }
+        
+        print("reinserting 2 done")
+        
+        (0..<count).shuffled().forEach {
+            XCTAssertEqual(tree.remove($0), $0)
+            XCTAssert(tree.isValid)
+        }
+        
+        print("done")
+    }
+    
     func testStrings() {
         var tree = BxTree<String>(maxInnerNodeSize: 5, maxLeafNodeSize: 5)
         

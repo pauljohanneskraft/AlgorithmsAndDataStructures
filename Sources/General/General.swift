@@ -6,6 +6,8 @@
 //  Copyright © 2016 pauljohanneskraft. All rights reserved.
 //
 
+import Foundation
+
 public func * (lhs: String, rhs: UInt) -> String {
 	guard rhs > 1 else {
         guard rhs > 0 else { return "" }
@@ -48,5 +50,17 @@ extension Int {
             num /= radix
         }
         return str
+    }
+}
+
+extension Sequence {
+    func shuffled() -> [Element] {
+        return sorted(by: { _, _ in arc4random() & 1 == 0 })
+    }
+}
+
+extension Array {
+    mutating func shuffle() {
+        sort(by: { _, _ in arc4random() & 1 == 0 })
     }
 }
