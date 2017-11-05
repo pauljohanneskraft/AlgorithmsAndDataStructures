@@ -20,6 +20,14 @@ public func * (lhs: String, rhs: UInt) -> String {
 	return result + result
 }
 
+public func * (lhs: UInt, rhs: String) -> String {
+    return rhs * lhs
+}
+
+public func * (lhs: Int, rhs: String) -> String {
+    return rhs * UInt(lhs)
+}
+
 public func * (lhs: String, rhs: Int) -> String {
     return lhs * UInt(rhs)
 }
