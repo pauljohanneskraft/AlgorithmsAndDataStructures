@@ -64,3 +64,11 @@ extension Array {
         sort(by: { _, _ in arc4random() & 1 == 0 })
     }
 }
+
+var cacheLineSize: Int {
+    var a: size_t = 0
+    var b: size_t = MemoryLayout<Int>.size
+    var c: size_t = 0
+    sysctlbyname("hw.cachelinesize", &a, &b, &c, 0)
+    return a
+}

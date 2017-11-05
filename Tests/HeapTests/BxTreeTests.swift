@@ -11,22 +11,18 @@ import XCTest
 // swiftlint:disable trailing_whitespace
 
 class BxTreeTests: XCTestCase {
-    
-    var cacheLineSize: Int {
-        var a: size_t = 0
-        var b: size_t = MemoryLayout<Int>.size
-        var c: size_t = 0
-        sysctlbyname("hw.cachelinesize", &a, &b, &c, 0)
-        return a
-    }
-    
     func testRemove() {
+        let standardTree = BxTree<Int>()
+        
+        let maxSize = cacheLineSize / MemoryLayout<Int>.size
+        XCTAssertEqual(standardTree.maxInnerNodeSize, maxSize)
+        XCTAssertEqual(standardTree.maxLeafNodeSize, maxSize)
+        
         testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 5, maxLeafNodeSize: 3))
+        testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 4, maxLeafNodeSize: 4))
         testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 20, maxLeafNodeSize: 3))
         testRemoval(tree: BxTree<Int>(maxInnerNodeSize: 3, maxLeafNodeSize: 20))
-        testRemoval(tree: BxTree<Int>(
-            maxInnerNodeSize: cacheLineSize / 8,
-            maxLeafNodeSize: cacheLineSize / 8))
+        testRemoval(tree: standardTree)
     }
     
     func testRemoval(tree: BxTree<Int>) {
@@ -66,7 +62,8 @@ class BxTreeTests: XCTestCase {
             XCTAssert(tree.isValid)
         }
         
-        print("done")
+        print("removing 2 done")
+        print((innerNode: tree.maxInnerNodeSize, leaf: tree.maxLeafNodeSize), "done")
     }
     
     func testStrings() {
@@ -98,5 +95,17 @@ class BxTreeTests: XCTestCase {
         
         XCTAssertEqual(tree.array.count, 100)
         XCTAssertEqual(tree.array, [Int](0..<100))
+    }
+    
+    func testArray() {
+        let arr = (0..<100).shuffled()
+        var tree = BxTree<Int>(maxInnerNodeSize: 8, maxLeafNodeSize: 4)
+        
+        tree.array = arr
+        
+        print(tree.structure)
+        print(tree)
+        
+        XCTAssertEqual(tree.array, arr.sorted())
     }
 }

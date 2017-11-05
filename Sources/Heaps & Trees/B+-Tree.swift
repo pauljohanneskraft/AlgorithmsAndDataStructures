@@ -8,8 +8,8 @@
 
 // swiftlint:disable trailing_whitespace file_length
 
-struct BxTree<Element: Hashable> {
-    var root: Node
+public struct BxTree<Element: Hashable> {
+    private var root: Node
     public let maxInnerNodeSize: Int
     public let maxLeafNodeSize: Int
     
@@ -18,12 +18,19 @@ struct BxTree<Element: Hashable> {
         self.maxLeafNodeSize = maxLeafNodeSize
         self.root = LeafNode(maxSize: maxLeafNodeSize)
     }
+    
+    public init() {
+        let cls = cacheLineSize
+        let maxInnerNodeSize = cls / MemoryLayout<InnerNode>.size
+        let maxLeafNodeSize  = cls / MemoryLayout<Element>.size
+        self.init(maxInnerNodeSize: maxInnerNodeSize, maxLeafNodeSize: maxLeafNodeSize)
+    }
 }
 
 extension BxTree {
-    typealias Split = (data: Int, left: Node, right: Node)
-    typealias KeyValue = (hashValue: Int, data: Element)
-    enum ChildrenType: CustomStringConvertible {
+    fileprivate typealias Split = (data: Int, left: Node, right: Node)
+    fileprivate typealias KeyValue = (hashValue: Int, data: Element)
+    fileprivate enum ChildrenType: CustomStringConvertible {
         case element(Element)
         case node(Node)
         var description: String {
@@ -33,9 +40,9 @@ extension BxTree {
             }
         }
     }
-    typealias Steal = (hashValue: Int, child: ChildrenType)
+    fileprivate typealias Steal = (hashValue: Int, child: ChildrenType)
 
-    class Node {
+    fileprivate class Node {
         static var levelString: String { return "   " }
 
         var keys: [Int]
@@ -60,9 +67,7 @@ extension BxTree {
         func remove(_ hashValue: Int) -> Element? { return nil }
         func stealRight() -> Steal? { return nil }
         func stealLeft() -> Steal? { return nil }
-        func merge(with node: Node, separator: Int) {
-            self.keys += [separator] + node.keys
-        }
+        func merge(with node: Node, separator: Int) {}
         
         func isValid(minKey: Int, maxKey: Int) -> Bool {
             guard keys.count <= maxSize else {
@@ -85,17 +90,12 @@ extension BxTree {
         }
         
         var structure: [Any] { return [] }
-        
-        func shrink(at index: Int) { return }
-        
-        func description(depth: Int) -> String {
-            return ""
-        }
+        func description(depth: Int) -> String { return "" }
     }
 }
 
 extension BxTree {
-    final class InnerNode: Node {
+    fileprivate final class InnerNode: Node {
         var children: [Node]
         
         override func isValid(minKey: Int, maxKey: Int) -> Bool {
@@ -204,7 +204,7 @@ extension BxTree {
             return (keys.remove(at: 0), .node(children.remove(at: 0)))
         }
         
-        override func shrink(at index: Int) {
+        func shrink(at index: Int) {
             let childAtIndex = children[index]
             if index > 0, let r = children[index - 1].stealRight() {
                 let tmp = keys[index - 1]
@@ -256,7 +256,7 @@ extension BxTree {
 }
 
 extension BxTree {
-    final class LeafNode: Node {
+    fileprivate final class LeafNode: Node {
         var elements: [Element]
         
         override init(maxSize: Int) {
@@ -368,14 +368,14 @@ extension BxTree {
 }
 
 extension BxTree: DataStructure {
-    mutating func remove(_ data: Element) throws {
+    public mutating func remove(_ data: Element) throws {
         guard remove(data.hashValue) != nil else {
             throw DataStructureError.notIn
         }
     }
     
     @discardableResult
-    mutating func remove(_ hashValue: Int) -> Element? {
+    public mutating func remove(_ hashValue: Int) -> Element? {
         defer { assert(isValid, self.description) }
         let element = root.remove(hashValue)
         if let rootInner = root as? InnerNode, rootInner.children.count < 2 {
@@ -384,11 +384,11 @@ extension BxTree: DataStructure {
         return element
     }
     
-    var description: String {
+    public var description: String {
         return "\(BxTree.self)\n" + root.description(depth: 0)
     }
     
-    mutating func insert(_ data: Element) throws {
+    public mutating func insert(_ data: Element) throws {
         defer { assert(isValid, self.description) }
         let newData = (hashValue: data.hashValue, data: data)
         guard let result = try root.insert(newData) else {
@@ -400,15 +400,15 @@ extension BxTree: DataStructure {
         root = newRoot
     }
     
-    func find(key: Int) -> Element? {
+    public func find(key: Int) -> Element? {
         return root.find(key: key)
     }
     
-    var count: UInt {
+    public var count: UInt {
         return root.count
     }
     
-    var array: [Element] {
+    public var array: [Element] {
         get {
             return root.array
         }
@@ -420,7 +420,7 @@ extension BxTree: DataStructure {
         }
     }
     
-    var isValid: Bool {
+    public var isValid: Bool {
         switch root {
         case let root as InnerNode:
             guard root.children.count - 1 == root.keys.count else {
@@ -450,21 +450,21 @@ extension BxTree: DataStructure {
         }
     }
     
-    mutating func removeAll() {
+    public mutating func removeAll() {
         root = LeafNode(maxSize: maxLeafNodeSize)
     }
     
-    var structure: [Any] {
+    public var structure: [Any] {
         return root.structure
     }
     
-    typealias DataElement = Element
+    public typealias DataElement = Element
     
 }
 
 extension BxTree.LeafNode: CustomStringConvertible {
-    var description: String {
-        return /* "\(BxTree.LeafNode.self): " +*/ "\(keys.indices.map { (key: keys[$0], value: elements[$0]) })"
+    public var description: String {
+        return "\(BxTree.LeafNode.self): " + "\(keys.indices.map { (key: keys[$0], value: elements[$0]) })"
     }
 }
 
@@ -479,6 +479,6 @@ extension BxTree.InnerNode: CustomStringConvertible {
         let str = keys.indices.reduce("[") {
             $0 + "\(children[$1]), " + "key: \(keys[$1]), "
         } + "\(lastDescription)]"
-        return /* "\(BxTree.InnerNode.self): " +*/ str
+        return "\(BxTree.InnerNode.self): " + str
     }
 }
