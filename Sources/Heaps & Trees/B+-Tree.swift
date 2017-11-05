@@ -1,6 +1,6 @@
 //
 //  B+-Tree.swift
-//  Algorithms and Data structures
+//  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 23.08.16.
 //  Copyright © 2016 pauljohanneskraft. All rights reserved.
@@ -12,6 +12,12 @@ public struct BxTree<Element: Hashable> {
     private var root: Node
     public let maxInnerNodeSize: Int
     public let maxLeafNodeSize: Int
+    public var minInnerNodeSize: Int {
+        return (maxInnerNodeSize + 1) >> 1
+    }
+    public var minLeafNodeSize: Int {
+        return (maxLeafNodeSize + 1) >> 1
+    }
     
     public init(maxInnerNodeSize: Int, maxLeafNodeSize: Int) {
         self.maxInnerNodeSize = maxInnerNodeSize

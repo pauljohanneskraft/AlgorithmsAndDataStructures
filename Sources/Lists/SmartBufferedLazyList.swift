@@ -1,6 +1,6 @@
 //
 //  SmartBufferedLazyList.swift
-//  Algorithms_and_Data_structures
+//  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 17.03.17.
 //  Copyright © 2017 pauljohanneskraft. All rights reserved.

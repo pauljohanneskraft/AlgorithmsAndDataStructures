@@ -1,6 +1,6 @@
 //
 //  Assertions.swift
-//  Algorithms & Data structuresPackageDescription
+//  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 01.11.17.
 //

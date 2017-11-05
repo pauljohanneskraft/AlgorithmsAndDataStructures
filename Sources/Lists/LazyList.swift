@@ -1,6 +1,6 @@
 //
 //  LazyList.swift
-//  Algorithms_and_Data_structures
+//  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 09.12.16.
 //  Copyright © 2016 pauljohanneskraft. All rights reserved.

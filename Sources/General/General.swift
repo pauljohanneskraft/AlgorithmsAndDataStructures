@@ -1,6 +1,6 @@
 //
 //  General.swift
-//  Algorithms_and_Data_structures
+//  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 13.09.16.
 //  Copyright © 2016 pauljohanneskraft. All rights reserved.
