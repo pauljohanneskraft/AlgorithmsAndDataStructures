@@ -29,10 +29,9 @@ class HeapTests: XCTestCase {
     var arrs : [[Int]] = []
     
     func testBTree() {
-        var btree = BTree<Int>(maxNodeSize: 5)!
-        XCTAssertNil(BTree<Int>(maxNodeSize: 2))
+        var btree = BTree<Int>(maxNodeSize: 5)
         for i in [3, 6, 7] {
-            btree = BTree<Int>(maxNodeSize: i)!
+            btree = BTree<Int>(maxNodeSize: i)
             btree.replace(2)
             print(btree)
             btree.remove(at: 2)
@@ -235,32 +234,30 @@ class HeapTests: XCTestCase {
     
     func testBinaryTree<T: Tree>(type: T.Type) where T.Element == Int {
         for arr in arrs {
+            var array = Set(arr).sorted()
             var bin = T.init()
             
-            for e in arr {
-                XCTAssertNotNil(try? bin.push(e))
+            for e in array {
+                XCTAssertNotNil(try? bin.push(e), "\(e) already in \(bin.array)")
                 print(bin.array)
             }
             
-            var a = bin.array
-            
-            var sorted = arr.sorted(by: bin.order)
-            
-            XCTAssertEqual(a, sorted)
+            XCTAssertEqual(bin.array, array)
             
             print("before pop()", bin)
             
             let p = bin.pop()
             
-            XCTAssertEqual(p, sorted[0])
+            XCTAssertEqual(p, array.remove(at: 0))
             
-            _ = sorted.remove(at: 0)
-            a = bin.array
-            
-            XCTAssertEqual(a, sorted)
+            XCTAssertEqual(bin.array, array)
             print("after pop()", bin)
             
-            for _ in sorted {
+            XCTAssertWillThrow(errors: [DataStructureError.alreadyIn]) {
+                try bin.push(array.last!)
+            }
+            
+            for _ in array {
                 _ = bin.pop()
             }
             
