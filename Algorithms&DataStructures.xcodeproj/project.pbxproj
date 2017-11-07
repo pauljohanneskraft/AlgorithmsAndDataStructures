@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9B14E7091FAFA79300F168AB /* BxTreeLinked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */; };
-		9B14E70C1FAFAA3B00F168AB /* BxTreeLinkedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */; };
+		9B14E7091FAFA79300F168AB /* LinkedBxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E7081FAFA79300F168AB /* LinkedBxTree.swift */; };
+		9B14E70C1FAFAA3B00F168AB /* LinkedBxTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B14E70A1FAFAA3B00F168AB /* LinkedBxTreeTests.swift */; };
+		9B17A5071FB0028D00B7E62B /* DataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B17A5061FB0028D00B7E62B /* DataStructure.swift */; };
 		9B3CC82B1FAA08D400562A6D /* LinkedListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC8291FAA08D400562A6D /* LinkedListTests.swift */; };
 		9B3CC8301FAA9D0F00562A6D /* LazyListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC82E1FAA9D0F00562A6D /* LazyListTests.swift */; };
 		9B3CC8381FAA9DC700562A6D /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CC8371FAA9DC700562A6D /* GraphTests.swift */; };
@@ -23,6 +24,7 @@
 		9B427CD21FAAC33600AB179F /* Algorithms_DataStructures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Algorithms&DataStructures::Algorithms&DataStructures::Product" /* Algorithms_DataStructures.framework */; };
 		9B427CD91FAAC58300AB179F /* DFATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B427CD81FAAC58300AB179F /* DFATests.swift */; };
 		9B427CDB1FAAC62300AB179F /* NFATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B427CDA1FAAC62300AB179F /* NFATests.swift */; };
+		9B536AB91FB093D7006C2BFF /* DataStructureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B536AB71FB093D7006C2BFF /* DataStructureTests.swift */; };
 		9B7F98491FAC1857009FD18C /* BxTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7F98471FAC1857009FD18C /* BxTreeTests.swift */; };
 		9B8A88101FA9F5BE00C6C8EE /* HuffmanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8A880F1FA9F5BE00C6C8EE /* HuffmanTests.swift */; };
 		9B8A88121FA9F79C00C6C8EE /* GrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8A88111FA9F79C00C6C8EE /* GrayTests.swift */; };
@@ -47,25 +49,25 @@
 		OBJ_71 /* DPDA.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* DPDA.swift */; };
 		OBJ_72 /* NFA.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_12 /* NFA.swift */; };
 		OBJ_73 /* TuringMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* TuringMachine.swift */; };
-		OBJ_74 /* epsilon-NFA.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* epsilon-NFA.swift */; };
+		OBJ_74 /* eNFA.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* eNFA.swift */; };
 		OBJ_75 /* Gray.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_16 /* Gray.swift */; };
 		OBJ_76 /* Huffman.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* Huffman.swift */; };
 		OBJ_77 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Assertions.swift */; };
 		OBJ_78 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* Concurrency.swift */; };
 		OBJ_79 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* General.swift */; };
 		OBJ_80 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_23 /* Graph.swift */; };
-		OBJ_81 /* GraphAdjacencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* GraphAdjacencyList.swift */; };
+		OBJ_81 /* AdjacencyListGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_24 /* AdjacencyListGraph.swift */; };
 		OBJ_82 /* GraphAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_25 /* GraphAlgorithms.swift */; };
 		OBJ_83 /* GraphColoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_26 /* GraphColoring.swift */; };
-		OBJ_84 /* GraphHashing.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* GraphHashing.swift */; };
-		OBJ_85 /* GraphList.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* GraphList.swift */; };
-		OBJ_86 /* GraphMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* GraphMatrix.swift */; };
+		OBJ_84 /* HashingGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_27 /* HashingGraph.swift */; };
+		OBJ_85 /* ListGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_28 /* ListGraph.swift */; };
+		OBJ_86 /* MatrixGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_29 /* MatrixGraph.swift */; };
 		OBJ_87 /* GraphPathfinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_30 /* GraphPathfinding.swift */; };
 		OBJ_88 /* GraphTraversal.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_31 /* GraphTraversal.swift */; };
 		OBJ_89 /* AVLBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_33 /* AVLBinaryTree.swift */; };
 		OBJ_90 /* AVLCompositeBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_34 /* AVLCompositeBinaryTree.swift */; };
-		OBJ_91 /* B+-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* B+-Tree.swift */; };
-		OBJ_92 /* B-Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* B-Tree.swift */; };
+		OBJ_91 /* BxTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_35 /* BxTree.swift */; };
+		OBJ_92 /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_36 /* BTree.swift */; };
 		OBJ_93 /* BinaryMaxHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* BinaryMaxHeap.swift */; };
 		OBJ_94 /* BinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* BinaryTree.swift */; };
 		OBJ_95 /* BinomialHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* BinomialHeap.swift */; };
@@ -135,8 +137,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTreeLinked.swift; sourceTree = "<group>"; };
-		9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTreeLinkedTests.swift; sourceTree = "<group>"; };
+		9B14E7081FAFA79300F168AB /* LinkedBxTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedBxTree.swift; sourceTree = "<group>"; };
+		9B14E70A1FAFAA3B00F168AB /* LinkedBxTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedBxTreeTests.swift; sourceTree = "<group>"; };
+		9B17A5061FB0028D00B7E62B /* DataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructure.swift; sourceTree = "<group>"; };
 		9B3CC8291FAA08D400562A6D /* LinkedListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedListTests.swift; sourceTree = "<group>"; };
 		9B3CC82E1FAA9D0F00562A6D /* LazyListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyListTests.swift; sourceTree = "<group>"; };
 		9B3CC8351FAA9DC700562A6D /* GraphTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GraphTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +163,7 @@
 		9B427CDA1FAAC62300AB179F /* NFATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFATests.swift; sourceTree = "<group>"; };
 		9B4B7E6C1FA9F555003164FA /* CodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B4B7E701FA9F555003164FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B536AB71FB093D7006C2BFF /* DataStructureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructureTests.swift; sourceTree = "<group>"; };
 		9B7F98471FAC1857009FD18C /* BxTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTreeTests.swift; sourceTree = "<group>"; };
 		9B8A880F1FA9F5BE00C6C8EE /* HuffmanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuffmanTests.swift; sourceTree = "<group>"; };
 		9B8A88111FA9F79C00C6C8EE /* GrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTests.swift; sourceTree = "<group>"; };
@@ -171,25 +175,25 @@
 		OBJ_11 /* DPDA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDA.swift; sourceTree = "<group>"; };
 		OBJ_12 /* NFA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFA.swift; sourceTree = "<group>"; };
 		OBJ_13 /* TuringMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuringMachine.swift; sourceTree = "<group>"; };
-		OBJ_14 /* epsilon-NFA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "epsilon-NFA.swift"; sourceTree = "<group>"; };
+		OBJ_14 /* eNFA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eNFA.swift; sourceTree = "<group>"; };
 		OBJ_16 /* Gray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gray.swift; sourceTree = "<group>"; };
 		OBJ_17 /* Huffman.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Huffman.swift; sourceTree = "<group>"; };
 		OBJ_19 /* Assertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		OBJ_20 /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		OBJ_21 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
 		OBJ_23 /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
-		OBJ_24 /* GraphAdjacencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAdjacencyList.swift; sourceTree = "<group>"; };
+		OBJ_24 /* AdjacencyListGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjacencyListGraph.swift; sourceTree = "<group>"; };
 		OBJ_25 /* GraphAlgorithms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAlgorithms.swift; sourceTree = "<group>"; };
 		OBJ_26 /* GraphColoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphColoring.swift; sourceTree = "<group>"; };
-		OBJ_27 /* GraphHashing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphHashing.swift; sourceTree = "<group>"; };
-		OBJ_28 /* GraphList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphList.swift; sourceTree = "<group>"; };
-		OBJ_29 /* GraphMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphMatrix.swift; sourceTree = "<group>"; };
+		OBJ_27 /* HashingGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashingGraph.swift; sourceTree = "<group>"; };
+		OBJ_28 /* ListGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGraph.swift; sourceTree = "<group>"; };
+		OBJ_29 /* MatrixGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixGraph.swift; sourceTree = "<group>"; };
 		OBJ_30 /* GraphPathfinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphPathfinding.swift; sourceTree = "<group>"; };
 		OBJ_31 /* GraphTraversal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTraversal.swift; sourceTree = "<group>"; };
 		OBJ_33 /* AVLBinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVLBinaryTree.swift; sourceTree = "<group>"; };
 		OBJ_34 /* AVLCompositeBinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVLCompositeBinaryTree.swift; sourceTree = "<group>"; };
-		OBJ_35 /* B+-Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "B+-Tree.swift"; sourceTree = "<group>"; };
-		OBJ_36 /* B-Tree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "B-Tree.swift"; sourceTree = "<group>"; };
+		OBJ_35 /* BxTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BxTree.swift; sourceTree = "<group>"; };
+		OBJ_36 /* BTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
 		OBJ_37 /* BinaryMaxHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryMaxHeap.swift; sourceTree = "<group>"; };
 		OBJ_38 /* BinaryTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryTree.swift; sourceTree = "<group>"; };
 		OBJ_39 /* BinomialHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinomialHeap.swift; sourceTree = "<group>"; };
@@ -293,7 +297,8 @@
 		9B427C911FAAB3A700AB179F /* HeapTests */ = {
 			isa = PBXGroup;
 			children = (
-				9B14E70A1FAFAA3B00F168AB /* BxTreeLinkedTests.swift */,
+				9B536AB71FB093D7006C2BFF /* DataStructureTests.swift */,
+				9B14E70A1FAFAA3B00F168AB /* LinkedBxTreeTests.swift */,
 				9B7F98471FAC1857009FD18C /* BxTreeTests.swift */,
 				9B427C921FAAB3A700AB179F /* HeapTests.swift */,
 				9B427C941FAAB3A700AB179F /* Info.plist */,
@@ -304,10 +309,10 @@
 		9B427C9B1FAAB98E00AB179F /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				OBJ_24 /* GraphAdjacencyList.swift */,
-				OBJ_27 /* GraphHashing.swift */,
-				OBJ_28 /* GraphList.swift */,
-				OBJ_29 /* GraphMatrix.swift */,
+				OBJ_24 /* AdjacencyListGraph.swift */,
+				OBJ_27 /* HashingGraph.swift */,
+				OBJ_28 /* ListGraph.swift */,
+				OBJ_29 /* MatrixGraph.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -404,17 +409,19 @@
 		OBJ_32 /* Heaps & Trees */ = {
 			isa = PBXGroup;
 			children = (
+				9B17A5061FB0028D00B7E62B /* DataStructure.swift */,
 				OBJ_33 /* AVLBinaryTree.swift */,
 				OBJ_34 /* AVLCompositeBinaryTree.swift */,
-				OBJ_35 /* B+-Tree.swift */,
-				9B14E7081FAFA79300F168AB /* BxTreeLinked.swift */,
-				OBJ_36 /* B-Tree.swift */,
+				OBJ_35 /* BxTree.swift */,
+				9B14E7081FAFA79300F168AB /* LinkedBxTree.swift */,
+				OBJ_36 /* BTree.swift */,
 				OBJ_37 /* BinaryMaxHeap.swift */,
 				OBJ_38 /* BinaryTree.swift */,
 				OBJ_39 /* BinomialHeap.swift */,
 				OBJ_40 /* CompositeBinaryTree.swift */,
 				OBJ_41 /* Tree.swift */,
 				OBJ_42 /* Trie.swift */,
+				OBJ_48 /* PriorityQueue.swift */,
 			);
 			path = "Heaps & Trees";
 			sourceTree = "<group>";
@@ -426,7 +433,6 @@
 				OBJ_45 /* DoublyLinkedList.swift */,
 				OBJ_46 /* LazyList.swift */,
 				OBJ_47 /* List.swift */,
-				OBJ_48 /* PriorityQueue.swift */,
 				OBJ_49 /* SinglyLinkedList.swift */,
 				OBJ_50 /* SmartBufferedLazyList.swift */,
 			);
@@ -514,7 +520,7 @@
 				OBJ_11 /* DPDA.swift */,
 				OBJ_12 /* NFA.swift */,
 				OBJ_13 /* TuringMachine.swift */,
-				OBJ_14 /* epsilon-NFA.swift */,
+				OBJ_14 /* eNFA.swift */,
 			);
 			path = "Automata & Formal Languages";
 			sourceTree = "<group>";
@@ -855,8 +861,9 @@
 			files = (
 				9BDC8D511FABB6EA0094A06A /* General.swift in Sources */,
 				9B427C931FAAB3A700AB179F /* HeapTests.swift in Sources */,
-				9B14E70C1FAFAA3B00F168AB /* BxTreeLinkedTests.swift in Sources */,
+				9B14E70C1FAFAA3B00F168AB /* LinkedBxTreeTests.swift in Sources */,
 				9B7F98491FAC1857009FD18C /* BxTreeTests.swift in Sources */,
+				9B536AB91FB093D7006C2BFF /* DataStructureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,26 +933,27 @@
 				OBJ_71 /* DPDA.swift in Sources */,
 				OBJ_72 /* NFA.swift in Sources */,
 				OBJ_73 /* TuringMachine.swift in Sources */,
-				OBJ_74 /* epsilon-NFA.swift in Sources */,
-				9B14E7091FAFA79300F168AB /* BxTreeLinked.swift in Sources */,
+				OBJ_74 /* eNFA.swift in Sources */,
+				9B14E7091FAFA79300F168AB /* LinkedBxTree.swift in Sources */,
 				OBJ_75 /* Gray.swift in Sources */,
 				OBJ_76 /* Huffman.swift in Sources */,
 				OBJ_77 /* Assertions.swift in Sources */,
 				OBJ_78 /* Concurrency.swift in Sources */,
 				OBJ_79 /* General.swift in Sources */,
 				OBJ_80 /* Graph.swift in Sources */,
-				OBJ_81 /* GraphAdjacencyList.swift in Sources */,
+				OBJ_81 /* AdjacencyListGraph.swift in Sources */,
 				OBJ_82 /* GraphAlgorithms.swift in Sources */,
 				OBJ_83 /* GraphColoring.swift in Sources */,
-				OBJ_84 /* GraphHashing.swift in Sources */,
-				OBJ_85 /* GraphList.swift in Sources */,
-				OBJ_86 /* GraphMatrix.swift in Sources */,
+				OBJ_84 /* HashingGraph.swift in Sources */,
+				OBJ_85 /* ListGraph.swift in Sources */,
+				OBJ_86 /* MatrixGraph.swift in Sources */,
+				9B17A5071FB0028D00B7E62B /* DataStructure.swift in Sources */,
 				OBJ_87 /* GraphPathfinding.swift in Sources */,
 				OBJ_88 /* GraphTraversal.swift in Sources */,
 				OBJ_89 /* AVLBinaryTree.swift in Sources */,
 				OBJ_90 /* AVLCompositeBinaryTree.swift in Sources */,
-				OBJ_91 /* B+-Tree.swift in Sources */,
-				OBJ_92 /* B-Tree.swift in Sources */,
+				OBJ_91 /* BxTree.swift in Sources */,
+				OBJ_92 /* BTree.swift in Sources */,
 				OBJ_93 /* BinaryMaxHeap.swift in Sources */,
 				OBJ_94 /* BinaryTree.swift in Sources */,
 				OBJ_95 /* BinomialHeap.swift in Sources */,

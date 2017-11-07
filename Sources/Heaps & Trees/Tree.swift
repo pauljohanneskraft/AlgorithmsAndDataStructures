@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public protocol Tree: PriorityQueue {
+public protocol Tree: PriorityQueue, DataStructure {
 	var array: [Element] { get }
 }
 

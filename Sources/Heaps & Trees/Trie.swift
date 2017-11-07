@@ -8,7 +8,16 @@
 
 // swiftlint:disable trailing_whitespace
 
-extension Trie: DataStructure {}
+extension Trie: DataStructure {
+    public func contains(_ word: [Element]) -> Bool {
+        return false
+    }
+    
+    public mutating func removeAll() {
+        wordsAtCurrentLength = 0
+        children = [:]
+    }
+}
 
 public struct Trie<Element: Hashable> {
     public typealias DataElement = [Element]

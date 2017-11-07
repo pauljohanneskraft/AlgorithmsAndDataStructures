@@ -13,8 +13,8 @@ import XCTest
 class DFATests: XCTestCase {
     func testExample1() {
         let dfa = DFA<Character>(states: [
-            0: DFAState<Character>(transition: { _ in 1 }),
-            1: DFAState<Character>(transition: { _ in 0 })
+            0: DFA.State(transition: { _ in 1 }),
+            1: DFA.State(transition: { _ in 0 })
             ], initialState: 0, finalStates: [0])
         
         XCTAssertEqual(try? dfa.accepts(word: ""  .characters), true )
@@ -24,10 +24,10 @@ class DFATests: XCTestCase {
     
     func testDivisibleBy3() {
         let dfa = DFA<Character>(states: [
-            0: DFAState { ["0": 0, "1": 1][$0] ?? 3 },
-            1: DFAState { ["0": 2, "1": 0][$0] ?? 3 },
-            2: DFAState { ["0": 1, "1": 2][$0] ?? 3 },
-            3: DFAState { _ in 3 }
+            0: DFA.State { ["0": 0, "1": 1][$0] ?? 3 },
+            1: DFA.State { ["0": 2, "1": 0][$0] ?? 3 },
+            2: DFA.State { ["0": 1, "1": 2][$0] ?? 3 },
+            3: DFA.State { _ in 3 }
             ], initialState: 0, finalStates: [0])
         
         for _ in 0..<100 {

@@ -8,15 +8,15 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct BinaryMaxHeap < Element >: PriorityQueue {
+public struct BinaryMaxHeap<Element>: PriorityQueue {
 	
 	public	let order: (Element, Element) -> Bool
-	private var _array: [Element]
+	private var internalArray: [Element]
 	
 	public	var array: [Element] {
-		get { return _array }
+		get { return internalArray }
 		set {
-			_array = newValue
+			internalArray = newValue
 			for i in (0..<(array.count >> 1)).reversed() { siftDown(at: i) }
 		}
 	}
@@ -27,26 +27,26 @@ public struct BinaryMaxHeap < Element >: PriorityQueue {
 	
 	public init(array: [Element], order: @escaping (Element, Element) -> Bool) {
 		self.order = order
-		self._array = []
+		self.internalArray = []
 		self.array = array
 	}
 	
 	public mutating func push(_ elem: Element) {
-		_array.append(elem)
-		siftUp(at: _array.indices.last!)
-        assertEqual(_array.first.debugDescription, _array.max(by: order).debugDescription)
+		internalArray.append(elem)
+		siftUp(at: internalArray.count - 1)
+        assertEqual(internalArray.first.debugDescription, internalArray.max(by: order).debugDescription)
 	}
     
-    public var isEmpty: Bool { return _array.isEmpty }
+    public var isEmpty: Bool { return internalArray.isEmpty }
 	
 	public mutating func pop() -> Element? {
-		guard _array.count > 1 else { return _array.popLast() }
+		guard internalArray.count > 1 else { return internalArray.popLast() }
 		
-		let data = _array.popLast()!
-		let ret = _array[0]
-		_array[0] = data
+		let data = internalArray.removeLast()
+		let ret = internalArray[0]
+		internalArray[0] = data
 		siftDown(at: 0)
-        assertEqual(_array.first.debugDescription, _array.max(by: order).debugDescription)
+        assertEqual(internalArray.first.debugDescription, internalArray.max(by: order).debugDescription)
 		return ret
 	}
 	
@@ -56,38 +56,38 @@ public struct BinaryMaxHeap < Element >: PriorityQueue {
 		var child = (index << 1) | 1
 		
 		// is left child in range? / is there a left child?
-		guard _array.indices.contains(child) else { return }
+		guard internalArray.indices.contains(child) else { return }
 		
 		// right child exists
-		if _array.indices.contains(child + 1) {
+		if internalArray.indices.contains(child + 1) {
 			// left child < right child
-			if order(_array[child], _array[child + 1]) {
+			if order(internalArray[child], internalArray[child + 1]) {
 				child += 1 // right child
 			}
 		}
-		// self[i] < self[child]
-		if order(_array[index], _array[child]) {
-            _array.swapAt(index, child)
+
+        if order(internalArray[index], internalArray[child]) {
+            internalArray.swapAt(index, child)
 			siftDown(at: child) // sifting down child then
 		}
 	}
 	
 	public mutating func siftUp(at index: Int) {
 
-		guard _array.indices.contains(index) else { return }
+		guard internalArray.indices.contains(index) else { return }
 		
 		let parent = (index-1) >> 1
 		
-		guard _array.indices.contains(parent) else { return }
+		guard internalArray.indices.contains(parent) else { return }
 		
-		if order(_array[parent], _array[index]) {
-            _array.swapAt(parent, index)
+		if order(internalArray[parent], internalArray[index]) {
+            internalArray.swapAt(parent, index)
 			siftUp(at: parent) // sifting down child then
 		}
 	}
     
     public var description: String {
-        return "\(self._array)"
+        return internalArray.description
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  Graph_List.swift
+//  ListGraph.swift
 //  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 22.08.16.
@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct GraphList: Graph {
+public struct ListGraph: Graph {
 	
 	// stored properties
 	public var edges: Set<GraphEdge>

@@ -1,5 +1,5 @@
 //
-//  Graph_Hashing.swift
+//  HashingGraph.swift
 //  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 09.08.16.
@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct GraphHashing: Graph, CustomStringConvertible {
+public struct HashingGraph: Graph, CustomStringConvertible {
 	
 	// stored properties
 	public var internalEdges: [Int: [Int: Int]]

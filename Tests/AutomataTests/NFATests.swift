@@ -14,8 +14,8 @@ class NFATests: XCTestCase {
     
     func testPerformanceExample() {
         let nfa = NFA<Character>(states: [
-            0: NFAState<Character>(transition: { _ in [1] }),
-            1: NFAState<Character>(transition: { _ in []  })
+            0: NFA.State(transition: { _ in [1] }),
+            1: NFA.State(transition: { _ in []  })
             ], initialStates: [0], finalStates: [0])
         
         XCTAssertEqual(try? nfa.accepts(word: ""  .characters), true )
@@ -25,9 +25,9 @@ class NFATests: XCTestCase {
     
     func testDivisibleBy3() {
         let nfa = NFA<Character>(states: [
-            0: NFAState { ["0": [0], "1": [1]][$0] ?? [] },
-            1: NFAState { ["0": [2], "1": [0]][$0] ?? [] },
-            2: NFAState { ["0": [1], "1": [2]][$0] ?? [] }
+            0: NFA.State { ["0": [0], "1": [1]][$0] ?? [] },
+            1: NFA.State { ["0": [2], "1": [0]][$0] ?? [] },
+            2: NFA.State { ["0": [1], "1": [2]][$0] ?? [] }
             ], initialStates: [0], finalStates: [0])
         
         for _ in 0..<100 {

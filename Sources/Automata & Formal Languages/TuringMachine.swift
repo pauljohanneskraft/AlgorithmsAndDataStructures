@@ -8,19 +8,21 @@
 
 // swiftlint:disable trailing_whitespace
 
-struct TuringBand <Character> {
-    private var elements: [Character]
-    private var index: Int
-    
-    var currentElement: Character {
-        return elements[index]
-    }
-    
-    mutating func advance(by advancing: Int = 1) {
-        index += advancing
+extension TuringMachine {
+    struct Band {
+        private var elements: [Character]
+        private var index: Int
+        
+        var currentElement: Character {
+            return elements[index]
+        }
+        
+        mutating func advance(by advancing: Int = 1) {
+            index += advancing
+        }
     }
 }
 
 struct TuringMachine <Character> {
-    var bands: [TuringBand<Character>]
+    var bands: [Band]
 }

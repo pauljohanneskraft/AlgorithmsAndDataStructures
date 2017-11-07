@@ -1,5 +1,5 @@
 //
-//  Graph_Matrix.swift
+//  MatrixGraph.swift
 //  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 09.08.16.
@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct GraphMatrix: Graph, CustomStringConvertible {
+public struct MatrixGraph: Graph, CustomStringConvertible {
 	
 	// stored properties
 	public private(set) var internalEdges: [[Int?]]

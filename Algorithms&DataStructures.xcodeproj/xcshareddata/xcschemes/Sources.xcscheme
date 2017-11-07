@@ -79,6 +79,11 @@
                BlueprintName = "HeapTests"
                ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "BxTreeLinkedTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO">

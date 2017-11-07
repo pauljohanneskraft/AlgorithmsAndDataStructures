@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct BinaryTree<Element> {
+public struct BinaryTree<Element: Equatable> {
     var root: Node?
     public let order: (Element, Element) -> Bool
     
@@ -31,17 +31,49 @@ extension BinaryTree {
     }
 }
 
-extension BinaryTree: BinaryTreeProtocol {
-    public var array: [Element] {
-        return root?.array ?? []
+extension BinaryTree: BinaryTreeProtocol, Tree {
+    public func contains(_ data: Element) -> Bool {
+        return root?.contains(data) ?? false
     }
     
-    public mutating func push(_ data: Element) {
+    public mutating func insert(_ data: Element) throws {
+        try push(data)
+    }
+    
+    public mutating func remove(_ data: Element) throws {
+        guard let res = try root?.remove(data) else {
+            throw DataStructureError.notIn
+        }
+        root = res
+    }
+    
+    public mutating func removeAll() {
+        root = nil
+    }
+    
+    public var count: UInt {
+        return root?.count ?? 0
+    }
+    
+    public typealias DataElement = Element
+    
+    public var array: [Element] {
+        get {
+            return root?.array ?? []
+        }
+        set {
+            removeAll()
+            newValue.forEach { try? insert($0) }
+            
+        }
+    }
+    
+    public mutating func push(_ data: Element) throws {
         guard let root = root else {
             self.root = Node(data: data, order: order)
             return
         }
-        root.push(data)
+        try root.push(data)
     }
     
 	public mutating func pop() -> Element? {
@@ -76,7 +108,10 @@ extension BinaryTree: CustomStringConvertible {
 }
 
 extension BinaryTree.Node: BinaryTreeNodeProtocol {
-    func push(_ newData: Element) {
+    func push(_ newData: Element) throws {
+        guard newData != data else {
+            throw DataStructureError.alreadyIn
+        }
         let newDataIsSmaller = order(newData, data)
         guard let node = newDataIsSmaller ? left: right else {
             if newDataIsSmaller {
@@ -86,7 +121,47 @@ extension BinaryTree.Node: BinaryTreeNodeProtocol {
             }
             return
         }
-        node.push(newData)
+        try node.push(newData)
+    }
+    
+    func contains(_ data: Element) -> Bool {
+        if self.data == data {
+            return true
+        } else if order(data, self.data) {
+            return left?.contains(data) ?? false
+        } else {
+            return right?.contains(data) ?? true
+        }
+    }
+    
+    func removeLast() -> (data: Element, node: BinaryTree.Node?) {
+        if let rightNode = right {
+            let result = rightNode.removeLast()
+            right = result.node
+            return (result.data, self)
+        }
+        return (data: data, node: left)
+    }
+    
+    func remove(_ data: Element) throws -> BinaryTree.Node? {
+        if data == self.data {
+            if let last = left?.removeLast() {
+                left = last.node
+                self.data = last.data
+                return self
+            } else {
+                return right
+            }
+        } else if order(data, self.data) {
+            left = try left?.remove(data)
+        } else {
+            right = try right?.remove(data)
+        }
+        return self
+    }
+    
+    var count: UInt {
+        return (left?.count ?? 0) + (right?.count ?? 0) + 1
     }
     
     var array: [Element] {

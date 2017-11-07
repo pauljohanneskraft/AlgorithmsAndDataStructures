@@ -8,33 +8,64 @@
 
 // swiftlint:disable trailing_whitespace
 
-struct CompositeBinaryTree<Element>: Tree {
+public struct CompositeBinaryTree<Element: Equatable>: Tree {
+    public func contains(_ data: Element) -> Bool {
+        return root.contains(data)
+    }
+    
+    public mutating func insert(_ data: Element) throws {
+        try push(data)
+    }
+    
+    public mutating func remove(_ data: Element) throws {
+        root = try root.remove(data)
+    }
+    
+    public mutating func removeAll() {
+        root = Leaf(order: order)
+    }
+    
+    public var count: UInt {
+        return root.count
+    }
+    
+    public typealias DataElement = Element
+    
     var root: Node
     
-    init(order: @escaping (Element, Element) -> Bool) {
+    public init(order: @escaping (Element, Element) -> Bool) {
         self.root = Leaf(order: order)
     }
     
-    var array: [Element] {
-        return root.array
+    public var array: [Element] {
+        get {
+            return root.array
+        }
+        set {
+            root = Leaf(order: order)
+            newValue.forEach { try? insert($0) }
+        }
     }
     
-    var order: (Element, Element) -> Bool {
+    public var order: (Element, Element) -> Bool {
         return root.order
     }
     
-    mutating func push(_ data: Element) {
-        root = root.push(data)
+    public mutating func push(_ data: Element) throws {
+        root = try root.push(data)
     }
     
-    mutating func pop() -> Element? {
+    public mutating func pop() -> Element? {
         let ret = root.pop()
-        self.root = ret.0
-        return ret.1
+        self.root = ret.node
+        return ret.data
     }
     
     class Node {
         let order: (Element, Element) -> Bool
+        var count: UInt {
+            return 0
+        }
         
         init(order: @escaping (Element, Element) -> Bool) {
             self.order = order
@@ -42,12 +73,28 @@ struct CompositeBinaryTree<Element>: Tree {
         
         var array: [Element] { return [] }
         
-        func push(_ data: Element) -> Node {
+        func push(_ data: Element) throws -> Node {
             return InnerNode(data: data, order: order)
         }
         
-        func pop() -> (Node, Element?) {
-            return (self, nil)
+        func remove(_ data: Element) throws {
+            throw DataStructureError.notIn
+        }
+        
+        func pop() -> (data: Element?, node: Node) {
+            return (nil, self)
+        }
+        
+        func remove(_ data: Element) throws -> Node {
+            throw DataStructureError.notIn
+        }
+        
+        func contains(_ data: Element) -> Bool {
+            return false
+        }
+        
+        func removeLast() -> (data: Element?, node: Node) {
+            return (nil, self)
         }
     }
     
@@ -67,22 +114,65 @@ struct CompositeBinaryTree<Element>: Tree {
             return left.array + [data] + right.array
         }
         
-        override func push(_ newData: Element) -> Node {
+        override func push(_ newData: Element) throws -> Node {
+            guard data != newData else {
+                throw DataStructureError.alreadyIn
+            }
             if order(newData, data) {
-                left = left.push(newData)
+                left = try left.push(newData)
             } else {
-                right = right.push(newData)
+                right = try right.push(newData)
             }
             return self
         }
         
-        override func pop() -> (Node, Element?) {
-            if left is Leaf {
-                return (right, self.data)
+        override func remove(_ data: Element) throws -> Node {
+            if data == self.data {
+                let leftPop = left.removeLast()
+                left = leftPop.node
+                if let data = leftPop.data {
+                    self.data = data
+                    return self
+                }
+                return right
+            } else if order(data, self.data) {
+                left = try left.remove(data)
+            } else {
+                right = try right.remove(data)
             }
-            let (newLeft, data) = left.pop()
+            return self
+        }
+        
+        override func removeLast() -> (data: Element?, node: CompositeBinaryTree.Node) {
+            let remLast = right.removeLast()
+            right = remLast.node
+            guard let element = remLast.data else {
+                return (self.data, left)
+            }
+            return (element, self)
+        }
+        
+        override func pop() -> (data: Element?, node: Node) {
+            if left is Leaf {
+                return (self.data, right)
+            }
+            let (data, newLeft) = left.pop()
             left = newLeft
-            return (self, data)
+            return (data, self)
+        }
+        
+        override func contains(_ data: Element) -> Bool {
+            if data == self.data {
+                return true
+            } else if order(data, self.data) {
+                return left.contains(data)
+            } else {
+                return right.contains(data)
+            }
+        }
+        
+        override var count: UInt {
+            return left.count + right.count + 1
         }
     }
     

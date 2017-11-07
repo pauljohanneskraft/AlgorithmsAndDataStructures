@@ -1,5 +1,5 @@
 //
-//  B-Tree.swift
+//  BTree.swift
 //  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 23.08.16.
@@ -12,24 +12,37 @@ public struct BTree<Element: Hashable> {
     public let maxNodeSize: Int
     fileprivate var root: Node?
     
-    public init?(maxNodeSize: Int) {
-        guard maxNodeSize > 2 else { return nil }
+    public init(maxNodeSize: Int) {
+        assert(maxNodeSize > 2)
         self.root = nil
         self.maxNodeSize = maxNodeSize
     }
 }
 
-extension BTree {
+extension BTree: IndexedDataStructure, DataStructure {
+    public func contains(_ data: Element) -> Bool {
+        return find(key: data.hashValue) == data
+    }
+    
+    public mutating func removeAll() {
+        root = nil
+    }
+    
+    public typealias DataElement = Element
+    public typealias KeyElement = Int
+    
     public var array: [Element] {
         get {
             return root?.array ?? []
         }
         set {
-            root = nil
-            for i in newValue {
-                try? insert(i)
-            }
+            removeAll()
+            newValue.forEach { try? insert($0) }
         }
+    }
+    
+    public func find(key: Int) -> Element? {
+        return root?.find(key: key)
     }
     
     public mutating func insert(_ value: Element) throws {
@@ -64,7 +77,7 @@ extension BTree {
         root = newRoot
     }
     
-    public mutating func contains(_ value: Int) -> Bool {
+    public func contains(_ value: Int) -> Bool {
         return root?.contains(value) ?? false
     }
     
@@ -73,7 +86,7 @@ extension BTree {
     }
     
     @discardableResult
-    public mutating func remove(hashValue: Int) -> Element? {
+    public mutating func remove(at hashValue: Int) -> Element? {
         defer { assert(valid, "\(self), \(hashValue)") }
         let elem = root?.remove(hashValue: hashValue)
         guard root?.children.count != 1 else { root = root!.children[0]; return elem }
@@ -84,7 +97,7 @@ extension BTree {
     public var valid: Bool {
         return root?.valid(root: true, min: Int.min, max: Int.max) ?? true
     }
-    public var count: Int { return root?.count ?? 0 }
+    public var count: UInt { return root?.count ?? 0 }
     
     public var height: Int { return root?.height ?? 0 }
     
@@ -123,6 +136,17 @@ extension BTree.Node {
         return elements.indices.reduce([Element]()) { indexA, indexB in
             indexA + children[indexB].array + [elements[indexB].element]
         } + children.last!.array
+    }
+    
+    func find(key: Int) -> Element? {
+        guard let index = getIndex(hashValue: key) else {
+            return children.last?.find(key: key)
+        }
+        guard elements[index].hashValue != key else {
+            return elements[index].element
+        }
+        guard !children.isEmpty else { return nil }
+        return children[index].find(key: key)
     }
     
     func get(hashValue: Int) -> Element? {
@@ -253,7 +277,7 @@ extension BTree.Node {
         return children[i].contains(hashValue)
     }
     
-    var count: Int { return elements.count + children.reduce(0) { $0 + $1.count } }
+    var count: UInt { return UInt(elements.count) + children.reduce(0) { $0 + $1.count } }
     
     var height: Int { return 1 + (children.first?.height ?? 0) }
 

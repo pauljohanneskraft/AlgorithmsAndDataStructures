@@ -1,5 +1,5 @@
 //
-//  Graph_AdjacencyList.swift
+//  AdjacencyListGraph.swift
 //  Algorithms&DataStructures
 //
 //  Created by Paul Kraft on 22.08.16.
@@ -8,7 +8,7 @@
 
 // swiftlint:disable trailing_whitespace
 
-public struct GraphAdjacencyList: Graph, CustomStringConvertible {
+public struct AdjacencyListGraph: Graph, CustomStringConvertible {
 	
 	// stored properties
 	public var internalEdges: [Int: [(end: Int, weight: Int)] ]

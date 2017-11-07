@@ -8,21 +8,23 @@
 
 // swiftlint:disable trailing_whitespace
 
-struct DFAState <Character> {
-    init(transition: @escaping (Character) -> Int) {
-        self.transition = transition
+extension DFA {
+    struct State {
+        init(transition: @escaping (Character) -> Int) {
+            self.transition = transition
+        }
+        
+        var transition: (Character) -> Int
+        
     }
-    
-    var transition: (Character) -> Int
-    
 }
 
 struct DFA <Character> {
     let initialState: Int
-    let states: [Int: DFAState<Character>]
+    let states: [Int: State]
     let finalStates: Set<Int>
     
-    init(states: [Int: DFAState<Character>], initialState: Int, finalStates: Set<Int>) {
+    init(states: [Int: State], initialState: Int, finalStates: Set<Int>) {
         self.states = states
         self.initialState = initialState
         self.finalStates = finalStates

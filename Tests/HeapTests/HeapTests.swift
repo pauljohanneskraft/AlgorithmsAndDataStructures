@@ -35,7 +35,7 @@ class HeapTests: XCTestCase {
             btree = BTree<Int>(maxNodeSize: i)!
             btree.replace(2)
             print(btree)
-            btree.remove(hashValue: 2)
+            btree.remove(at: 2)
             print(btree)
             try! btree.insert(2)
             let interval = 0..<50
@@ -49,7 +49,7 @@ class HeapTests: XCTestCase {
             print(btree)
             for i in interval.reversed() {
                 // print(i, btree)
-                XCTAssertEqual(i, btree.remove(hashValue: i)!)
+                XCTAssertEqual(i, btree.remove(at: i)!)
             }
             XCTAssertEqual(btree.count, 0)
             XCTAssertEqual(btree.height, 0)
@@ -63,7 +63,7 @@ class HeapTests: XCTestCase {
             
             for i in interval.reversed() {
                 // print(i, btree)
-                XCTAssertEqual(i, btree.remove(hashValue: i)!)
+                XCTAssertEqual(i, btree.remove(at: i)!)
             }
             XCTAssertEqual(btree.count, 0)
             XCTAssertEqual(btree.height, 0)
@@ -72,7 +72,7 @@ class HeapTests: XCTestCase {
             for arr in arrs.dropLast(20) {
                 for r in arr { insertArray.insert(r) }
             }
-            var count = 0
+            var count: UInt = 0
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 count += 1
                 try! btree.insert(r)
@@ -99,13 +99,13 @@ class HeapTests: XCTestCase {
                 }
                 XCTAssert(!btree.contains(r))
                 XCTAssertNil(btree[r])
-                XCTAssertNil(btree.remove(hashValue: r))
+                XCTAssertNil(btree.remove(at: r))
                 XCTAssertEqual(btree.count, countBefore)
             }
             print(btree)
             for r in insertArray.sorted(by: { a, b in arc4random() & 0x1 == 0 }) {
                 count -= 1
-                let res = btree.remove(hashValue: r)
+                let res = btree.remove(at: r)
                 XCTAssertEqual(count, btree.count)
                 XCTAssert(res != nil && r == res!)
             }
@@ -271,6 +271,8 @@ class HeapTests: XCTestCase {
     func testBinaryTrees() {
         testBinaryTree(type: BinaryTree<Int>.self)
         testBinaryTree(type: CompositeBinaryTree<Int>.self)
+        testBinaryTree(type: AVLBinaryTree<Int>.self)
+        testBinaryTree(type: AVLCompositeBinaryTree<Int>.self)
     }
 }
 

@@ -15,10 +15,10 @@ class GraphTests: XCTestCase {
     func testGraph_Types() {
         print()
         var results = [(type: String, result: Double)]()
-        results.append(result(GraphHashing      .self))
-        results.append(result(GraphMatrix       .self))
-        results.append(result(GraphList         .self))
-        results.append(result(GraphAdjacencyList.self))
+        results.append(result(HashingGraph      .self))
+        results.append(result(MatrixGraph       .self))
+        results.append(result(ListGraph         .self))
+        results.append(result(AdjacencyListGraph.self))
         
         print(results.min { $0.result < $1.result }!)
     }
@@ -60,7 +60,7 @@ class GraphTests: XCTestCase {
         
         XCTAssertEqual(graph.vertices, Set<Int>(0...20))
         
-        let c = graph.convert(to: GraphMatrix.self)
+        let c = graph.convert(to: MatrixGraph.self)
         let cc = c.convert(to: G.self)
         XCTAssert(cc == graph)
         
@@ -584,7 +584,7 @@ class GraphTests: XCTestCase {
             [52, 43, 55, 15, 74, 0, 23],
             [450, 43, 23, 72, 23, 61, 0]
         ]
-        let g = GraphMatrix(matrix).convert(to: G.self)
+        let g = MatrixGraph(matrix).convert(to: G.self)
         let res = g.bellmanHeldKarp(start: 0)!
         // print(res)
         XCTAssertEqual(res.0, [0, 1, 6, 2, 3, 4, 5, 0])

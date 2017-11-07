@@ -36,14 +36,6 @@ public enum DataStructureError: Error {
     case notIn, alreadyIn
 }
 
-public protocol DataStructure {
-    associatedtype DataElement
-    mutating func insert(_: DataElement) throws
-    mutating func remove(_: DataElement) throws
-    var count: UInt { get }
-    var array: [DataElement] { get set }
-}
-
 extension Int {
     func description(radix: Int) -> String {
         guard radix > 0 && radix < 65 else {
@@ -62,14 +54,23 @@ extension Int {
 }
 
 extension Sequence {
-    func shuffled() -> [Element] {
+    public func shuffled() -> [Element] {
         return sorted(by: { _, _ in arc4random() & 1 == 0 })
     }
 }
 
 extension Array {
-    mutating func shuffle() {
+    public mutating func shuffle() {
         sort(by: { _, _ in arc4random() & 1 == 0 })
+    }
+}
+
+extension Array where Element: Equatable {
+    public mutating func remove(_ element: Element) {
+        guard let index = index(of: element) else {
+            return
+        }
+        remove(at: index)
     }
 }
 

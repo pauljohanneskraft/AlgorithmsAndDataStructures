@@ -8,21 +8,22 @@
 
 // swiftlint:disable trailing_whitespace
 
-struct NFAState <Character> {
-    init(transition: @escaping (Character) -> Set<Int>) {
-        self.transition = transition
+extension NFA {
+    struct State {
+        init(transition: @escaping (Character) -> Set<Int>) {
+            self.transition = transition
+        }
+        
+        var transition: (Character) -> Set<Int>
     }
-    
-    var transition: (Character) -> Set<Int>
-    
 }
 
 struct NFA <Character> {
     let initialState: Set<Int>
-    let states: [Int: NFAState<Character>]
+    let states: [Int: State]
     let finalStates: Set<Int>
     
-    init(states: [Int: NFAState<Character>], initialStates: Set<Int>, finalStates: Set<Int>) {
+    init(states: [Int: State], initialStates: Set<Int>, finalStates: Set<Int>) {
         self.states = states
         self.initialState = initialStates
         self.finalStates = Set(finalStates)

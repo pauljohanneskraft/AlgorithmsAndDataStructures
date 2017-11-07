@@ -39,7 +39,7 @@ class BxTreeTests: XCTestCase {
         print("inserting done")
         
         (0..<(count >> 1)).map({ $0 * 2 }).shuffled().forEach {
-            XCTAssertEqual(tree.remove($0), $0)
+            XCTAssertEqual(tree.remove(at: $0), $0)
             XCTAssert(tree.isValid)
         }
         
@@ -58,7 +58,7 @@ class BxTreeTests: XCTestCase {
         print("reinserting 2 done")
         
         (0..<count).shuffled().forEach {
-            XCTAssertEqual(tree.remove($0), $0)
+            XCTAssertEqual(tree.remove(at: $0), $0)
             XCTAssert(tree.isValid)
         }
         

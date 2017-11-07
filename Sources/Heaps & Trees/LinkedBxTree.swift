@@ -1,14 +1,15 @@
 //
-//  B+-Tree.swift
+//  BxTreeLinkedLinked.swift
 //  Algorithms&DataStructures
 //
-//  Created by Paul Kraft on 23.08.16.
-//  Copyright © 2016 pauljohanneskraft. All rights reserved.
+//  Created by Paul Kraft on 05.11.17.
 //
+
+import Foundation
 
 // swiftlint:disable trailing_whitespace file_length
 
-public struct BxTree<Element: Hashable> {
+public struct LinkedBxTree<Element: Hashable> {
     private var root: Node
     public let maxInnerNodeSize: Int
     public let maxLeafNodeSize: Int
@@ -33,7 +34,7 @@ public struct BxTree<Element: Hashable> {
     }
 }
 
-extension BxTree {
+extension LinkedBxTree {
     fileprivate typealias Split = (data: Int, left: Node, right: Node)
     fileprivate typealias KeyValue = (hashValue: Int, data: Element)
     fileprivate enum ChildrenType: CustomStringConvertible {
@@ -47,10 +48,10 @@ extension BxTree {
         }
     }
     fileprivate typealias Steal = (hashValue: Int, child: ChildrenType)
-
+    
     fileprivate class Node {
         static var levelString: String { return "   " }
-
+        
         var keys: [Int]
         let maxSize: Int
         var minSize: Int {
@@ -100,7 +101,7 @@ extension BxTree {
     }
 }
 
-extension BxTree {
+extension LinkedBxTree {
     fileprivate final class InnerNode: Node {
         var children: [Node]
         
@@ -131,11 +132,11 @@ extension BxTree {
         }
         
         override var count: UInt {
-            return children.reduce(0) { $0 + $1.count }
+            return children.first?.count ?? 0
         }
         
         override var array: [Element] {
-            return children.reduce([]) { $0 + $1.array }
+            return children.first?.array ?? []
         }
         
         override func find(key: Int) -> Element? {
@@ -261,9 +262,11 @@ extension BxTree {
     }
 }
 
-extension BxTree {
+extension LinkedBxTree {
     fileprivate final class LeafNode: Node {
         var elements: [Element]
+        var next: LeafNode?
+        var previous: LeafNode?
         
         override init(maxSize: Int) {
             elements = []
@@ -271,11 +274,11 @@ extension BxTree {
         }
         
         override var count: UInt {
-            return UInt(elements.count)
+            return UInt(elements.count) + (next?.count ?? 0)
         }
         
         override var array: [Element] {
-            return elements
+            return elements + (next?.array ?? [])
         }
         
         override func isValid(minKey: Int, maxKey: Int) -> Bool {
@@ -331,10 +334,13 @@ extension BxTree {
             
             keys.insert(data.hashValue, at: keyLocation)
             elements.insert(data.data, at: keyLocation)
-                        
+            
             guard keys.count <= maxSize else {
                 let mid = minSize
                 let sibling = LeafNode(maxSize: maxSize)
+                sibling.next = self.next
+                self.next = sibling
+                sibling.previous = self
                 let midKey = keys[mid-1]
                 sibling.keys = Array(keys[mid...])
                 self.keys = Array(keys[..<mid])
@@ -367,21 +373,22 @@ extension BxTree {
                 assert(false)
                 return
             }
+            node.next?.previous = self
+            self.next = node.next
             self.keys += node.keys
             self.elements += node.elements
         }
     }
 }
 
-extension BxTree: DataStructure {
-    public mutating func remove(_ data: Element) throws {
-        guard remove(data.hashValue) != nil else {
-            throw DataStructureError.notIn
-        }
+extension LinkedBxTree: IndexedDataStructure, DataStructure {
+    public func contains(_ data: Element) -> Bool {
+        let element = root.find(key: data.hashValue)
+        return element == data
     }
     
     @discardableResult
-    public mutating func remove(_ hashValue: Int) -> Element? {
+    public mutating func remove(at hashValue: Int) -> Element? {
         defer { assert(isValid, self.description) }
         let element = root.remove(hashValue)
         if let rootInner = root as? InnerNode, rootInner.children.count < 2 {
@@ -391,7 +398,7 @@ extension BxTree: DataStructure {
     }
     
     public var description: String {
-        return "\(BxTree.self)\n" + root.description(depth: 0)
+        return "\(LinkedBxTree.self)\n" + root.description(depth: 0)
     }
     
     public mutating func insert(_ data: Element) throws {
@@ -419,10 +426,8 @@ extension BxTree: DataStructure {
             return root.array
         }
         set {
-            root = LeafNode(maxSize: maxLeafNodeSize)
-            for i in newValue {
-                _ = try? insert(i)
-            }
+            removeAll()
+            newValue.forEach { try? insert($0) }
         }
     }
     
@@ -468,13 +473,13 @@ extension BxTree: DataStructure {
     
 }
 
-extension BxTree.LeafNode: CustomStringConvertible {
+extension LinkedBxTree.LeafNode: CustomStringConvertible {
     public var description: String {
-        return "\(BxTree.LeafNode.self): " + "\(keys.indices.map { (key: keys[$0], value: elements[$0]) })"
+        return "\(LinkedBxTree.LeafNode.self): " + "\(keys.indices.map { (key: keys[$0], value: elements[$0]) })"
     }
 }
 
-extension BxTree.InnerNode: CustomStringConvertible {
+extension LinkedBxTree.InnerNode: CustomStringConvertible {
     var description: String {
         let lastDescription: String
         if let last = children.last {
@@ -484,7 +489,7 @@ extension BxTree.InnerNode: CustomStringConvertible {
         }
         let str = keys.indices.reduce("[") {
             $0 + "\(children[$1]), " + "key: \(keys[$1]), "
-        } + "\(lastDescription)]"
-        return "\(BxTree.InnerNode.self): " + str
+            } + "\(lastDescription)]"
+        return "\(LinkedBxTree.InnerNode.self): " + str
     }
 }
