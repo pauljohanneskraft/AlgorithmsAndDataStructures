@@ -14,7 +14,7 @@ extension Int {
     }
     
     public func hammingDistance(to other: Int) -> Int {
-        let ones: [Character] = (self ^ other).description(radix: 2).characters.filter { $0 == "1" }
+        let ones: [Character] = (self ^ other).description(radix: 2).filter { $0 == "1" }
         return ones.count
     }
     

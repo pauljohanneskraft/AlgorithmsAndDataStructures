@@ -22,8 +22,8 @@ public extension String {
         insertion: Int = -1,
         deletion: Int = -1) -> [(String, String)] {
 		
-		let cmpc  = cmp.characters.count + 1
-		let count = other.characters.count + 1
+		let cmpc  = cmp.count + 1
+		let count = other.count + 1
 		
 		var matrix = [[(Int, [NeedlemanWunschDirection])]](
             repeating: [(Int, [NeedlemanWunschDirection])](repeating: (0, []), count: cmpc),
@@ -37,7 +37,7 @@ public extension String {
 			let ai = other.index(other.startIndex, offsetBy: i-1)
 			for j in 1..<cmpc {		// columns
                 let bj = cmp.index( cmp.startIndex, offsetBy: j-1)
-                let diagonal: Int = matrix[i-1][j-1].0 + (other.characters[ai] == cmp.characters[bj] ? match: mismatch)
+                let diagonal: Int = matrix[i-1][j-1].0 + (other[ai] == cmp[bj] ? match: mismatch)
                 let left: Int = matrix[i  ][j-1].0 + insertion
                 let top: Int  = matrix[i-1][j  ].0 + deletion
                 matrix[i][j] = matrixContent(diagonal: diagonal, left: left, top: top)
@@ -69,7 +69,7 @@ public extension String {
         appending: (String, String)) -> [(String, String)] {
 		
 		guard coordinates != (0, 0) else {
-            return [(String(appending.0.characters.reversed()), String(appending.1.characters.reversed()))]
+            return [(String(appending.0.reversed()), String(appending.1.reversed()))]
         }
 		
 		var result = [(String, String)]()
@@ -81,20 +81,20 @@ public extension String {
 			case .top:
 				newCoordinates = (coordinates.0 - 1, coordinates.1)
 				newAppending = (
-					appending.0 + "\(strings.0.characters[strings.0.index(strings.0.startIndex, offsetBy: coordinates.0 - 1)])",
+					appending.0 + "\(strings.0[strings.0.index(strings.0.startIndex, offsetBy: coordinates.0 - 1)])",
 					appending.1 + "-"
 				)
 			case .left:
 				newCoordinates = (coordinates.0, coordinates.1 - 1)
 				newAppending = (
 					appending.0 + "-",
-					appending.1 + "\(strings.1.characters[strings.1.index(strings.1.startIndex, offsetBy: coordinates.1 - 1)])"
+					appending.1 + "\(strings.1[strings.1.index(strings.1.startIndex, offsetBy: coordinates.1 - 1)])"
 				)
 			case .diagonal:
 				newCoordinates = (coordinates.0 - 1, coordinates.1 - 1)
 				newAppending = (
-					appending.0 + "\(strings.0.characters[strings.0.index(strings.0.startIndex, offsetBy: coordinates.0 - 1)])",
-					appending.1 + "\(strings.1.characters[strings.1.index(strings.1.startIndex, offsetBy: coordinates.1 - 1)])"
+					appending.0 + "\(strings.0[strings.0.index(strings.0.startIndex, offsetBy: coordinates.0 - 1)])",
+					appending.1 + "\(strings.1[strings.1.index(strings.1.startIndex, offsetBy: coordinates.1 - 1)])"
 				)
 			}
 			result.append(contentsOf:
