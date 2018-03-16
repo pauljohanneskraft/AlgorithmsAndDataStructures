@@ -1,0 +1,22 @@
+{
+  "name": "AlgorithmsDataStructures",
+  "version": "0.1.0",
+  "summary": "A short description of AlgorithmsDataStructures.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/pauljohanneskraft/AlgorithmsDataStructures",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "pauljohanneskraft": "paul.kraft@tum.de"
+  },
+  "source": {
+    "git": "https://github.com/pauljohanneskraft/AlgorithmsDataStructures.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "AlgorithmsDataStructures/Classes/**/*"
+}
