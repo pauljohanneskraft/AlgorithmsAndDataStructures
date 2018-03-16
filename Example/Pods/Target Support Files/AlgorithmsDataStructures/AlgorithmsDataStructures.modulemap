@@ -1,0 +1,6 @@
+framework module AlgorithmsDataStructures {
+  umbrella header "AlgorithmsDataStructures-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'AlgorithmsDataStructures_Example' do
+  pod 'AlgorithmsDataStructures', :path => '../'
+
+  target 'AlgorithmsDataStructures_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
