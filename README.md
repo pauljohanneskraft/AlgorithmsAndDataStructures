@@ -22,7 +22,7 @@ pod 'AlgorithmsDataStructures'
 
 ## Author
 
-pauljohanneskraft, paul.kraft@tum.de
+Paul Kraft
 
 ## License
 
