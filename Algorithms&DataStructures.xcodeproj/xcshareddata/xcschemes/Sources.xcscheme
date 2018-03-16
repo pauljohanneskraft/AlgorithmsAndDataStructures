@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "0900"
+   version = "1.3">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "Algorithms&amp;DataStructures::Algorithms&amp;DataStructures"
+               BuildableName = "Algorithms_DataStructures.framework"
+               BlueprintName = "Algorithms&amp;DataStructures"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B427CCC1FAAC33600AB179F"
+               BuildableName = "AutomataTests.xctest"
+               BlueprintName = "AutomataTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B4B7E6B1FA9F555003164FA"
+               BuildableName = "CodesTests.xctest"
+               BlueprintName = "CodesTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B427CAE1FAAC31400AB179F"
+               BuildableName = "GeneralTests.xctest"
+               BlueprintName = "GeneralTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B3CC8341FAA9DC700562A6D"
+               BuildableName = "GraphTests.xctest"
+               BlueprintName = "GraphTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B427C8F1FAAB3A700AB179F"
+               BuildableName = "HeapTests.xctest"
+               BlueprintName = "HeapTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "BxTreeLinkedTests">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B8A88161FA9F7F300C6C8EE"
+               BuildableName = "ListTests.xctest"
+               BlueprintName = "ListTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B427CBD1FAAC32300AB179F"
+               BuildableName = "PatternMatchingTests.xctest"
+               BlueprintName = "PatternMatchingTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9B427C9F1FAAC2F300AB179F"
+               BuildableName = "StableMarriageProblemTests.xctest"
+               BlueprintName = "StableMarriageProblemTests"
+               ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "Algorithms&amp;DataStructures::Algorithms&amp;DataStructures"
+            BuildableName = "Algorithms_DataStructures.framework"
+            BlueprintName = "Algorithms&amp;DataStructures"
+            ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "Algorithms&amp;DataStructures::Algorithms&amp;DataStructures"
+            BuildableName = "Algorithms_DataStructures.framework"
+            BlueprintName = "Algorithms&amp;DataStructures"
+            ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "Algorithms&amp;DataStructures::Algorithms&amp;DataStructures"
+            BuildableName = "Algorithms_DataStructures.framework"
+            BlueprintName = "Algorithms&amp;DataStructures"
+            ReferencedContainer = "container:Algorithms&amp;DataStructures.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
