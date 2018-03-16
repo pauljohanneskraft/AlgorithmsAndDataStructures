@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AlgorithmsDataStructures'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'AlgorithmsDataStructures contains a lot of popular algorithms & data structures.'
 
   s.description      = <<-DESC
