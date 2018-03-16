@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'AlgorithmsDataStructures'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'AlgorithmsDataStructures contains a lot of popular algorithms & data structures.'
 
   s.description      = <<-DESC
@@ -11,7 +11,7 @@ AlgorithmsDataStructures might help you with that.
 
   s.homepage         = 'https://github.com/pauljohanneskraft/AlgorithmsDataStructures'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'pauljohanneskraft' => 'pauljohanneskraft@icloud.com' }
+  s.author           = { 'Paul Kraft' => 'pauljohanneskraft@icloud.com' }
   s.source           = { :git => 'https://github.com/pauljohanneskraft/AlgorithmsDataStructures.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '8.0'
