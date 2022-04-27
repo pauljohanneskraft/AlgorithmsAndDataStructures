@@ -1,3 +1,5 @@
+![AlgorithmsAndDataStructures](https://user-images.githubusercontent.com/15239005/165649309-b93064f9-0210-499c-9790-5024a2df4048.png)
+
 # AlgorithmsDataStructures
 
 [![CI Status](http://img.shields.io/travis/pauljohanneskraft/AlgorithmsDataStructures.svg?style=flat)](https://travis-ci.org/pauljohanneskraft/AlgorithmsDataStructures)
